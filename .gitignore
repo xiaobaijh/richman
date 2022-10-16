@@ -1,0 +1,8 @@
+.cache/
+.vscode/
+.idea/
+build/
+bin/
+test.txt
+cmake-build-debug/
+*.code-workspace
