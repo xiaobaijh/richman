@@ -1,8 +1,10 @@
 .cache/
 .vscode/
 .idea/
+.vs/
 build/
 bin/
 test.txt
 cmake-build-debug/
 *.code-workspace
+CMakeSettings.json

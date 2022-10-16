@@ -1,35 +1,33 @@
 #pragma once
 #include <iostream>
+#include <valarray>
 #include <vector>
 
-typedef int money;
-
 enum player_state { normal,
-                    bankrupt };
+                    bankrupt,
+                    stop };
 
 class Player {
 public:
-    explicit Player();
-    Player(std::string name) {
-        name_ = name;
+    Player(int property, int credit) {
+        property_ = property;
+        credit_ = credit;
         state_ = normal;
+        position_ = 0;
+        stop_time_ = 0;
     }
     ~Player();
     std::string get_name();
-    void buy(int place_num); //参数地图中编号,sell和buy针对买地和抵押
-    void sell(int place_num);
-    void decrease_money(money mount);    //到达地图后check地图状态后先扣自己的钱
-    void charge(Player &other_player);   //向地图owner缴费
-    void update_place();                 //根据地图编号升级地图,访问自己的places数组
     int get_dices();                     //模拟掷骰子
     void update_poistion(int &step_num); //更新位置，
 
-    std::string name_;
     player_state state_;
     int position_;
-    std::vector<int> places;
-
-    money proverty_;
+    int property_;
+    int credit_;
 
 private:
+    int stop_time_ = 0;
+    std::valarray<int> props_[3]; //props_[0]炸弹数量，props_[1]娃娃数量，props_[0]路障数量，
+    std::vector<int> places_;     //玩家拥有的地块,编号
 };
