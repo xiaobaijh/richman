@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <locale.h>
 #include "display.h"
-
+#include <string.h>
 
 static int shape_map[3] = {0};
-static int _color_array[] = {COLOR_BLACK, COLOR_GREEN};
+static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE};
 
 #define curs_color(color) ((color < NUM_COLOR) ?  _color_array[color] : _color_array[COLOR_BASIC])
 
@@ -166,39 +166,59 @@ char print_info(char * content){
     return 0;
 }
 
-char print_line(int x, int y, char * content){
-    if(x < 0 || x >= shape_map[0] || y < 0 || y >= shape_map[1])
+char replace_line(int x, int y, char * content, int color){
+    if(!content)
+        return 2;
+    if(x < 0 || y < 0)
+        return 1; 
+    move(y, x);
+    addstr(content);
+    refresh();
+    setcolor(color, COLOR_BACKGROUD);
+    addstr(content);
+    unsetcolor(color, COLOR_BACKGROUD);
+    refresh();
+    return 0;
+}
+
+char print_line(int x, int y, char * content, int color){
+    if(x < 0 || y < 0 )
         return 1; 
     move(y, x);
     clrtobot();
     char res = 2;
     if(content){
+        setcolor(color, COLOR_BACKGROUD);
         addstr(content);
+        unsetcolor(color, COLOR_BACKGROUD);
         res = 0;
     }
     refresh();
     return res;
 }
 
-char replace_line(int x, int y, char * content){
-    if(!content)
-        return 2;
-    if(x < 0 || x >= shape_map[0] || y < 0 || y >= shape_map[1])
-        return 1; 
-    move(y, x);
-    addstr(content);
-    refresh();
-}
-
-int get_input(char * buf, int len){
+int get_input(char * hint, int color, char * buf, int len){
+    print_line(0, LINES-1, hint, color);
+    int x = strlen(hint);
     int count = 0;
     while(1){
         for(count = 0; count < len-1; ++count){
             buf[count] = getch();
             if(buf[count] == '\n'){
+                move(LINES-1,0);
+                clrtobot();
                 buf[count] = '\0';
                 return count;
+            }else{
+                addch(buf[count]);
             }
         }
+        count = getch();
+        while(count != '\n'){
+            addch(count);
+            count = getch();
+        }
+        move(LINES-1, x);
+        clrtobot();
     }
 }

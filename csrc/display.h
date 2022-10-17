@@ -29,17 +29,17 @@ char print_info(char * content);
 /* 将指定位置到行尾清空并打印内容
  * 对于超出屏幕范围的x,y不进行操作
  */
-char print_line(int x, int y, char * content);
+char print_line(int x, int y, char * content, int color);
 
 /* 将内容打印到指定位置
  * 对超出屏幕范围的x,y不进行操作
  */
-char replace_line(int x, int y, char * content);
+char replace_line(int x, int y, char * content, int color);
 
 /* 获取一定长度内的内容，复制到buffer中（以\0结尾）
  * 超出长度的输入视为无效，在得到有效输入前阻塞
  */
-int get_input(char * buf, int len);
+int get_input(char * hint, int color, char * buf, int len);
 
 #include <ncurses.h>
 

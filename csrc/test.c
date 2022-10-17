@@ -33,11 +33,16 @@ int main(void){
     char * map = initMap();
     display_map(29, 8, map);
     refresh();
-    for(int i = 0; i < 70; ++i){
-        change_map(i, '0'+i, COLOR_BASIC);
-        getch();
-    }
+    // for(int i = 0; i < 70; ++i){
+    //     change_map(i, '0'+i, COLOR_BASIC);
+    //     getch();
+    // }
     getch();
+    char * buf = (char *)calloc(1, 10);
+    char hint[] = "钱夫人>";
+    do{
+        get_input(hint, COLOR_P1, buf, 10);
+    }while(buf[0] != 'q');
     endwin();
 
     exit(0);
