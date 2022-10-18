@@ -41,7 +41,7 @@ char replace_line(int x, int y, char * content, int color);
  */
 int get_input(char * hint, int color, char * buf, int len);
 
-#include <ncurses.h>
+void show_tips(char * tips);
 
 
 #endif

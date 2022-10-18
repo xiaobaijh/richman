@@ -222,3 +222,10 @@ int get_input(char * hint, int color, char * buf, int len){
         clrtobot();
     }
 }
+
+void show_tips(char * tips){
+    clean_info();
+    move(shape_map[1]+1,0);
+    addstr(tips);
+    refresh();
+}
