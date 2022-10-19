@@ -345,6 +345,9 @@ void show_tips(void){
             default:
                 break;
         }
+        move(LINES-1, 0);
+        addstr("s:开头,j:下翻(半页),k:上翻(半页),q:退出");
+        clrtoeol();
         input = getch();
     }
     attroff(COLOR_PAIR(tips.color));
