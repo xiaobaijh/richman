@@ -41,7 +41,11 @@ char replace_line(int x, int y, char * content, int color);
  */
 int get_input(char * hint, int color, char * buf, int len);
 
-void show_tips(char * tips);
+/* init help tips, without length limitation and support paging by calling show_tips 
+ * content should be terminated with '\0'
+ */
+void init_tips(const char * content, int color);
 
+void show_tips(void);
 
 #endif
