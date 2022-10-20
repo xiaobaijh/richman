@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include "display.h"
+// #include "display.h"
 #include <string.h>
+
+enum {COLOR_BACKGROUD=0, COLOR_BASIC, COLOR_P1, COLOR_P2, NUM_COLOR};
 
 static int shape_map[3] = {0};
 static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE};
@@ -153,8 +155,8 @@ char change_map(int pos, char content, int color){
 }
 
 char clean_info(){
-    clrtoeol();
     move(shape_map[1], 0); 
+    clrtobot();
     refresh();
     return 0;
 }
@@ -185,7 +187,7 @@ char print_line(int x, int y, const char * content, int color){
     if(x < 0 || y < 0 )
         return 1; 
     move(y, x);
-    clrtobot();
+    clrtoeol();
     char res = 2;
     if(content){
         setcolor(color, COLOR_BACKGROUD);
@@ -201,12 +203,13 @@ int get_input(const char * hint, int color, char * buf, int len){
     print_line(0, LINES-1, hint, color);
     int x = strlen(hint);
     int count = 0;
+    fflush(stdin);
     while(1){
         for(count = 0; count < len-1; ++count){
             buf[count] = getch();
             if(buf[count] == '\n'){
                 move(LINES-1,0);
-                clrtobot();
+                clrtoeol();
                 buf[count] = '\0';
                 return count;
             }else{
@@ -219,6 +222,133 @@ int get_input(const char * hint, int color, char * buf, int len){
             count = getch();
         }
         move(LINES-1, x);
-        clrtobot();
+        clrtoeol();
     }
+}
+
+#define BUFFER_LINE_BASE 20
+typedef struct{
+    char ** content; // 
+    int cap; // number of valid content entry
+    int line;
+    int col;
+    int row;
+    int color;
+} Tips;
+
+static Tips tips = {0};
+// '\n' turn into '\0\n'
+void str2tips(const char * content){
+    if(!tips.col || !tips.row) // tips not initialized
+        return;
+
+    int index, row, col, line_index;
+    for(index = 0; content[index] != '\0'; ){
+        tips.content = (char **) realloc(tips.content, (tips.cap+BUFFER_LINE_BASE)*sizeof(char *));
+        row = tips.cap;
+        tips.cap += BUFFER_LINE_BASE;
+
+        for(col = 0, line_index = 0; row < tips.cap; ++row, col = 0, line_index = 0){
+            tips.content[row] = (char *)calloc(1, (tips.col)*3+1); // chinese char takes 3 bytes
+            while(col < tips.col){
+                switch(content[index]){
+                    case '\0':
+                        tips.content[row][line_index] = '\0';
+                        tips.cap = row+1;
+                        tips.content = (char **)realloc(tips.content, tips.cap*sizeof(char*));
+                        return;
+                    case '\n':
+                        tips.content[row][line_index] = '\0';
+                        tips.content[row][line_index+1] = '\n';
+                        ++index;
+                        col = tips.col; // end this in-loop
+                        break;
+                    default:
+                        if(content[index] < 0 && (content[index+1] < 0 || content[index+1] > 63)){ // chinese char
+                            for(int i = 0; i < 3; ++i){
+                                tips.content[row][line_index++] = content[index++];
+                            }
+                        }else{
+                            tips.content[row][line_index++] = content[index++];
+                        }
+                            ++col;
+                        break;
+                }
+            }
+        } 
+    }
+}
+
+
+char * tips2str(void){
+    char * str = NULL;
+    for(int line = 0, size = 0; line < tips.cap; ++line){
+// sprintf, turn '\0\n' to '\n'
+    }
+    return str;
+}
+
+void init_tips(const char * content, int color){
+    if(!content)
+        return;
+    getmaxyx(stdscr, tips.row, tips.col);
+    tips.cap = 0;
+    tips.content = NULL;
+    str2tips(content);    
+    tips.color = color;
+}
+
+void show_tips(void){
+    clean_info();
+    attron(COLOR_PAIR(color_num(tips.color, COLOR_BACKGROUD)));
+    int row = tips.row - shape_map[1] - 1;
+    row = (row < tips.cap) ? row : tips.cap;
+    int index = 0;
+    move(shape_map[1],0);
+    char input = 's';
+    while(input != 'q'){
+        switch(input){
+            case 's':
+                clean_info();
+                index = 0;
+                for(index = 0; index < row; ++index){
+                    move(shape_map[1]+index, 0);
+                    addstr(tips.content[index]);
+                }
+                refresh();
+                break;
+            case 'j': // up half page
+                if(!index)
+                    break;
+                clean_info();
+                index -= ((row>>1)+row);
+                index = (index < 0) ? 0 : index;
+                for(int i = 0; i < row; ++i){
+                    move(shape_map[1]+i, 0);
+                    // printf("%s", tips.content[index]);
+                    addstr(tips.content[index++]);
+                    refresh();
+                }
+                break;
+            case 'k':
+                if(index == tips.cap)
+                    break;
+                clean_info();
+                index -= row >> 1;
+                for(int i = 0; i < row && i + index < tips.cap; ++i){
+                    move(shape_map[1]+i, 0);
+                    // printf("%s", tips.content[index]);
+                    addstr(tips.content[index++]);
+                    refresh();
+                }
+                break;
+            default:
+                break;
+        }
+        move(LINES-1, 0);
+        addstr("s:开头,j:下翻(半页),k:上翻(半页),q:退出");
+        clrtoeol();
+        input = getch();
+    }
+    attroff(COLOR_PAIR(tips.color));
 }
