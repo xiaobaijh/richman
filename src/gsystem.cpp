@@ -82,12 +82,13 @@ void Gsystem::out_tip(std::string tip) {
     print_info(char_tip);
 }
 
-void Gsystem::out_tip(const char *tip) {
-    print_info(tip);
+void Gsystem::out_help() {
+    init_tips(HELPStr,1200);
+    show_tips();
 }
 // todo
 std::string Gsystem::convert_input(char actor) {
-    std::string hint = "->";
+    std::string hint =get_name(actor)+ "->";
     const char *char_hint = hint.c_str();
     int clour = get_clour(actor);
     get_input(char_hint, clour, input_buffer_, 100);
@@ -122,7 +123,7 @@ int Gsystem::prarse_input(std::string &input) {
         } else if (func_name == "query") {
             return ORDER_QUERY;
         } else if (func_name == "help") {
-            show_tips();
+            out_help();
             return 0;
         } else if (func_name == "print") {
             // todo print
@@ -184,10 +185,13 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool print() {
+    std:: string order = "aqsj";
+    
+
 }
 
 bool Gsystem::step() {
-    for (auto i : user_order_) {
+    for (auto i =0;i<user_num_;i++) {
         if (user_num_ == 0) {
             return false;
         }

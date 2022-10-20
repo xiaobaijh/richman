@@ -36,7 +36,7 @@ public:
     bool ready();
 
     void out_tip(std::string tip);         //向游戏框输出提示信息
-    void out_tip(const char * tip);
+    void out_help();
     void out_err(std::string &tip);        //系统输出错误，即提示开发人员的错误
     std::string convert_input(char actor); //需要玩家输入信息时使用，返回一个字符串
     int prarse_input(std::string &input);  //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令

@@ -51,8 +51,7 @@
 #define TotalStr std::string("总计")
 #define QueryTitleStr std::string("位置\t地段\t房屋等级")
 
-#define HELPStr "Roll: 掷骰子，行走1~6步。\nSell n: 售出自己在地图上位置为n的房产。\nBlock n: 将路障放在前后n格（-10 <= n <= 10）的位置，n为正表示向前，为负表示向后，路过路障被拦截\nRobot: 使用机器人清空前方10格的任何道具\nQuery: 查询自家资产\nHelp: 显示帮助\nQuit: 退出游戏\n"
-static char test_str[] = "王家河";
+const char  HELPStr[] = "Roll: 掷骰子，行走1~6步。\nSell n: 售出自己在地图上位置为n的房产。\nBlock n: 将路障放在前后n格（-10 <= n <= 10）的位置，n为正表示向前，为负表示向后，路过路障被拦截\nRobot: 使用机器人清空前方10格的任何道具\nQuery: 查询自家资产\nHelp: 显示帮助\nQuit: 退出游戏";
 std::string get_name(char c);
 int get_clour(char c);
 std::string get_level_str(int level);
