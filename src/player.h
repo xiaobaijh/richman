@@ -13,14 +13,9 @@ class Player {
 
 public:
     Player();
-    Player(char actor) {
+    Player(char actor, int property) {
         actor_ = actor;
-    }
-    Player(int property) {
         property_ = property;
-        state_ = normal;
-        position_ = 0;
-        stop_time_ = 0;
     }
     ~Player();
     int update_poistion(int &step_num); //更新位置，
@@ -41,11 +36,11 @@ public:
     bool buy_robot();         //购买娃娃
     bool buy_barrier();       //购买障碍物
 
-    void tool_house(void);        //进入道具屋
-    void gift_ouse(void);         //进入礼物屋
-    void prison(void);            //进入监狱
-    void mine();                  //到达矿地
-    void hospital();              //遇到炸弹后进入医院
+    void got_tool_house();        //进入道具屋
+    void got_gift_house();        //进入礼物屋
+    void got_prison();            //进入监狱
+    void got_mine();              //到达矿地
+    void got_hospital();          //遇到炸弹后进入医院
     void barriered();             //遇到障碍
     bool sell_land(Place &place); //卖地
     bool buy_land(Place &place);  //买地
@@ -59,7 +54,7 @@ public:
 
     bool player_move(); //玩家移动一步
 
-    player_state state_;
+    player_state state_{normal};
     char actor_{0};
 
 private:

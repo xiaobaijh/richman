@@ -68,7 +68,6 @@ int main(void){
     refresh();
     // while(cmd_call());
     char tips[] = "asd\n\n\n\nasdf\n\n\n\n\n\n\nasdfawef\nasdf\naasdf\naasdf\nasdb\nasdfc\naasdfsdf\n\n\n\nasdf\nasdf\nasdf\nasdf";
-    show_tips(tips);
     getch();
     char hint[] = "钱夫人>";
     char buf[1024];
