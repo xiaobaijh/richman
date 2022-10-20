@@ -19,10 +19,11 @@ class Gsystem {
 private:
     std::string user_order_{"qasj"};
     char map_[70]{'0'}; //供绘图模块使用
-    Place places_[PLACE_NUM];
-    std::unordered_map<char, Player> players_;
+    char input_buffer_[100];
 
 public:
+    Place places_[PLACE_NUM];
+    std::unordered_map<char, Player> players_;
     bool game_over_{false};
     char current_player_{'0'};
     std::size_t user_num_{0};
@@ -34,10 +35,11 @@ public:
     bool set_user(std::string &seq, int money); //设置玩家列表
     bool ready();
 
-    void out_tip(std::string tip);                  //向游戏框输出提示信息
-    void out_err(std::string &tip);                 //系统输出错误，即提示开发人员的错误
-    std::string convert_input(char actor, int len); //需要玩家输入信息时使用，返回一个字符串
-    int prarse_input(std::string &input);           //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
+    void out_tip(std::string tip);         //向游戏框输出提示信息
+    void out_tip(const char * tip);
+    void out_err(std::string &tip);        //系统输出错误，即提示开发人员的错误
+    std::string convert_input(char actor); //需要玩家输入信息时使用，返回一个字符串
+    int prarse_input(std::string &input);  //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
 
     bool step(); //游戏进行一步
     bool player_step(char actor);

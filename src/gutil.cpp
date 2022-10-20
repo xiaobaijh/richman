@@ -16,8 +16,7 @@ std::string to_upper(std::string s)
 }
 bool isPlayerName(char c)
 {
-    c = toupper(c);
-    return c == 'Q' || c == 'A' || c == 'S' || c == 'J';
+    return c == 'q' || c == 'a' || c == 's' || c == 'j';
 }
 char GetPlayerName(int idx)
 {

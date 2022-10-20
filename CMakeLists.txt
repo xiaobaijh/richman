@@ -3,6 +3,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("richman")
 
 set(CMAKE_CXX_STANDARD 11)
+add_compile_options(-lncursesw)
 
 # 将源代码添加到此项目的可执行文件。
 add_executable (richman "main.cpp" )

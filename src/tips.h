@@ -15,7 +15,7 @@
 #define BankruptcyStr std::string("破产了")
 #define MagicHouseTip std::string("请选择要陷害的人 1、钱夫人；2、阿土伯；3、孙小美；4、金贝贝；0、退出")
 #define FrameStr std::string("陷害了")
-#define ToolHouseTip std::string("欢迎光临道具屋，请选择您所需要的道具：1:路障  2:机器娃娃  F:退出")
+#define ToolHouseTip std::string("欢迎光临道具屋，请选择您所需要的道具：1:路障  2:机器娃娃  0:退出")
 #define CreditNotEnoughStr std::string("点数不足")
 #define BagFullStr std::string("道具背包满了")
 #define ExitToolHouseTip std::string("退出道具屋")
@@ -52,7 +52,7 @@
 #define QueryTitleStr std::string("位置\t地段\t房屋等级")
 
 #define HELPStr "Roll: 掷骰子，行走1~6步。\nSell n: 售出自己在地图上位置为n的房产。\nBlock n: 将路障放在前后n格（-10 <= n <= 10）的位置，n为正表示向前，为负表示向后，路过路障被拦截\nRobot: 使用机器人清空前方10格的任何道具\nQuery: 查询自家资产\nHelp: 显示帮助\nQuit: 退出游戏\n"
-
+static char test_str[] = "王家河";
 std::string get_name(char c);
 int get_clour(char c);
 std::string get_level_str(int level);

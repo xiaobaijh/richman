@@ -3,6 +3,7 @@
 #include <random>
 #include "player.h"
 #include "common.h"
+#include "gsystem.h"
 
 Player::~Player() {
 }
@@ -29,9 +30,6 @@ int Player::update_poistion(int &step_num) {
 
 inline char Player::get_name() {
 } //获取玩家姓名
-
-inline int Player::get_position() {
-} //获取当当前位置
 
 inline int Player::get_property() {
 } //获取当前财产数
@@ -64,11 +62,14 @@ void Player::got_hospital() {
 } //遇到炸弹后进入医院
 void Player::barriered() {
 } //遇到障碍
-bool Player::sell_land(Place &place) {
+bool Player::sell_land() {
 } //卖地
-bool Player::buy_land(Place &place) {
+bool Player::buy_land() {
+    g->places_[40].set_owner(actor_);
+    return true;
+
 } //买地
-bool Player::charge(Place &place) {
+bool Player::charge() {
 } //玩家缴费
 bool Player::stopped() {
 } //因为炸弹或监狱等状态轮空一轮
