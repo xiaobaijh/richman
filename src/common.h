@@ -44,4 +44,3 @@
 #define MINE4_CREDIT 100
 #define MINE5_CREDIT 80
 #define MINE6_CREDIT 20
-#define 

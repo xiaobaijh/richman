@@ -3,13 +3,13 @@
 #include <string>
 std::string get_name(char c) {
     switch (c) {
-    case 'a':
+    case 'A':
         return "阿土伯";
-    case 'q':
+    case 'Q':
         return "钱夫人";
-    case 's':
+    case 'S':
         return "孙小美";
-    case 'j':
+    case 'J':
         return "金贝贝";
     default:
         return "";

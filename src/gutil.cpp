@@ -16,22 +16,5 @@ std::string to_upper(std::string s)
 }
 bool isPlayerName(char c)
 {
-    return c == 'q' || c == 'a' || c == 's' || c == 'j';
+    return c == 'Q' || c == 'A' || c == 'S' || c == 'J';
 }
-char GetPlayerName(int idx)
-{
-    switch (idx)
-    {
-    case '1':
-        return 'Q';
-    case '2':
-        return 'A';
-    case '3':
-        return 'S';
-    case '4':
-        return 'J';
-    default:
-        return '\0';
-    }
-}
-

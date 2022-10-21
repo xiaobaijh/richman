@@ -9,6 +9,7 @@
 #include <string>
 #include <regex>
 #include <algorithm>
+#include <random>
 
 using std::cin;
 
@@ -19,39 +20,51 @@ Gsystem::~Gsystem() {
 }
 void Gsystem::init_game_display() {
     int i = 0;
+    places_[i].default_symbol_ = 'S';
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
+        places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
     places_[i].type_ = hospital;
+    places_[i].default_symbol_ = 'H';
     map_[i++] = 'H';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
+        places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
     places_[i].type_ = tool_house;
+    places_[i].default_symbol_ = 'T';
     map_[i++] = 'T';
     for (int m = 0; m < 6; ++m) {
         places_[i].price_ = 500;
+        places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
     places_[i].type_ = gift_house;
+    places_[i].default_symbol_ = 'G';
     map_[i++] = 'G';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
+        places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
     places_[i].type_ = prision;
+    places_[i].default_symbol_ = 'P';
     map_[i++] = 'P';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
+        places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
     places_[i].type_ = magic_house;
+    places_[i].default_symbol_ = 'M';
     map_[i++] = 'M';
     for (int m = 0; m < 6; ++m) {
         places_[i].price_ = 500;
+        places_[i].default_symbol_ = '$';
         map_[i++] = '$';
     }
     init_display();
@@ -115,10 +128,6 @@ int Gsystem::prarse_input(std::string &input) {
             // todo quit
         } else if (func_name == "roll") {
             return ORDER_ROLL;
-        } else if (func_name == "y") {
-            return ORDER_Y;
-        } else if (func_name == "n") {
-            return ORDER_N;
         } else if (func_name == "robot") {
             return ORDER_ROBOT;
         } else if (func_name == "query") {
@@ -139,6 +148,7 @@ int Gsystem::prarse_input(std::string &input) {
                 out_tip(CmdErrorStr);
             }
         }
+        out_tip(CmdErrorStr);
         return ORDER_WRONG;
     }
 }
@@ -208,12 +218,8 @@ bool Gsystem::step() {
         }
         auto pos = players_[current_player_].get_position();
         auto current_pos_type = places_[pos].type_;
+        change_map(pos, current_player_, COLOR_BASIC);
         switch (current_pos_type) {
-        case hospital: {
-            players_[current_player_].got_hospital();
-            break;
-        }
-
         case prision: {
             players_[current_player_].got_prison();
             break;
@@ -230,10 +236,21 @@ bool Gsystem::step() {
             players_[current_player_].got_tool_house();
             break;
         }
-        case common: {
-            // player.charge();
+        case magic_house: {
+            // player.magic
             break;
         }
+        }
+        auto current_pos_state = places_[pos].state_;
+        switch (current_pos_state)
+        {
+        case unowned:
+            players_[current_player_].buy_land();
+            /* code */
+            break;
+        case owned:
+        default:
+            break;
         }
     }
     //更新位置的过程中可能出现：
@@ -257,8 +274,8 @@ int Gsystem::player_step(char actor) {
         return 0;
     }
     }
-    out_tip(ActorTip);
     while (1) {
+        out_tip(get_name(actor) + ActorTip);
         input = convert_input(actor, 10);
         if (prarse_input(input) == ORDER_ROLL) {
             step = get_dices();
@@ -273,7 +290,8 @@ int Gsystem::player_step(char actor) {
 }
 
 bool Gsystem::update_position(char actor, int step) {
-    auto pos = players_[actor].get_position();
+    int pos = players_[actor].get_position();
+    change_map(pos, places_[pos].default_symbol_, COLOR_BASIC); //在玩家移动前恢复地图
     for (auto i = pos + 1; i <= pos + step; i++) {
         auto place_state = places_[i].state_;
         switch (place_state) {
@@ -298,6 +316,11 @@ bool Gsystem::ready() {
 }
 
 int Gsystem::get_dices() {
+    int min = 1, max = 6;
+    std::random_device seed;                           //硬件生成随机数种子
+    std::ranlux48 engine(seed());                      //利用种子生成随机数引擎
+    std::uniform_int_distribution<> distrib(min, max); //设置随机数范围，并为均匀分布
+    return distrib(engine);                            //随机数
 } //模拟掷骰子
 bool Gsystem::use_tool(int loc, int type) {
 } //使用道具

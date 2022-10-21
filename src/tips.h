@@ -8,9 +8,10 @@
 
 #define CmdErrorStr std::string("命令错误")
 #define SetUserFirstStr std::string("请先设置玩家")
-#define ActorTip std::string("您的回合，您可以输入命令")
-#define QueryBuyEmptyTip std::string("是否购买空地？y:是 n:否")
-#define BuyEmptyY std::string("购买了空地")
+#define ActorTip std::string("的回合，请输入命令")
+#define QueryBuyEmptyTip std::string("您来到了一片空地，是否购买空地？y:是 n:否")
+#define MoneyNotEnough std::string("余额不足，购买失败！")
+#define BuyEmptyY std::string("您购买了空地")
 #define QueryUpdateBulidingTip std::string("是否升级建筑？y:是 n:否")
 #define UpdateBulidingY std::string("升级了建筑")
 #define BankruptcyStr std::string("破产了")
