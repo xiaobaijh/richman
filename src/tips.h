@@ -8,6 +8,7 @@
 
 #define CmdErrorStr std::string("命令错误")
 #define SetUserFirstStr std::string("请先设置玩家")
+#define ActorTip std::string("您的回合，您可以输入命令")
 #define QueryBuyEmptyTip std::string("是否购买空地？y:是 n:否")
 #define BuyEmptyY std::string("购买了空地")
 #define QueryUpdateBulidingTip std::string("是否升级建筑？y:是 n:否")
@@ -21,7 +22,7 @@
 #define ExitToolHouseTip std::string("退出道具屋")
 #define BuyBarrierStr std::string("购买了一个路障")
 #define BuyRobotStr std::string("购买了一个机器娃娃")
-#define RollStr std::string("掷骰子")
+#define RollStr std::string("您掷骰子的点数是")
 #define NoBarrierStr std::string("没有路障")
 #define SellStr std::string("成功卖了地")
 #define CantPlaceBarrier std::string("不能放路障")

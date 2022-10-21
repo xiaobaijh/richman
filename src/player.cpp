@@ -31,12 +31,13 @@ int Player::update_poistion(int &step_num) {
 inline char Player::get_name() {
 } //获取玩家姓名
 
-inline int Player::get_property() {
-} //获取当前财产数
-
 //获取当前状态
 bool Player::isBankruptcy(void) {
-} //是否破产
+    if (state_ == bankrupt) {
+        return true;
+    }
+    return false;
+} //是否破产r
 
 bool Player::increase_property() {
 } //礼品屋选择金钱
@@ -60,7 +61,7 @@ void Player::got_mine() {
 } //到达矿地
 void Player::got_hospital() {
 } //遇到炸弹后进入医院
-void Player::barriered() {
+void Player::got_barriered() {
 } //遇到障碍
 bool Player::sell_land() {
 } //卖地
