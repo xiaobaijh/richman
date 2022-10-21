@@ -43,7 +43,7 @@ public:
     void got_prison();     //进入监狱
     void got_mine();       //到达矿地
     void got_hospital();   //遇到炸弹后进入医院
-    void got_barriered();      //遇到障碍
+    void got_barriered();  //遇到障碍
     bool sell_land();      //卖地
     bool buy_land();       //买地
     bool charge();         //玩家缴费
@@ -61,9 +61,9 @@ public:
     char actor_{0};
 
 private:
-    int position_{0};
-    int property_{0};
-    int credit_{0};
+    int position_{0};         //位置
+    int property_{0};         //金钱数
+    int credit_{0};           //积分数
     int stop_time_{0};        //剩余停止轮数
     int bomb_{0};             //炸弹数
     int barrier_{0};          //障碍数
