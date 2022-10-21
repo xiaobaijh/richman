@@ -134,9 +134,9 @@ void Player::got_mine() {
 void Player::got_hospital() {
     stop_time_ += HOSPITAL_ROLL_DELAY;
     position_ = HOSPITAL_POS;
+    change_map(HOSPITAL_POS, actor_, 0);
 } //遇到炸弹后进入医院
-void Player::got_barriered() {
-} //遇到障碍
+
 bool Player::sell_land() {
 }
 //买地
@@ -152,7 +152,7 @@ bool Player::buy_land() {
             property_ -= g_->places_[position_].price_;
             places_.push_back(position_);
             g_->places_[position_].state_ = owned;
-            g_->places_[position_].set_owner(actor_);
+            g_->places_[position_].owner_ = actor_;
             change_map(position_, g_->places_[position_].default_symbol_, 0);
             g_->out_tip(BuyEmptyY);
             break;
@@ -167,10 +167,14 @@ bool Player::charge() {
     auto land_price = g_->places_[position_].price_;
     if (land_price > property_) {
         state_ = bankrupt;
-        g_->out_tip(get_name(actor_)+BankruptcyStr);
+        g_->user_num_--;
+        if (!bankrupted()) {
+            return false;
+        }
+        g_->out_tip(get_name(actor_) + BankruptcyStr);
         return true;
     }
-    if (god_>0) {
+    if (god_ > 0) {
         god_--;
         g_->out_tip(GodOnBodyStr);
         return true;
@@ -179,7 +183,24 @@ bool Player::charge() {
     g_->players_[actor_].property_ += land_price;
     return true;
 } //玩家缴费
+
+bool Player::bankrupted() {
+    for (auto iter = places_.begin(); iter != places_.end(); iter++) {
+        g_->places_[*iter].owner_ = '0';
+        g_->places_[*iter].state_ = unowned;
+        auto price = g_->places_[*iter].price_;
+        if (g_->places_[*iter].level_ != 0) {
+            g_->places_[*iter].price_ /= g_->places_[*iter].level_;
+        }
+        g_->places_[*iter].level_ = 0;
+        change_map(*iter, '0', COLOR_BASIC);
+    }
+    return true;
+}
 bool Player::stopped() {
+    stop_time_--;
+    stop_time_ == 0 ? state_ = normal : state_ = stop;
+    return true;
 } //因为炸弹或监狱等状态轮空一轮
 
 bool Player::update_land() {
@@ -202,5 +223,38 @@ bool Player::update_land() {
             }
         }
     } //升级土地
+    return true;
+}
+
+bool Player::set_pos(int &num) {
+    position_ = num;
+    return true;
+}
+bool Player::set_property(int &num) {
+    property_ = num;
+    return true;
+}
+bool Player::set_credit(int &num) {
+    credit_ = num;
+    return true;
+}
+bool Player::set_stop_time_(int &num) {
+    stop_time_ = num;
+    return true;
+}
+bool Player::set_bomb(int &num) {
+    bomb_ = num;
+    return true;
+}
+bool Player::set_barrier(int &num) {
+    barrier_ = num;
+    return true;
+}
+bool Player::set_robot(int &num) {
+    robot_ = num;
+    return true;
+}
+bool Player::set_god(int &num) {
+    god_ = num;
     return true;
 }

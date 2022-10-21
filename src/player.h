@@ -26,10 +26,23 @@ public:
     } //获取当前财产数
     inline int get_credit() {
         return credit_;
-    }; //获取当前积分数
+    } //获取当前积分数
     inline player_state get_state() {
         return state_;
-    }                        //获取当前状态
+    } //获取当前状态
+    inline int get_bomb() {
+        return bomb_;
+    }
+    inline int get_barrier() {
+        return barrier_;
+    }
+    inline int get_god() {
+        return god_;
+    }
+    inline int get_robot() {
+        return robot_;
+    }
+
     bool isBankruptcy(void); //是否破产
 
     bool increase_property(); //礼品屋选择金钱
@@ -44,10 +57,10 @@ public:
     void got_prison();     //进入监狱
     void got_mine();       //到达矿地
     void got_hospital();   //遇到炸弹后进入医院
-    void got_barriered();  //遇到障碍
     bool sell_land();      //卖地
     bool buy_land();       //买地
     bool charge();         //玩家缴费
+    bool bankrupted();     //玩家破产
     bool stopped();        //因为炸弹或监狱等状态轮空一轮
     bool update_land();    //升级土地
 
@@ -61,7 +74,15 @@ public:
     bool use_barria(int loc); //放置障碍
     bool query();             //查询财产信息
 
-    bool player_move(); //玩家移动一步
+    bool set_pos(int &num);
+    bool set_property(int &num);
+    bool set_credit(int &num);
+    bool set_stop_time_(int &num);
+    bool set_bomb(int &num);
+    bool set_barrier(int &num);
+    bool set_robot(int &num);
+    bool set_god(int &num);
+
     void init(Gsystem *g) {
         g_ = g;
     }

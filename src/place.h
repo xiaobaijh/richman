@@ -4,8 +4,6 @@
 
 enum place_state { unowned,
                    owned,
-                   bombed,
-                   barried
 };
 
 enum place_type {
@@ -32,22 +30,6 @@ public:
 
     Place() = default;
     ~Place();
-
-    void init(void);
-    inline place_state get_state() {
-        return state_;
-    }
-    inline bool set_state(place_state state);
-    inline bool set_owner(char owner) {
-        owner_ = owner;
-        return true;
-    }
-    inline char get_owner() {
-        return owner_;
-    }
-    inline int get_price();
-    inline int get_level();
-    inline int update();
 
 private:
 };
