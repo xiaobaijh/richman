@@ -205,7 +205,8 @@ int get_input(const char * hint, int color, char * buf, int len){
     const int x = strlen(hint)-3;
     int count = 0, input = 0;
     while(1){
-        for(count = 0; count < len-1; ){
+        count = 0;
+        do{
 get_input_load:
             input = getch();
             switch(input){
@@ -226,7 +227,7 @@ get_input_load:
                     ++count;
                     break;
             }
-        }
+        }while(count < len);
         do{
             input = getch();
             if(input == 263){
