@@ -308,6 +308,10 @@ char * tips2str(void){
 void init_tips(const char * content, int color){
     if(!content)
         return;
+    if(tips.cap != 0){
+        for(int i = 0; i < tips.cap; free(tips.content[i++]));
+        free(tips.content);
+    }
     getmaxyx(stdscr, tips.row, tips.col);
     tips.cap = 0;
     tips.content = NULL;
