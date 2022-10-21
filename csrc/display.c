@@ -200,27 +200,44 @@ char print_line(int x, int y, char * content, int color){
 }
 
 int get_input(char * hint, int color, char * buf, int len){
-    print_line(0, LINES-1, hint, color);
-    int x = strlen(hint);
-    int count = 0;
     fflush(stdin);
+    print_line(0, LINES-1, hint, color);
+    const int x = strlen(hint)-3;
+    int count = 0, input = 0;
     while(1){
-        for(count = 0; count < len-1; ++count){
-            buf[count] = getch();
-            if(buf[count] == '\n'){
-                move(LINES-1,0);
-                clrtoeol();
-                buf[count] = '\0';
-                return count;
-            }else{
-                addch(buf[count]);
+        for(count = 0; count < len-1; ){
+get_input_load:
+            input = getch();
+            switch(input){
+                case '\n':
+                    move(LINES-1,0);
+                    clrtoeol();
+                    buf[count] = '\0';
+                    return count;
+                case 263:
+                    if(count > 0){
+                        addstr("\b \b");
+                        --count;
+                    }
+                    break;
+                default:
+                    addch(input);
+                    buf[count] = input;
+                    ++count;
+                    break;
             }
         }
-        count = getch();
-        while(count != '\n'){
-            addch(count);
-            count = getch();
-        }
+        do{
+            input = getch();
+            if(input == 263){
+                addstr("\b \b");
+                if(--count < len - 1)
+                    goto get_input_load;
+            }else{
+                addch(input);
+                ++count;
+            }
+        }while(input != '\n');
         move(LINES-1, x);
         clrtoeol();
     }
