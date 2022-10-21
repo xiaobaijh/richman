@@ -100,6 +100,10 @@ bool test_get_input(Gsystem *g) {
         std::cout << "输入了query" << endl;
         break;
     }
+    case ORDER_ROLL: {
+        std::cout << "输入了roll" << endl;
+        break;
+    }
     case ORDER_Y: {
         std::cout << "输入了y" << endl;
         break;
@@ -107,4 +111,13 @@ bool test_get_input(Gsystem *g) {
     }
     g->out_tip(CmdErrorStr);
     return true;
+}
+
+bool test_got_mine(Gsystem *g) {
+    std::string input;
+    std::string order = "qasj";
+    g->set_user(order, 5000);
+    // input = g->convert_input('j');
+    // auto result = g->prarse_input(input);
+    g->players_['a'].got_mine
 }
