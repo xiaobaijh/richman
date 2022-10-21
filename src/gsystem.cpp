@@ -17,7 +17,7 @@ Gsystem::Gsystem() {
 
 Gsystem::~Gsystem() {
 }
-void Gsystem::init_map() {
+void Gsystem::init_game_display() {
     int i = 0;
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
@@ -56,6 +56,7 @@ void Gsystem::init_map() {
     }
     init_display();
     display_map(29, 8, map_);
+    init_tips(HELPStr,COLOR_BASIC);
 }
 
 bool Gsystem::set_user(std::string &seq, int money) {
@@ -83,7 +84,6 @@ void Gsystem::out_tip(std::string tip) {
 }
 
 void Gsystem::out_help() {
-    init_tips(HELPStr,1200);
     show_tips();
 }
 // todo

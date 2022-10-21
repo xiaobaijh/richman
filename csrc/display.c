@@ -335,7 +335,7 @@ void show_tips(void){
                     break;
                 clean_info();
                 index -= row >> 1;
-                for(int i = 0; i < row && i + index < tips.cap; ++i){
+                for(int i = 0; i < row && index < tips.cap; ++i){
                     move(shape_map[1]+i, 0);
                     // printf("%s", tips.content[index]);
                     addstr(tips.content[index++]);

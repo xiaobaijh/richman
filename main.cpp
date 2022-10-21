@@ -22,7 +22,7 @@ bool test_get_input(Gsystem *g);
 
 int main(int argc, char **argv) {
     Gsystem sys = Gsystem();
-    sys.init_map();
+    sys.init_game_display();
     test_get_input(&sys);
 
     // int player_num = 0;
