@@ -21,6 +21,7 @@
 #define ORDER_ROBOT -6
 #define ORDER_QUERY -7
 #define ORDER_WRONG -8
+#define ORDER_STEP -9
 
 #define HOSPITITAL_POS 17
 #define TOOLHOUSE_POS 30

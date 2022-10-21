@@ -17,7 +17,7 @@ Gsystem::Gsystem() {
 
 Gsystem::~Gsystem() {
 }
-void Gsystem::init_map() {
+void Gsystem::init_game_display() {
     int i = 0;
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
@@ -56,6 +56,7 @@ void Gsystem::init_map() {
     }
     init_display();
     display_map(29, 8, map_);
+    init_tips(HELPStr,COLOR_BASIC);
 }
 
 bool Gsystem::set_user(std::string &seq, int money) {
@@ -82,15 +83,15 @@ void Gsystem::out_tip(std::string tip) {
     print_info(char_tip);
 }
 
-void Gsystem::out_tip(const char *tip) {
-    print_info(tip);
+void Gsystem::out_help() {
+    show_tips();
 }
 // todo
-std::string Gsystem::convert_input(char actor) {
-    std::string hint = "->";
+std::string Gsystem::convert_input(char actor,int len) {
+    std::string hint = get_name(actor) + "->";
     const char *char_hint = hint.c_str();
     int clour = get_clour(actor);
-    get_input(char_hint, clour, input_buffer_, 100);
+    get_input(char_hint, clour, input_buffer_, len+1);
     std::string result = input_buffer_;
     return result;
 }
@@ -122,7 +123,7 @@ int Gsystem::prarse_input(std::string &input) {
         } else if (func_name == "query") {
             return ORDER_QUERY;
         } else if (func_name == "help") {
-            show_tips();
+            out_help();
             return 0;
         } else if (func_name == "print") {
             // todo print
@@ -184,10 +185,12 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool print() {
+    // todo
+    std::string order = "aqsj";
 }
 
 bool Gsystem::step() {
-    for (auto i : user_order_) {
+    for (auto i = 0; i < user_num_; i++) {
         if (user_num_ == 0) {
             return false;
         }
@@ -195,8 +198,41 @@ bool Gsystem::step() {
             continue;
         }
         current_player_ = user_order_[i];
-        if (!player_step(current_player_)) {
+        auto step = player_step(current_player_);
+        if (step < 0 || step > 6) {
             return false;
+        }
+        if (!update_position(current_player_, step)) {
+            return false;
+        }
+        auto pos = players_[current_player_].get_position();
+        auto current_pos_type = places_[pos].type_;
+        switch (current_pos_type) {
+        case hospital: {
+            players_[current_player_].got_hospital();
+            break;
+        }
+
+        case prision: {
+            players_[current_player_].got_prison();
+            break;
+        }
+        case mine: {
+            players_[current_player_].got_mine();
+            break;
+        }
+        case gift_house: {
+            players_[current_player_].got_gift_house();
+            break;
+        }
+        case tool_house: {
+            players_[current_player_].got_tool_house();
+            break;
+        }
+        case common: {
+            // player.charge();
+            break;
+        }
         }
     }
     //更新位置的过程中可能出现：
@@ -204,64 +240,58 @@ bool Gsystem::step() {
     // 2.玩家遇到障碍，被停留在障碍所在处，
     // 3.玩家遇到监狱，礼品屋，道具屋，魔法屋，矿地返回场地类型为prison等
     // 4.玩家遇到普通地块返回场地类型为
-    auto current_player_state = players_[current_player_].get_state();
-    auto current_player_pos = players_[current_player_].get_position();
-    auto current_position_type = places_[current_player_pos].type_;
-    switch (current_position_type) {
-    case hospital: {
-        players_[current_player_].got_hospital();
-        break;
-    }
-
-    case prision: {
-        players_[current_player_].got_prison();
-        break;
-    }
-    case mine: {
-        players_[current_player_].got_mine();
-        break;
-    }
-    case gift_house: {
-        players_[current_player_].got_gift_house();
-        break;
-    }
-    case tool_house: {
-        players_[current_player_].got_tool_house();
-        break;
-    }
-    case common: {
-        // player.charge();
-        break;
-    }
-    }
     return true;
 }
-bool Gsystem::player_step(char actor) {
+
+int Gsystem::player_step(char actor) {
+    std::string input;
+    int step = 0;
     player_state current_player_state = players_[actor].get_state();
     switch (current_player_state) {
     case stop: {
-        return true;
+        players_[actor].stopped();
+        return 0;
     }
     case bankrupt: {
-        return true;
+        return 0;
     }
     }
-
-    if (players_[actor].query_use_tool()) {
-        // todo 输出是否使用道具信息并获取处理
-        // use_tool(int loc, int type)
+    out_tip(ActorTip);
+    while (1) {
+        input = convert_input(actor,10);
+        if (prarse_input(input) == ORDER_ROLL) {
+            step = get_dices();
+            break;
+        } else if (prarse_input(input) > 0 && prarse_input(input) < 7) {
+            step = (prarse_input(input));
+            break;
+        }
     }
-
-    if (players_[actor].query_sell_lands()) {
-        // todo 输出是否使用买地并获取处理
-        // use_tool(int loc, int type)
-        //
-    }
-    // todo 获取掷骰子指令，赋给step
-    auto step = get_dices();
-    update_position(actor, step);
-    return true;
+    out_tip(RollStr + std::to_string(step));
+    return step;
 }
+
+bool Gsystem::update_position(char actor, int step) {
+    auto pos = players_[actor].get_position();
+    for (auto i = pos + 1; i <= pos + step; i++) {
+        auto place_state = places_[i].state_;
+        switch (place_state) {
+        case bombed: {
+            players_[actor].got_hospital();
+            return true;
+        }
+        case barried: {
+            players_[actor].got_barriered();
+            return true;
+        }
+        case normal: {
+            break;
+        }
+        }
+    }
+    players_[actor].update_poistion(step);
+    return true;
+} //根据位置更新玩家信息，考虑地形
 
 bool Gsystem::ready() {
 }
@@ -270,10 +300,6 @@ int Gsystem::get_dices() {
 } //模拟掷骰子
 bool Gsystem::use_tool(int loc, int type) {
 } //使用道具
-place_type Gsystem::update_position(char actor, int position) {
-} //根据位置更新玩家信息，考虑地形，
-  //在这里修改玩家状态，返回结束后所在地形特征
-
 bool Gsystem::set_current_user(int cur_user) {
 } //设置当前玩家
 bool Gsystem::set_current_user(char cur_user) {

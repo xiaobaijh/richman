@@ -8,6 +8,7 @@
 
 #define CmdErrorStr std::string("命令错误")
 #define SetUserFirstStr std::string("请先设置玩家")
+#define ActorTip std::string("您的回合，您可以输入命令")
 #define QueryBuyEmptyTip std::string("是否购买空地？y:是 n:否")
 #define BuyEmptyY std::string("购买了空地")
 #define QueryUpdateBulidingTip std::string("是否升级建筑？y:是 n:否")
@@ -21,7 +22,7 @@
 #define ExitToolHouseTip std::string("退出道具屋")
 #define BuyBarrierStr std::string("购买了一个路障")
 #define BuyRobotStr std::string("购买了一个机器娃娃")
-#define RollStr std::string("掷骰子")
+#define RollStr std::string("您掷骰子的点数是")
 #define NoBarrierStr std::string("没有路障")
 #define SellStr std::string("成功卖了地")
 #define CantPlaceBarrier std::string("不能放路障")
@@ -51,8 +52,7 @@
 #define TotalStr std::string("总计")
 #define QueryTitleStr std::string("位置\t地段\t房屋等级")
 
-#define HELPStr "Roll: 掷骰子，行走1~6步。\nSell n: 售出自己在地图上位置为n的房产。\nBlock n: 将路障放在前后n格（-10 <= n <= 10）的位置，n为正表示向前，为负表示向后，路过路障被拦截\nRobot: 使用机器人清空前方10格的任何道具\nQuery: 查询自家资产\nHelp: 显示帮助\nQuit: 退出游戏\n"
-static char test_str[] = "王家河";
+const char  HELPStr[] = "Roll: 掷骰子，行走1~6步。\nSell n: 售出自己在地图上位置为n的房产。\nBlock n: 将路障放在前后n格（-10 <= n <= 10）的位置，n为正表示向前，为负表示向后，路过路障被拦截\nRobot: 使用机器人清空前方10格的任何道具\nQuery: 查询自家资产\nHelp: 显示帮助\nQuit: 退出游戏";
 std::string get_name(char c);
 int get_clour(char c);
 std::string get_level_str(int level);

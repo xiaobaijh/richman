@@ -17,11 +17,11 @@ class Gsystem {
     friend std::string CommandFuncPreset(std::string cmd, Gsystem *g);
 
 private:
-    std::string user_order_{"qasj"};
     char map_[70]{'0'}; //供绘图模块使用
     char input_buffer_[100];
 
 public:
+    std::string user_order_{"qasj"};
     Place places_[PLACE_NUM];
     std::unordered_map<char, Player> players_;
     bool game_over_{false};
@@ -31,22 +31,22 @@ public:
     Gsystem();
     virtual ~Gsystem(void);
 
-    void init_map();
+    void init_game_display();
+    // void init_map();
     bool set_user(std::string &seq, int money); //设置玩家列表
     bool ready();
 
-    void out_tip(std::string tip);         //向游戏框输出提示信息
-    void out_tip(const char * tip);
-    void out_err(std::string &tip);        //系统输出错误，即提示开发人员的错误
-    std::string convert_input(char actor); //需要玩家输入信息时使用，返回一个字符串
-    int prarse_input(std::string &input);  //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
+    void out_tip(std::string tip); //向游戏框输出提示信息
+    void out_help();
+    void out_err(std::string &tip);                 //系统输出错误，即提示开发人员的错误
+    std::string convert_input(char actor, int len); //需要玩家输入信息时使用，返回一个字符串
+    int prarse_input(std::string &input);           //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
 
     bool step(); //游戏进行一步
-    bool player_step(char actor);
-    int get_dices();                                      //模拟掷骰子
-    bool use_tool(int loc, int type);                     //使用道具
-    place_type update_position(char actor, int position); //根据位置更新玩家信息，考虑地形，
-                                                          //在这里修改玩家状态，返回结束后所在地形特征,
+    int player_step(char actor);
+    int get_dices();                            //模拟掷骰子
+    bool use_tool(int loc, int type);           //使用道具
+    bool update_position(char actor, int step); //根据位置更新玩家信息，考虑地形，
 
     bool set_current_user(int cur_user);  //设置当前玩家
     bool set_current_user(char cur_user); //设置当前玩家

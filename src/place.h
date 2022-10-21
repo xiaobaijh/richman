@@ -20,7 +20,7 @@ enum place_type {
 
 class Place {
 public:
-    place_state state_{owned};
+    place_state state_{unowned};
     place_type type_{common};
     char owner_{'0'}; // owner =0没有所有者，1表示玩家1，类推
     int price_{0};
