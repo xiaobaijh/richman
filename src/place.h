@@ -37,7 +37,7 @@ public:
     inline bool set_state(place_state state);
     inline bool set_owner(char owner) {
         owner_ = owner;
-        return false;
+        return true;
     }
     inline char get_owner() {
         return owner_;

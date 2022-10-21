@@ -59,8 +59,11 @@ public:
     bool query_sell_lands();   //查询是否出卖地产
 
     bool player_move(); //玩家移动一步
+    void init(Gsystem * g){
+        g_ =g;
+    }
 
-    Gsystem *g;
+    Gsystem *g_;
     player_state state_{normal};
     char actor_{0};
 

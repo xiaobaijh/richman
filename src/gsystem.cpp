@@ -56,7 +56,7 @@ void Gsystem::init_game_display() {
     }
     init_display();
     display_map(29, 8, map_);
-    init_tips(HELPStr,COLOR_BASIC);
+    init_tips(HELPStr, COLOR_BASIC);
 }
 
 bool Gsystem::set_user(std::string &seq, int money) {
@@ -71,6 +71,7 @@ bool Gsystem::set_user(std::string &seq, int money) {
     }
     for (auto i = 0; i < len; i++) {
         players_.emplace(seq[i], Player(seq[i], money));
+        players_[seq[i]].init(this);
     }
     user_num_ = players_.size();
     user_order_ = seq;
@@ -87,11 +88,11 @@ void Gsystem::out_help() {
     show_tips();
 }
 // todo
-std::string Gsystem::convert_input(char actor,int len) {
+std::string Gsystem::convert_input(char actor, int len) {
     std::string hint = get_name(actor) + "->";
     const char *char_hint = hint.c_str();
     int clour = get_clour(actor);
-    get_input(char_hint, clour, input_buffer_, len+1);
+    get_input(char_hint, clour, input_buffer_, len + 1);
     std::string result = input_buffer_;
     return result;
 }
@@ -258,7 +259,7 @@ int Gsystem::player_step(char actor) {
     }
     out_tip(ActorTip);
     while (1) {
-        input = convert_input(actor,10);
+        input = convert_input(actor, 10);
         if (prarse_input(input) == ORDER_ROLL) {
             step = get_dices();
             break;

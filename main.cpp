@@ -55,15 +55,15 @@ int main(int argc, char **argv) {
         if (sys.set_user(input, default_fund))
             break;
     }
-
     while (sys.step()) {
         ;
     }
 
-    // while (true) {
-    //     std::getline(cin, input);
-    //     sys.prarse_input(input);
-    // }
+    while (true) {
+        std::getline(cin, input);
+        sys.prarse_input(input);
+    }
+
     return 0;
 }
 
