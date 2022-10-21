@@ -16,16 +16,20 @@ public:
         property_ = property;
     }
     ~Player();
-    int update_poistion(int &step_num); //更新位置，
+    bool update_poistion(int &step_num); //更新位置，
 
-    inline char get_name(); //获取玩家姓名
+    inline char get_name() {
+        return actor_;
+    } //获取玩家姓名
     inline int get_position() {
         return position_;
-    }; //获取当当前位置
+    } //获取当当前位置
     inline int get_property() {
         return property_;
-    };                       //获取当前财产数
-    inline int get_credit(); //获取当前积分数
+    } //获取当前财产数
+    inline int get_credit() {
+        return credit_;
+    }; //获取当前积分数
     inline player_state get_state() {
         return state_;
     }                        //获取当前状态

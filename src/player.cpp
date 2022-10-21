@@ -9,6 +9,9 @@ Player::~Player() {
 }
 Player::Player() {
 }
+
+bool Player::update_poistion(int &) {
+}
 bool Player::query_use_tool() {
     if (bomb_ > 0 || barrier_ > 0 || robot_ > 0) {
         return true;
@@ -21,35 +24,46 @@ bool Player::increase_credit() {
     return true;
 }
 
-int Player::get_credit() {
-    return credit_;
+bool Player::isBankruptcy(void) {
+    return state_ == bankrupt ? true : false;
+}
+bool Player::increase_property() {
+    property_ += 2000;
+    return true;
 }
 
-int Player::update_poistion(int &step_num) {
-} //更新位置，
-
-inline char Player::get_name() {
-} //获取玩家姓名
-
-//获取当前状态
-bool Player::isBankruptcy(void) {
-    if (state_ == bankrupt) {
-        return true;
-    }
-    return false;
-} //是否破产r
-
-bool Player::increase_property() {
-} //礼品屋选择金钱
-
 bool Player::increase_god() {
-} //礼品屋选择财神
+    god_ += 5;
+    return true;
+}
 bool Player::buy_bomb() {
-} //购买炸弹
+    if (property_ >= 50 && (bomb_ + robot_ + barrier_) < 10) {
+        property_ -= 50;
+        bomb_ += 1;
+        return true;
+    } else {
+        return false;
+    }
+}
 bool Player::buy_robot() {
-} //购买娃娃
+    if (property_ >= 30 && (bomb_ + robot_ + barrier_) < 10) {
+        property_ -= 30;
+        robot_ += 1;
+        return true;
+    } else {
+        return false;
+    }
+}
+
 bool Player::buy_barrier() {
-} //购买障碍物
+    if (property_ >= 50 && (bomb_ + robot_ + barrier_) < 10) {
+        property_ -= 50;
+        barrier_ += 1;
+        return true;
+    } else {
+        return false;
+    }
+}
 
 void Player::got_tool_house() {
 } //进入道具屋
@@ -66,19 +80,8 @@ void Player::got_barriered() {
 bool Player::sell_land() {
 } //卖地
 bool Player::buy_land() {
-    g->places_[40].set_owner(actor_);
-    return true;
-
 } //买地
 bool Player::charge() {
 } //玩家缴费
 bool Player::stopped() {
 } //因为炸弹或监狱等状态轮空一轮
-
-bool Player::query_buy_empty() {
-} //查询是否买空地，（查询是否符合买地条件）
-
-bool Player::query_update_lands() {
-} //查询是否升级建筑
-bool Player::query_sell_lands() {
-} //查询是否出卖地产

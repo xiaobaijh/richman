@@ -199,7 +199,7 @@ char print_line(int x, int y, const char * content, int color){
     return res;
 }
 
-int get_input(char * hint, int color, char * buf, int len){
+int get_input(const char * hint, int color, char * buf, int len){
     fflush(stdin);
     print_line(0, LINES-1, hint, color);
     const int x = strlen(hint)-3;

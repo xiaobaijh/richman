@@ -315,57 +315,57 @@
 //     tips.color = color;
 // }
 
-void show_tips(void){
-    clean_info();
-    attron(COLOR_PAIR(color_num(tips.color, COLOR_BACKGROUD)));
-    int row = tips.row - shape_map[1] - 1;
-    row = (row < tips.cap) ? row : tips.cap;
-    int index = 0;
-    move(shape_map[1],0);
-    char input = 's';
-    while(input != 'q'){
-        switch(input){
-            case 's':
-                clean_info();
-                index = 0;
-                for(index = 0; index < row; ++index){
-                    move(shape_map[1]+index, 0);
-                    addstr(tips.content[index]);
-                }
-                refresh();
-                break;
-            case 'j': // up half page
-                if(!index)
-                    break;
-                clean_info();
-                index -= ((row>>1)+row);
-                index = (index < 0) ? 0 : index;
-                for(int i = 0; i < row; ++i){
-                    move(shape_map[1]+i, 0);
-                    // printf("%s", tips.content[index]);
-                    addstr(tips.content[index++]);
-                    refresh();
-                }
-                break;
-            case 'k':
-                if(index == tips.cap)
-                    break;
-                clean_info();
-                index -= row >> 1;
-                for(int i = 0; i < row && i + index < tips.cap; ++i){
-                    move(shape_map[1]+i, 0);
-                    // printf("%s", tips.content[index]);
-                    addstr(tips.content[index++]);
-                    refresh();
-                }
-                break;
-            default:
-                break;
-        }
-        move(LINES-1, 0);
-        addstr("s:开头,j:下翻(半页),k:上翻(半页),q:退出");
-        clrtoeol();
-        input = getch();
-    }
-    attroff(COLOR_PAIR(tips.color));
-}
+// void show_tips(void){
+//     clean_info();
+//     attron(COLOR_PAIR(color_num(tips.color, COLOR_BACKGROUD)));
+//     int row = tips.row - shape_map[1] - 1;
+//     row = (row < tips.cap) ? row : tips.cap;
+//     int index = 0;
+//     move(shape_map[1],0);
+//     char input = 's';
+//     while(input != 'q'){
+//         switch(input){
+//             case 's':
+//                 clean_info();
+//                 index = 0;
+//                 for(index = 0; index < row; ++index){
+//                     move(shape_map[1]+index, 0);
+//                     addstr(tips.content[index]);
+//                 }
+//                 refresh();
+//                 break;
+//             case 'j': // up half page
+//                 if(!index)
+//                     break;
+//                 clean_info();
+//                 index -= ((row>>1)+row);
+//                 index = (index < 0) ? 0 : index;
+//                 for(int i = 0; i < row; ++i){
+//                     move(shape_map[1]+i, 0);
+//                     // printf("%s", tips.content[index]);
+//                     addstr(tips.content[index++]);
+//                     refresh();
+//                 }
+//                 break;
+//             case 'k':
+//                 if(index == tips.cap)
+//                     break;
+//                 clean_info();
+//                 index -= row >> 1;
+//                 for(int i = 0; i < row && i + index < tips.cap; ++i){
+//                     move(shape_map[1]+i, 0);
+//                     // printf("%s", tips.content[index]);
+//                     addstr(tips.content[index++]);
+//                     refresh();
+//                 }
+//                 break;
+//             default:
+//                 break;
+//         }
+//         move(LINES-1, 0);
+//         addstr("s:开头,j:下翻(半页),k:上翻(半页),q:退出");
+//         clrtoeol();
+//         input = getch();
+//     }
+//     attroff(COLOR_PAIR(tips.color));
+// }
