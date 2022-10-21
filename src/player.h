@@ -52,6 +52,12 @@ public:
     bool query_update_lands(); //查询是否升级建筑
     bool query_sell_lands();   //查询是否出卖地产
 
+    bool user_robot();          // 使用机器人
+    bool user_bomb(int loc);    // 使用炸弹
+    bool user_barrier(int loc); // 放置障碍
+    bool query();               // 查询财产信息
+
+
     bool player_move(); //玩家移动一步
 
     Gsystem* g;

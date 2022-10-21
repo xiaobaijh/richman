@@ -43,4 +43,13 @@
 #define MINE4_CREDIT 100
 #define MINE5_CREDIT 80
 #define MINE6_CREDIT 20
-#define 
+
+#define EMPTY_PIC '0'
+#define BOMB_PIC '@'
+#define BARRIER_PIC '#'
+#define PRISON_PIC 'P'
+#define HOSPITAL_PIC 'H'
+#define MAGIC_PIC 'M'
+#define TOOL_PIC 'T'
+#define GIFT_PIC 'G'
+#define MINE_PIC '$'
