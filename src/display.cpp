@@ -162,6 +162,7 @@ char clean_info(){
 }
 
 char print_info(const char * content){
+    getch();
     clean_info();
     addstr(content);
     refresh();
