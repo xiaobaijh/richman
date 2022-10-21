@@ -18,9 +18,6 @@ public:
     ~Player();
     bool update_poistion(int &step_num); //更新位置，
 
-    inline char get_name() {
-        return actor_;
-    } //获取玩家姓名
     inline int get_position() {
         return position_;
     } //获取当当前位置
@@ -52,6 +49,7 @@ public:
     bool buy_land();       //买地
     bool charge();         //玩家缴费
     bool stopped();        //因为炸弹或监狱等状态轮空一轮
+    bool update_land();    //升级土地
 
     bool query_buy_empty();    //查询是否买空地，（查询是否符合买地条件）
     bool query_use_tool();     //查询是否使用道具
@@ -70,7 +68,7 @@ public:
 
     Gsystem *g_;
     player_state state_{normal};
-    char actor_{0};
+    char actor_{'0'};
 
 private:
     int position_{0};         //位置

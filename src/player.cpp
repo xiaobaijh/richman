@@ -6,6 +6,7 @@
 #include "gsystem.h"
 #include "tips.h"
 #include "gutil.h"
+#include "display.h"
 
 Player::~Player() {
 }
@@ -142,15 +143,17 @@ bool Player::sell_land() {
 bool Player::buy_land() {
     while (1) {
         g_->out_tip(QueryBuyEmptyTip);
-        auto input = g_->convert_input(actor_, 1);
+        auto input = g_->convert_input(actor_, 3);
         if (to_lower(input) == "y") {
             if ((property_ - g_->places_[position_].price_) < 0) {
                 g_->out_tip(MoneyNotEnough);
                 break;
             }
             property_ -= g_->places_[position_].price_;
+            places_.push_back(position_);
             g_->places_[position_].state_ = owned;
             g_->places_[position_].set_owner(actor_);
+            change_map(position_, g_->places_[position_].default_symbol_, 0);
             g_->out_tip(BuyEmptyY);
             break;
         } else if (to_lower(input) == "n") {
@@ -161,6 +164,43 @@ bool Player::buy_land() {
 }
 //买地
 bool Player::charge() {
+    auto land_price = g_->places_[position_].price_;
+    if (land_price > property_) {
+        state_ = bankrupt;
+        g_->out_tip(get_name(actor_)+BankruptcyStr);
+        return true;
+    }
+    if (god_>0) {
+        god_--;
+        g_->out_tip(GodOnBodyStr);
+        return true;
+    }
+    property_ -= land_price;
+    g_->players_[actor_].property_ += land_price;
+    return true;
 } //玩家缴费
 bool Player::stopped() {
 } //因为炸弹或监狱等状态轮空一轮
+
+bool Player::update_land() {
+    auto land_price = g_->places_[position_].price_;
+    if (land_price > property_) {
+        return true;
+    }
+    while (1) {
+        if (g_->places_[position_].level_ < 4) {
+            g_->out_tip(QueryUpdateBulidingTip);
+            auto input = g_->convert_input(actor_, 1);
+            if (input == "y") {
+                property_ -= land_price;
+                land_price += land_price;
+                g_->places_[position_].level_++;
+                g_->out_tip(get_name(actor_) + UpdateBulidingY);
+                break;
+            } else if (input == "n") {
+                break;
+            }
+        }
+    } //升级土地
+    return true;
+}

@@ -14,7 +14,7 @@
 #define BuyEmptyY std::string("您购买了空地")
 #define QueryUpdateBulidingTip std::string("是否升级建筑？y:是 n:否")
 #define UpdateBulidingY std::string("升级了建筑")
-#define BankruptcyStr std::string("破产了")
+#define BankruptcyStr std::string("破产了!")
 #define MagicHouseTip std::string("请选择要陷害的人 1、钱夫人；2、阿土伯；3、孙小美；4、金贝贝；0、退出")
 #define FrameStr std::string("陷害了")
 #define ToolHouseTip std::string("欢迎光临道具屋，请选择您所需要的道具：1:路障  2:机器娃娃  3:炸弹  0:退出")

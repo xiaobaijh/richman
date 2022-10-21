@@ -197,7 +197,7 @@ bool Gsystem::preset(std::string &cmd) {
 
 bool print() {
     // todo
-    std::string order = "aqsj";
+    std::string order = "AQSJ";
 }
 
 bool Gsystem::step() {
@@ -218,7 +218,7 @@ bool Gsystem::step() {
         }
         auto pos = players_[current_player_].get_position();
         auto current_pos_type = places_[pos].type_;
-        change_map(pos, current_player_, COLOR_BASIC);
+        change_map(pos, current_player_, COLOR_P1); //移动后改变地图
         switch (current_pos_type) {
         case prision: {
             players_[current_player_].got_prison();
@@ -242,15 +242,18 @@ bool Gsystem::step() {
         }
         }
         auto current_pos_state = places_[pos].state_;
-        switch (current_pos_state)
-        {
+        switch (current_pos_state) {
         case unowned:
             players_[current_player_].buy_land();
             /* code */
             break;
-        case owned:
-        default:
-            break;
+        case owned:{
+            if (places_[pos].owner_ == current_player_) {
+                players_[current_player_].update_land();
+            } else {
+                players_[current_player_].charge();
+            }
+        }
         }
     }
     //更新位置的过程中可能出现：
@@ -274,8 +277,8 @@ int Gsystem::player_step(char actor) {
         return 0;
     }
     }
+    out_tip(get_name(actor) + ActorTip);
     while (1) {
-        out_tip(get_name(actor) + ActorTip);
         input = convert_input(actor, 10);
         if (prarse_input(input) == ORDER_ROLL) {
             step = get_dices();
@@ -291,7 +294,9 @@ int Gsystem::player_step(char actor) {
 
 bool Gsystem::update_position(char actor, int step) {
     int pos = players_[actor].get_position();
-    change_map(pos, places_[pos].default_symbol_, COLOR_BASIC); //在玩家移动前恢复地图
+    if (places_[pos].state_ != owned) {
+        change_map(pos, places_[pos].default_symbol_, COLOR_BASIC); //在玩家移动前恢复地图
+    }
     for (auto i = pos + 1; i <= pos + step; i++) {
         auto place_state = places_[i].state_;
         switch (place_state) {
