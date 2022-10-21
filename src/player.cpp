@@ -72,33 +72,32 @@ bool Player::buy_barrier() {
 void Player::got_tool_house() {
     g_->out_tip(ToolHouseTip);
     std::string input;
-
+    input = g_->convert_input(actor_, 1);
     if (input == "1") {
-        increase_property();
+        buy_barrier();
     } else if (input == "2") {
-        increase_credit();
+        buy_robot();
     } else if (input == "3") {
-        increase_god();
+        buy_bomb();
     }
-
 } //进入道具屋
+
 void Player::got_gift_house() {
     g_->out_tip(GiftHouseTip);
     std::string input;
-    // input = g->convert_input(actor_, 1);
+    input = g_->convert_input(actor_,1);
 
-    while (1) {
-        input = g_->convert_input(actor_, 1);
-        if (input == "1") {
-            buy_barrier();
-        } else if (input == "2") {
-            buy_robot();
-        } else if (input == "3") {
-            buy_bomb();
-        } else {
-            break;
-        }
+    if (input == "1") {
+        increase_property();
+        g_->out_tip(GetFundStr);
+    } else if (input == "2") {
+        increase_credit();
+        g_->out_tip(GetCreditStr);
+    } else if (input == "3") {
+        increase_god();
+        g_->out_tip(GetGodStr);
     }
+
 } //进入礼物屋
 void Player::got_prison() {
     stop_time_ += PRISON_ROLL_DELAY;
@@ -226,6 +225,147 @@ bool Player::update_land() {
     return true;
 }
 
+bool Player::user_robot() {
+    if (robot_ <= 0) {
+        g_->out_tip(NoRobotStr);
+        return false;
+    } else {
+        robot_--;
+        for (int i = 1; i <= 10; i++) {
+            int pos = (get_position() + i) % PLACE_NUM;
+            if (g_->places_[pos].has_bomb != false || g_->places_[pos].has_barrier != false) {
+                g_->places_[pos].has_bomb = false;
+                g_->places_[pos].has_barrier = false;
+                switch (g_->places_[pos].type_) {
+                case mine: {
+                    change_map(pos, MINE_PIC, COLOR_BASIC);
+                    break;
+                }
+                case tool_house: {
+                    change_map(pos, TOOL_PIC, COLOR_BASIC);
+                    break;
+                }
+                case gift_house: {
+                    change_map(pos, GIFT_PIC, COLOR_BASIC);
+                    break;
+                }
+                case magic_house: {
+                    change_map(pos, MAGIC_PIC, COLOR_BASIC);
+                    break;
+                }
+                case common: {
+                    if (g_->places_[pos].state_ == unowned) {
+                        change_map(pos, EMPTY_PIC, COLOR_BASIC);
+                    } else {
+                        char pic;
+                        int color;
+                        pic = '0' + g_->places_[pos].level_;
+                        switch (g_->places_[pos].owner_) {
+                        case 0:
+                            color = COLOR_Q;
+                        case 1:
+                            color = COLOR_A;
+                        case 2:
+                            color = COLOR_S;
+                        case 3:
+                            color = COLOR_J;
+                        }
+                        change_map(pos, pic, color);
+                    }
+                }
+                }
+            }
+        }
+        return true;
+    }
+} // 使用机器人
+
+bool Player::user_bomb(int loc) {
+    if (bomb_ <= 0) {
+        g_->out_tip(NoBombStr);
+        return false;
+    } else {
+        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
+            // 判断loc是否属于[0, 69]
+            // 判断loc是否和当前位置差距 > 10
+            // 判断loc是否有人、有道具
+            // 判断loc是否在医院、监狱
+            g_->out_tip(CantPlaceBomb);
+            return false;
+        } else {
+            bomb_--;
+            g_->place_tool(loc, TOOL_BOMB);
+            change_map(loc, BOMB_PIC, COLOR_BASIC);
+            return true;
+        }
+    }
+} // 使用炸弹
+
+bool Player::use_barrier(int loc) {
+    if (barrier_ <= 0) {
+        g_->out_tip(NoBarrierStr);
+        return false;
+    } else {
+        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
+            // 判断loc是否属于[0, 69]
+            // 判断loc是否和当前位置差距 > 10
+            // 判断loc是否有人、有道具
+            // 判断loc是否在医院、监狱
+            g_->out_tip(CantPlaceBarrier);
+            return false;
+        } else {
+            barrier_--;
+            g_->place_tool(loc, TOOL_BARRIER);
+            change_map(loc, BARRIER_PIC, COLOR_BASIC);
+            return true;
+        }
+    }
+} // 放置障碍
+// bool Player::query() {
+//     std::string str;
+//     int total[4];
+//     std::string s1 = "您现在拥有如下资产：\n资金：";
+//     std::string s2 = 
+//     str = s1 + std::to_string(property_) + "元\n点数：" + credit_ + "点\n固定资产：\n%s\0", , , QueryTitleStr);
+//     for (int i = 0; i < places_.size(); i++) {
+//         char str_pos[50];
+//         int pos = places_[i];
+//         int district;
+//         if (pos < 28) {
+//             district = 1;
+//         } else if (pos < 35) {
+//             district = 2;
+//         } else {
+//             district = 3;
+//         }
+//         int level = g->places_[pos].get_level();
+//         std::string LandLevel;
+//         switch (level) {
+//         case 0:
+//             LandLevel = LandEmptyStr;
+//             total[0]++;
+//             break;
+//         case 1:
+//             LandLevel = LandLevel1Str;
+//             total[1]++;
+//             break;
+//         case 2:
+//             LandLevel = LandLevel2Str;
+//             total[2]++;
+//             break;
+//         case 3:
+//             LandLevel = LandLevel3Str;
+//             total[3]++;
+//             break;
+//         default:
+//             break;
+//         }
+//         sprintf(str_pos, "%d\t%s%d\t%s\n\0", pos, LandTypeStr, district, level);
+//         str += str_pos;
+//     }
+//     init_tips(str, COLOR_BASIC);
+//     show_tips();
+// } // 查询财产信息
 bool Player::set_pos(int &num) {
     position_ = num;
     return true;

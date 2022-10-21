@@ -71,7 +71,7 @@ public:
 
     bool user_robot();        //使用机器人
     bool user_bomb(int loc);  //使用炸弹
-    bool use_barria(int loc); //放置障碍
+    bool use_barrier(int loc); //放置障碍
     bool query();             //查询财产信息
 
     bool set_pos(int &num);
