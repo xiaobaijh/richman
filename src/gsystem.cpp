@@ -97,7 +97,6 @@ void Gsystem::out_tip(std::string tip) {
     // std::cout << tip << std::endl;
     const char *char_tip = tip.c_str();
     print_info(char_tip);
-    sleep(0.5);
 }
 
 void Gsystem::out_help() {
@@ -346,6 +345,7 @@ int Gsystem::player_step(char actor) {
         input = convert_input(actor, 100);
     }
     out_tip(RollStr + std::to_string(step));
+    get_input(0, 0, 0, 0);
     return step;
 }
 

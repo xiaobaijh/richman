@@ -202,6 +202,10 @@ char print_line(int x, int y, const char * content, int color){
 
 int get_input(const char * hint, int color, char * buf, int len){
     fflush(stdin);
+    if(len == 0){
+        getch();
+        return 1;
+    }
     print_line(0, LINES-1, hint, color);
     const int x = strlen(hint)-3;
     int count = 0, input = 0;
