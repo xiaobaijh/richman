@@ -216,6 +216,12 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool Gsystem::print() {
+    int num=user_order_.size();
+    printf("seq ");
+    for(int i=0;i<num;++i){
+        printf("%c",user_order_[(current_player_-'1'+i)%num]);
+    }
+    printf("\n");
     for (auto ch : "QASJ") {
         if(players_.count(ch)<=0) continue;
         auto &player = players_[ch];
