@@ -43,21 +43,28 @@ bool Player::increase_god() {
 }
 
 bool Player::buy_robot() {
-    if (property_ >= 30 && (robot_ + barrier_) < 10) {
-        property_ -= 30;
+    if (credit_ >= 30 && (robot_ + barrier_) < 10) {
+        credit_ -= 30;
         robot_ += 1;
+        g_->out_tip(get_name(actor_) + BuyRobotStr);
+        get_input(0, 0, 0, 0);
         return true;
     } else {
+        g_->out_tip(get_name(actor_) + MoneyNotEnough);
+        get_input(0, 0, 0, 0);
         return false;
     }
 }
 
 bool Player::buy_barrier() {
-    if (property_ >= 50 && (robot_ + barrier_) < 10) {
-        property_ -= 50;
+    if (credit_ >= 50 && (robot_ + barrier_) < 10) {
+        credit_ -= 50;
         barrier_ += 1;
+        g_->out_tip(get_name(actor_) + BuyBarrierStr);
+        get_input(0, 0, 0, 0);
         return true;
     } else {
+        g_->out_tip(get_name(actor_) + MoneyNotEnough);
         return false;
     }
 }
@@ -71,7 +78,7 @@ void Player::got_tool_house() {
         buy_barrier();
     } else if (input == "2") {
         buy_robot();
-    } 
+    }
 } //进入道具屋
 
 void Player::got_gift_house() {
@@ -129,31 +136,31 @@ void Player::got_magic_house(char actor) {
     g_->out_tip(MagicHouseTip);
     std::string input;
     input = g_->convert_input(actor_, 1);
-    if(input=="1"){
-        actor='Q';
-    }else if(input=="2"){
-        actor='A';
-    }else if(input=="3"){
-        actor='S';
-    }else if(input=="4"){
-        actor='J';
-    }else{
+    if (input == "1") {
+        actor = 'Q';
+    } else if (input == "2") {
+        actor = 'A';
+    } else if (input == "3") {
+        actor = 'S';
+    } else if (input == "4") {
+        actor = 'J';
+    } else {
         g_->out_tip(CmdErrorStr);
-        return ;
+        return;
     }
-    
-    if(g_->players_.count(actor)<=0){
+
+    if (g_->players_.count(actor) <= 0) {
         g_->out_tip(FailFrameStr);
-        return ;
+        return;
     }
-    Player& tar=g_->players_[actor];
-    if(tar.get_state()==bankrupt){
+    Player &tar = g_->players_[actor];
+    if (tar.get_state() == bankrupt) {
         g_->out_tip(FailFrameStr);
-        return ;
+        return;
     }
     tar.add_stop_time(2);
-    return ;
-}//进入魔法屋
+    return;
+} //进入魔法屋
 
 bool Player::sell_land(int loc) {
     if (loc < 0 || loc > 69) {
@@ -433,7 +440,7 @@ bool Player::set_god(int &num) {
     return true;
 }
 
-bool Player::add_stop_time(int num){
-    stop_time_+=num;
+bool Player::add_stop_time(int num) {
+    stop_time_ += num;
     return true;
 }

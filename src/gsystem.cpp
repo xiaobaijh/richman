@@ -182,7 +182,7 @@ int Gsystem::prarse_input(std::string &input) {
 bool Gsystem::preset(std::string &cmd) {
     std::istringstream is(cmd);
     std::string s;
-    std::vector<std::string> paras(4);
+    std::vector<std::string> paras;
     while (is >> s) {
         paras.push_back(s);
     }
@@ -232,12 +232,11 @@ bool Gsystem::print() {
         printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
                players_[ch].get_stop_time(), 0, players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
-    int i = -1;
-    for (auto &place : places_) {
-        ++i;
-        if (place.level_ == 0 && place.state_ == unowned) continue;
-        printf("building %d %d %c ", i, place.level_, place.owner_);
-        if (place.has_barrier) {
+
+    for (int i = 0; i < 70; i++) {
+        if (places_[i].level_ == 0 && places_[i].state_ == unowned && (!places_[i].has_barrier)) continue;
+        printf("building %d %d %c ", i, places_[i].level_, places_[i].owner_);
+        if (places_[i].has_barrier) {
             printf("2\n");
         } else {
             printf("0\n");
@@ -461,6 +460,7 @@ bool Gsystem::set_god(char user, int num) {
 //设置建筑物状态
 bool Gsystem::set_building(int loc, int level, char owner) {
     places_[loc].level_ = level;
+    places_[loc].state_ = owned;
     places_[loc].owner_ = toupper(owner);
     players_[owner].increase_land(loc);
     return false;
