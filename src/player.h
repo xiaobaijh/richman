@@ -30,9 +30,6 @@ public:
     inline player_state get_state() {
         return state_;
     } //获取当前状态
-    inline int get_bomb() {
-        return bomb_;
-    }
     inline int get_barrier() {
         return barrier_;
     }
@@ -48,7 +45,6 @@ public:
     bool increase_property(); //礼品屋选择金钱
     bool increase_credit();   //礼品屋选则积分
     bool increase_god();      //礼品屋选择财神
-    bool buy_bomb();          //购买炸弹
     bool buy_robot();         //购买娃娃
     bool buy_barrier();       //购买障碍物
 
@@ -56,7 +52,6 @@ public:
     void got_gift_house();   //进入礼物屋
     void got_prison();       //进入监狱
     void got_mine();         //到达矿地
-    void got_hospital();     //遇到炸弹后进入医院
     bool sell_land(int loc); //卖地
     bool buy_land();         //买地
     bool charge(char owner);           //玩家缴费
@@ -70,7 +65,6 @@ public:
     bool query_sell_lands();   //查询是否出卖地产
 
     bool user_robot();         //使用机器人
-    bool user_bomb(int loc);   //使用炸弹
     bool use_barrier(int loc); //放置障碍
     bool query();              //查询财产信息
 
@@ -78,7 +72,6 @@ public:
     bool set_property(int &num);
     bool set_credit(int &num);
     bool set_stop_time_(int &num);
-    bool set_bomb(int &num);
     bool set_barrier(int &num);
     bool set_robot(int &num);
     bool set_god(int &num);
@@ -96,7 +89,6 @@ private:
     int property_{0};         //金钱数
     int credit_{0};           //积分数
     int stop_time_{0};        //剩余停止轮数
-    int bomb_{0};             //炸弹数
     int barrier_{0};          //障碍数
     int robot_{0};            //机器人数
     int god_{0};              //财神剩余回
