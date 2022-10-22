@@ -182,7 +182,7 @@ int Gsystem::prarse_input(std::string &input) {
 bool Gsystem::preset(std::string &cmd) {
     std::istringstream is(cmd);
     std::string s;
-    std::vector<std::string> paras;
+    std::vector<std::string> paras(4);
     while (is >> s) {
         paras.push_back(s);
     }
@@ -229,8 +229,8 @@ bool Gsystem::print() {
         if (players_.count(ch) <= 0) continue;
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
-        printf("%c %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
-               players_[ch].get_state(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
+        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
+               players_[ch].get_state(), 0, players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = -1;
     for (auto &place : places_) {
@@ -462,6 +462,8 @@ bool Gsystem::set_god(char user, int num) {
 bool Gsystem::set_building(int loc, int level, char owner) {
     places_[loc].level_ = level;
     places_[loc].owner_ = toupper(owner);
+    players_[owner].increase_land(loc);
+    return false;
 }
 
 //放置道具1炸弹2路障

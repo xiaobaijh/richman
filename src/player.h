@@ -27,8 +27,8 @@ public:
     inline int get_credit() {
         return credit_;
     } //获取当前积分数
-    inline player_state get_state() {
-        return state_;
+    inline int get_state() {
+        return stop_time_;
     } //获取当前状态
     inline int get_barrier() {
         return barrier_;
@@ -38,6 +38,11 @@ public:
     }
     inline int get_robot() {
         return robot_;
+    }
+
+    inline bool increase_land(int &loc) {
+        places_.push_back(loc);
+        return true;
     }
 
     bool isBankruptcy(void); //是否破产
