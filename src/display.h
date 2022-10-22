@@ -48,4 +48,6 @@ void init_tips(const char * content, int color);
 
 void show_tips(void);
 
+void end_display();
+
 #endif

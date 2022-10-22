@@ -394,10 +394,11 @@ bool Player::query() {
     std::string s5 = "道具：\n炸弹：" + std::to_string(bomb_) + "个\t路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\n";
     str += s5;
 
-    char str_char[500];
-    strcpy(str_char, str.c_str());
-    init_tips(str_char, COLOR_BASIC);
-    show_tips();
+    // char str_char[500];
+    // strcpy(str_char, str.c_str());
+    //init_tips(str_char, COLOR_BASIC);
+    //show_tips();
+    g_->out_tip(str);
 } // 查询财产信息
 bool Player::set_pos(int &num) {
     position_ = num;

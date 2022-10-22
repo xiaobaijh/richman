@@ -11,6 +11,7 @@
 #include <regex>
 #include <algorithm>
 #include <random>
+#include <unistd.h>
 
 using std::cin;
 
@@ -96,6 +97,7 @@ void Gsystem::out_tip(std::string tip) {
     // std::cout << tip << std::endl;
     const char *char_tip = tip.c_str();
     print_info(char_tip);
+    sleep(0.5);
 }
 
 void Gsystem::out_help() {

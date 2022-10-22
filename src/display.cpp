@@ -162,7 +162,7 @@ char clean_info(){
 }
 
 char print_info(const char * content){
-    getch();
+    // getch();
     clean_info();
     addstr(content);
     refresh();
@@ -374,4 +374,8 @@ void show_tips(void){
         input = getch();
     }
     attroff(COLOR_PAIR(tips.color));
+}
+
+void end_display(){
+    endwin();
 }

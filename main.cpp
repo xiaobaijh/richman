@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
     while (sys.step()) {
         ;
     }
+    end_display();
     return 0;
 }
 
