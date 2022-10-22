@@ -253,7 +253,7 @@ bool Gsystem::step() {
         current_player_ = user_order_[i];
         //玩家回合一步，处理玩家需要输入的指令，处理完后进入系统回合
         auto step = player_step(current_player_);
-        if (step < 0 || step > 6) {
+        if (step < 0 || step > 100) {
             return false;
         }
 
@@ -273,23 +273,23 @@ bool Gsystem::step() {
         switch (current_pos_type) {
         case prision: {
             players_[current_player_].got_prison();
-            break;
+            return true;
         }
         case mine: {
             players_[current_player_].got_mine();
-            break;
+            return true;
         }
         case gift_house: {
             players_[current_player_].got_gift_house();
-            break;
+            return true;
         }
         case tool_house: {
             players_[current_player_].got_tool_house();
-            break;
+            return true;
         }
         case magic_house: {
             // player.magic
-            break;
+            return true;
         }
         }
         auto current_pos_state = places_[pos].state_;
@@ -338,7 +338,7 @@ int Gsystem::player_step(char actor) {
             return -1;
         } else if (result == ORDER_WRONG) {
             out_tip(CmdErrorStr);
-        } else if (prarse_input(input) > 0 && prarse_input(input) < 7) {
+        } else if (prarse_input(input) > 0 && prarse_input(input) < 100) {
             step = (prarse_input(input));
             break;
         }

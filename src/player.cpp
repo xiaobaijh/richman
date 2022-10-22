@@ -74,6 +74,7 @@ void Player::got_tool_house() {
     g_->out_tip(ToolHouseTip);
     std::string input;
     input = g_->convert_input(actor_, 1);
+    get_input(0, 0, 0, 0);
     if (input == "1") {
         buy_barrier();
     } else if (input == "2") {
@@ -85,18 +86,22 @@ void Player::got_tool_house() {
 
 void Player::got_gift_house() {
     g_->out_tip(GiftHouseTip);
+    get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
 
     if (input == "1") {
         increase_property();
         g_->out_tip(GetFundStr);
+        get_input(0, 0, 0, 0);
     } else if (input == "2") {
         increase_credit();
         g_->out_tip(GetCreditStr);
+        get_input(0, 0, 0, 0);
     } else if (input == "3") {
         increase_god();
         g_->out_tip(GetGodStr);
+        get_input(0, 0, 0, 0);
     }
 
 } //进入礼物屋
@@ -146,7 +151,7 @@ bool Player::sell_land(int loc) {
         g_->out_tip(SellErrorOwnerLand);
         return false;
     }
-    property_ += g_->places_[loc].price_ / 2;
+    property_ += g_->places_[loc].price_ * 2;
     for (auto iter = places_.begin(); iter != places_.end(); iter++) { //从vector中删除指定的某一个元素
         if (*iter == loc) {
             places_.erase(iter);
@@ -171,7 +176,7 @@ bool Player::buy_land() {
         if (to_lower(input) == "y") {
             if ((property_ - g_->places_[position_].price_) < 0) {
                 g_->out_tip(MoneyNotEnough);
-                get_input(0,0,0,0);
+                get_input(0, 0, 0, 0);
                 break;
             }
             property_ -= g_->places_[position_].price_;
@@ -180,7 +185,7 @@ bool Player::buy_land() {
             g_->places_[position_].owner_ = actor_;
             change_map(position_, g_->places_[position_].default_symbol_, get_clour(actor_));
             g_->out_tip(BuyEmptyY);
-            get_input(0,0,0,0);
+            get_input(0, 0, 0, 0);
             break;
         } else if (to_lower(input) == "n") {
             break;
@@ -198,17 +203,17 @@ bool Player::charge(char owner) {
             return false;
         }
         g_->out_tip(get_name(actor_) + BankruptcyStr);
-        get_input(0,0,0,0);
+        get_input(0, 0, 0, 0);
         return true;
     }
     if (god_ > 0) {
         god_--;
         g_->out_tip(GodOnBodyStr);
-        get_input(0,0,0,0);
+        get_input(0, 0, 0, 0);
         return true;
     }
     property_ -= (land_price) / 2;
-    g_->players_[owner].property_ += land_price/2;
+    g_->players_[owner].property_ += land_price / 2;
     return true;
 } //玩家缴费
 
@@ -400,8 +405,8 @@ bool Player::query() {
 
     // char str_char[500];
     // strcpy(str_char, str.c_str());
-    //init_tips(str_char, COLOR_BASIC);
-    //show_tips();
+    // init_tips(str_char, COLOR_BASIC);
+    // show_tips();
     g_->out_tip(str);
 } // 查询财产信息
 bool Player::set_pos(int &num) {
