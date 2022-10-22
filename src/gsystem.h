@@ -41,7 +41,7 @@ public:
     void out_err(std::string &tip);                 //系统输出错误，即提示开发人员的错误
     std::string convert_input(char actor, int len); //需要玩家输入信息时使用，返回一个字符串
     int prarse_input(std::string &input);           //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
-
+    bool prarse_preset(std::string input);
     bool step();                                //游戏进行一步
     int player_step(char actor);                //玩家活动一步
     int get_dices();                            //模拟掷骰子

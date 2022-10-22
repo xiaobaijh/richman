@@ -116,6 +116,23 @@ void Gsystem::out_err(std::string &tip) {
     std::cerr << tip << std::endl;
 }
 
+bool Gsystem::prarse_preset(std::string input) {
+    std::regex pat("\\s*(\\w*)\\s*(.*)");
+    std::regex number_pat("\\+?[1-9][0-9]*$");
+    std::smatch result;
+    std::smatch result_num;
+    if (std::regex_match(input, result, pat)) {
+        auto func_name = result.str(1);
+        auto cmd = result.str(2);
+        func_name = to_lower(func_name);
+        if (func_name != "preset") {
+            return false;
+        }
+        return preset(cmd);
+    }
+    return false;
+}
+
 int Gsystem::prarse_input(std::string &input) {
     if (input == "0") {
         return 0;
@@ -150,27 +167,19 @@ int Gsystem::prarse_input(std::string &input) {
             auto number = std::stoi(cmd);
             if (func_name == "step") {
                 return number;
-            } else if (
-                func_name == "bomb") {
+            } else if (func_name == "bomb") {
                 players_[current_player_].user_bomb(number);
                 return 0;
-            } else if (
-                func_name == "sell") {
+            } else if (func_name == "sell") {
                 players_[current_player_].sell_land(number);
                 return 0;
-            } else if (
-                func_name == "bolck") {
+            } else if (func_name == "bolck") {
                 players_[current_player_].use_barrier(number);
                 return 0;
             }
-        } else if (func_name == "preset") {
-            if (!preset(cmd)) {
-                out_tip(CmdErrorStr);
-            }
-            return 0;
         }
-        return ORDER_WRONG;
     }
+    return ORDER_WRONG;
 }
 
 bool Gsystem::preset(std::string &cmd) {
@@ -219,8 +228,7 @@ bool Gsystem::print() {
     for (auto ch : user_order_) {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
-        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
-               players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
+        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(), players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = -1;
     for (auto &place : places_) {
@@ -338,7 +346,7 @@ int Gsystem::player_step(char actor) {
             return -1;
         } else if (result == ORDER_WRONG) {
             out_tip(CmdErrorStr);
-        } else if (prarse_input(input) > 0 && prarse_input(input) < 100) {
+        } else if (result > 0 && result < 69) {
             step = (prarse_input(input));
             break;
         }
@@ -400,6 +408,7 @@ bool Gsystem::set_user_pos(char user, int loc) {
     if ((loc < 0) || (loc > 69)) {
         return false;
     }
+    players_[user].set_pos(loc);
     return true;
 }
 
