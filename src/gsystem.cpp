@@ -116,6 +116,9 @@ void Gsystem::out_err(std::string &tip) {
 }
 
 int Gsystem::prarse_input(std::string &input) {
+    if (input == "0") {
+        return 0;
+    }
     std::regex pat("\\s*(\\w*)\\s*(.*)");
     std::regex number_pat("\\+?[1-9][0-9]*$");
     std::smatch result;
@@ -134,6 +137,7 @@ int Gsystem::prarse_input(std::string &input) {
             players_[current_player_].user_robot();
             return 0;
         } else if (func_name == "query") {
+            players_[current_player_].query();
             return ORDER_QUERY;
         } else if (func_name == "help") {
             out_help();
@@ -162,8 +166,8 @@ int Gsystem::prarse_input(std::string &input) {
             if (!preset(cmd)) {
                 out_tip(CmdErrorStr);
             }
+            return 0;
         }
-        out_tip(CmdErrorStr);
         return ORDER_WRONG;
     }
 }
@@ -214,7 +218,7 @@ bool Gsystem::print() {
     for (auto ch : "QASJ") {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
-        printf("%c %d %d %d %d %d %d %d %d\n", ch - 20, player.get_position(), player.get_property(), player.get_credit(),
+        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
                players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = 0;
@@ -246,13 +250,22 @@ bool Gsystem::step() {
             continue;
         }
         current_player_ = user_order_[i];
+        //玩家回合一步，处理玩家需要输入的指令，处理完后进入系统回合
         auto step = player_step(current_player_);
         if (step < 0 || step > 6) {
             return false;
         }
+
+        //掷完骰子后更新玩家位置
+        if (places_[current_player_].has_player != 0) {
+            places_[current_player_].has_player--;
+        }
+
         if (!update_position(current_player_, step)) {
             return false;
         }
+
+        //更新后根据当前位置行动
         auto pos = players_[current_player_].get_position();
         auto current_pos_type = places_[pos].type_;
         change_map(pos, current_player_, COLOR_P1); //移动后改变地图
@@ -287,7 +300,7 @@ bool Gsystem::step() {
             if (places_[pos].owner_ == current_player_) {
                 players_[current_player_].update_land();
             } else {
-                players_[current_player_].charge();
+                players_[current_player_].charge(places_[pos].owner_);
             }
         }
         }
@@ -314,23 +327,21 @@ int Gsystem::player_step(char actor) {
     }
     }
     out_tip(get_name(actor) + ActorTip);
+    input = convert_input(actor, 100);
     while (1) {
-        input = convert_input(actor, 100);
         auto result = prarse_input(input);
-        switch (result) {
-        case ORDER_ROLL: {
+        if (result == ORDER_ROLL) {
             step = get_dices();
-            out_tip(RollStr + std::to_string(step));
-            return step;
-        }
-        case ORDER_QUIT: {
+            break;
+        } else if (result == ORDER_QUIT) {
             return -1;
-        }
-        }
-        if (prarse_input(input) > 0 && prarse_input(input) < 7) {
+        } else if (result == ORDER_WRONG) {
+            out_tip(CmdErrorStr);
+        } else if (prarse_input(input) > 0 && prarse_input(input) < 7) {
             step = (prarse_input(input));
             break;
         }
+        input = convert_input(actor, 100);
     }
     out_tip(RollStr + std::to_string(step));
     return step;
@@ -341,14 +352,17 @@ bool Gsystem::update_position(char actor, int step) {
     if (places_[pos].state_ != owned) {
         change_map(pos, places_[pos].default_symbol_, COLOR_BASIC); //在玩家移动前恢复地图
     }
+    places_[pos].has_player--;
     for (auto i = pos + 1; i <= pos + step; i++) {
         if (places_[i].has_bomb) {
             places_[i].has_bomb = false;
+            places_[i].has_player++;
             players_[actor].got_hospital();
             return true;
         }
         if (places_[i].has_barrier) {
             places_[i].has_bomb = false;
+            places_[i].has_player++;
             players_[actor].set_pos(i);
             return true;
         }
@@ -358,6 +372,7 @@ bool Gsystem::update_position(char actor, int step) {
 } //根据位置更新玩家信息，考虑地形
 
 bool Gsystem::ready() {
+    return game_over_;
 }
 
 //模拟掷骰子

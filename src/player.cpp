@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <random>
+#include <cstring>
 #include "player.h"
 #include "common.h"
 #include "gsystem.h"
@@ -85,7 +86,7 @@ void Player::got_tool_house() {
 void Player::got_gift_house() {
     g_->out_tip(GiftHouseTip);
     std::string input;
-    input = g_->convert_input(actor_,1);
+    input = g_->convert_input(actor_, 1);
 
     if (input == "1") {
         increase_property();
@@ -137,6 +138,30 @@ void Player::got_hospital() {
 } //遇到炸弹后进入医院
 
 bool Player::sell_land(int loc) {
+    if (loc < 0 || loc > 69) {
+        g_->out_tip(SellErrorPosLand);
+        return false;
+    }
+    if (g_->places_[loc].owner_ != actor_) {
+        g_->out_tip(SellErrorOwnerLand);
+        return false;
+    }
+    property_ += g_->places_[loc].price_ / 2;
+    for (auto iter = places_.begin(); iter != places_.end(); iter++) { //从vector中删除指定的某一个元素
+        if (*iter == loc) {
+            places_.erase(iter);
+            break;
+        }
+    }
+
+    g_->places_[loc].owner_ = '0';
+    if (g_->places_[loc].level_ != 0) {
+        g_->places_[loc].price_ /= g_->places_[loc].level_;
+    }
+    g_->places_[loc].level_ = 0;
+    g_->out_tip(SellStr);
+    change_map(loc, '0', COLOR_BASIC);
+    return false;
 }
 //买地
 bool Player::buy_land() {
@@ -161,8 +186,8 @@ bool Player::buy_land() {
     }
     return true;
 }
-//买地
-bool Player::charge() {
+
+bool Player::charge(char owner) {
     auto land_price = g_->places_[position_].price_;
     if (land_price > property_) {
         state_ = bankrupt;
@@ -178,8 +203,8 @@ bool Player::charge() {
         g_->out_tip(GodOnBodyStr);
         return true;
     }
-    property_ -= land_price;
-    g_->players_[actor_].property_ += land_price;
+    property_ -= (land_price) / 2;
+    g_->players_[owner].property_ += land_price;
     return true;
 } //玩家缴费
 
@@ -285,7 +310,7 @@ bool Player::user_bomb(int loc) {
         g_->out_tip(NoBombStr);
         return false;
     } else {
-        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
+        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player != 0 || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
             // 判断loc是否属于[0, 69]
             // 判断loc是否和当前位置差距 > 10
             // 判断loc是否有人、有道具
@@ -306,7 +331,7 @@ bool Player::use_barrier(int loc) {
         g_->out_tip(NoBarrierStr);
         return false;
     } else {
-        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
+        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player != 0 || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
             // 判断loc是否属于[0, 69]
             // 判断loc是否和当前位置差距 > 10
             // 判断loc是否有人、有道具
@@ -321,51 +346,59 @@ bool Player::use_barrier(int loc) {
         }
     }
 } // 放置障碍
-// bool Player::query() {
-//     std::string str;
-//     int total[4];
-//     std::string s1 = "您现在拥有如下资产：\n资金：";
-//     std::string s2 = 
-//     str = s1 + std::to_string(property_) + "元\n点数：" + credit_ + "点\n固定资产：\n%s\0", , , QueryTitleStr);
-//     for (int i = 0; i < places_.size(); i++) {
-//         char str_pos[50];
-//         int pos = places_[i];
-//         int district;
-//         if (pos < 28) {
-//             district = 1;
-//         } else if (pos < 35) {
-//             district = 2;
-//         } else {
-//             district = 3;
-//         }
-//         int level = g->places_[pos].get_level();
-//         std::string LandLevel;
-//         switch (level) {
-//         case 0:
-//             LandLevel = LandEmptyStr;
-//             total[0]++;
-//             break;
-//         case 1:
-//             LandLevel = LandLevel1Str;
-//             total[1]++;
-//             break;
-//         case 2:
-//             LandLevel = LandLevel2Str;
-//             total[2]++;
-//             break;
-//         case 3:
-//             LandLevel = LandLevel3Str;
-//             total[3]++;
-//             break;
-//         default:
-//             break;
-//         }
-//         sprintf(str_pos, "%d\t%s%d\t%s\n\0", pos, LandTypeStr, district, level);
-//         str += str_pos;
-//     }
-//     init_tips(str, COLOR_BASIC);
-//     show_tips();
-// } // 查询财产信息
+bool Player::query() {
+    std::string str;
+    int total[4] = {0};
+    std::string s1 = "您现在拥有如下资产：\n资金：";
+    std::string s2 = "元\n点数：";
+    std::string s3 = "点\n固定资产：\n";
+    str = s1 + std::to_string(property_) + s2 + std::to_string(credit_) + s3 + QueryTitleStr + "\n";
+    for (int i = 0; i < places_.size(); i++) {
+        std::string str_pos;
+        int pos = places_[i];
+        std::string district;
+        if (pos < 28) {
+            district = "1";
+        } else if (pos < 35) {
+            district = "2";
+        } else {
+            district = "3";
+        }
+        int level = g_->places_[pos].level_;
+        std::string LandLevel;
+        switch (level) {
+        case 0:
+            LandLevel = LandEmptyStr;
+            total[0]++;
+            break;
+        case 1:
+            LandLevel = LandLevel1Str;
+            total[1]++;
+            break;
+        case 2:
+            LandLevel = LandLevel2Str;
+            total[2]++;
+            break;
+        case 3:
+            LandLevel = LandLevel3Str;
+            total[3]++;
+            break;
+        default:
+            break;
+        }
+        str_pos = std::to_string(pos) + "\t" + LandTypeStr + district + "\t" + LandLevel + "\n";
+        str += str_pos;
+    }
+    std::string s4 = "总计：空地" + std::to_string(total[0]) + "块，茅屋：" + std::to_string(total[1]) + "间，洋房：" + std::to_string(total[2]) + "幢，摩天楼：" + std::to_string(total[3]) + "座\n";
+    str += s4;
+    std::string s5 = "道具：\n炸弹：" + std::to_string(bomb_) + "个\t路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\n";
+    str += s5;
+
+    char str_char[500];
+    strcpy(str_char, str.c_str());
+    init_tips(str_char, COLOR_BASIC);
+    show_tips();
+} // 查询财产信息
 bool Player::set_pos(int &num) {
     position_ = num;
     return true;
