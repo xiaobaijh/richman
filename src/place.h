@@ -8,12 +8,11 @@ enum place_state { unowned,
 
 enum place_type {
     common,
-    hospital,
-    prision,
     mine,
     tool_house,
     gift_house,
-    magic_house
+    magic_house,
+    park,
 };
 
 class Place {
@@ -25,7 +24,6 @@ public:
     int price_{0};
     int level_{0};
     int  has_player{0}; //是否有玩家
-    bool has_bomb{false};
     bool has_barrier{false};
 
     Place() = default;

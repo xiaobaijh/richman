@@ -18,7 +18,7 @@ bool Player::update_poistion(int &step_num) {
     position_ = (position_ + step_num) % 69;
 }
 bool Player::query_use_tool() {
-    if (bomb_ > 0 || barrier_ > 0 || robot_ > 0) {
+    if (barrier_ > 0 || robot_ > 0) {
         return true;
     }
     return false;
@@ -41,17 +41,9 @@ bool Player::increase_god() {
     god_ += 5;
     return true;
 }
-bool Player::buy_bomb() {
-    if (property_ >= 50 && (bomb_ + robot_ + barrier_) < 10) {
-        property_ -= 50;
-        bomb_ += 1;
-        return true;
-    } else {
-        return false;
-    }
-}
+
 bool Player::buy_robot() {
-    if (property_ >= 30 && (bomb_ + robot_ + barrier_) < 10) {
+    if (property_ >= 30 && (robot_ + barrier_) < 10) {
         property_ -= 30;
         robot_ += 1;
         return true;
@@ -61,7 +53,7 @@ bool Player::buy_robot() {
 }
 
 bool Player::buy_barrier() {
-    if (property_ >= 50 && (bomb_ + robot_ + barrier_) < 10) {
+    if (property_ >= 50 && (robot_ + barrier_) < 10) {
         property_ -= 50;
         barrier_ += 1;
         return true;
@@ -79,9 +71,7 @@ void Player::got_tool_house() {
         buy_barrier();
     } else if (input == "2") {
         buy_robot();
-    } else if (input == "3") {
-        buy_bomb();
-    }
+    } 
 } //进入道具屋
 
 void Player::got_gift_house() {
@@ -105,9 +95,7 @@ void Player::got_gift_house() {
     }
 
 } //进入礼物屋
-void Player::got_prison() {
-    stop_time_ += PRISON_ROLL_DELAY;
-} //进入监狱
+
 void Player::got_mine() {
     switch (position_) {
     case MINE1_POS: {
@@ -136,11 +124,6 @@ void Player::got_mine() {
     }
     }
 } //到达矿地
-void Player::got_hospital() {
-    stop_time_ += HOSPITAL_ROLL_DELAY;
-    position_ = HOSPITAL_POS;
-    change_map(HOSPITAL_POS, actor_, get_clour(actor_));
-} //遇到炸弹后进入医院
 
 bool Player::sell_land(int loc) {
     if (loc < 0 || loc > 69) {
@@ -234,7 +217,7 @@ bool Player::stopped() {
     stop_time_--;
     stop_time_ == 0 ? state_ = normal : state_ = stop;
     return true;
-} //因为炸弹或监狱等状态轮空一轮
+} //因为被陷害轮空一轮
 
 bool Player::update_land() {
     auto land_price = g_->places_[position_].price_;
@@ -267,10 +250,12 @@ bool Player::user_robot() {
         robot_--;
         for (int i = 1; i <= 10; i++) {
             int pos = (get_position() + i) % PLACE_NUM;
-            if (g_->places_[pos].has_bomb != false || g_->places_[pos].has_barrier != false) {
-                g_->places_[pos].has_bomb = false;
+            if (g_->places_[pos].has_barrier != false) {
                 g_->places_[pos].has_barrier = false;
                 switch (g_->places_[pos].type_) {
+                case park: {
+                    change_map(pos, PARK_PIC, COLOR_BASIC);
+                }
                 case mine: {
                     change_map(pos, MINE_PIC, COLOR_BASIC);
                     break;
@@ -314,37 +299,16 @@ bool Player::user_robot() {
     }
 } // 使用机器人
 
-bool Player::user_bomb(int loc) {
-    if (bomb_ <= 0) {
-        g_->out_tip(NoBombStr);
-        return false;
-    } else {
-        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player != 0 || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
-            // 判断loc是否属于[0, 69]
-            // 判断loc是否和当前位置差距 > 10
-            // 判断loc是否有人、有道具
-            // 判断loc是否在医院、监狱
-            g_->out_tip(CantPlaceBomb);
-            return false;
-        } else {
-            bomb_--;
-            g_->place_tool(loc, TOOL_BOMB);
-            change_map(loc, BOMB_PIC, COLOR_BASIC);
-            return true;
-        }
-    }
-} // 使用炸弹
-
 bool Player::use_barrier(int loc) {
     if (barrier_ <= 0) {
         g_->out_tip(NoBarrierStr);
         return false;
     } else {
-        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player != 0 || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
-            // 判断loc是否属于[0, 69]
-            // 判断loc是否和当前位置差距 > 10
+        int barrier_pos = (loc + position_ + PLACE_NUM) % PLACE_NUM;
+        if (loc < -10 || loc > 10 || g_->places_[barrier_pos].has_barrier || g_->places_[barrier_pos].has_player != 0 || g_->places_[barrier_pos].type_ == park) {
+            // 判断loc是否属于[-10, 10]
             // 判断loc是否有人、有道具
-            // 判断loc是否在医院、监狱
+            // 判断loc是否在公园
             g_->out_tip(CantPlaceBarrier);
             return false;
         } else {
@@ -398,9 +362,9 @@ bool Player::query() {
         str_pos = std::to_string(pos) + "\t" + LandTypeStr + district + "\t" + LandLevel + "\n";
         str += str_pos;
     }
-    std::string s4 = "总计：空地" + std::to_string(total[0]) + "块，茅屋：" + std::to_string(total[1]) + "间，洋房：" + std::to_string(total[2]) + "幢，摩天楼：" + std::to_string(total[3]) + "座\n";
+    std::string s4 = "总计：\n空地：" + std::to_string(total[0]) + "块\t茅屋：" + std::to_string(total[1]) + "间\t洋房：" + std::to_string(total[2]) + "幢\t摩天楼：" + std::to_string(total[3]) + "座\n";
     str += s4;
-    std::string s5 = "道具：\n炸弹：" + std::to_string(bomb_) + "个\t路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\n";
+    std::string s5 = "道具：\n路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\n";
     str += s5;
 
     // char str_char[500];
@@ -425,10 +389,7 @@ bool Player::set_stop_time_(int &num) {
     stop_time_ = num;
     return true;
 }
-bool Player::set_bomb(int &num) {
-    bomb_ = num;
-    return true;
-}
+
 bool Player::set_barrier(int &num) {
     barrier_ = num;
     return true;

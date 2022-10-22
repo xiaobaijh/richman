@@ -29,9 +29,9 @@ void Gsystem::init_game_display() {
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
-    places_[i].type_ = hospital;
-    places_[i].default_symbol_ = 'H';
-    map_[i++] = 'H';
+    places_[i].type_ = park;
+    places_[i].default_symbol_ = 'P';
+    map_[i++] = 'P';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
         places_[i].default_symbol_ = '0';
@@ -53,7 +53,7 @@ void Gsystem::init_game_display() {
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
-    places_[i].type_ = prision;
+    places_[i].type_ = park;
     places_[i].default_symbol_ = 'P';
     map_[i++] = 'P';
     for (int m = 0; m < 13; ++m) {
@@ -145,7 +145,7 @@ int Gsystem::prarse_input(std::string &input) {
         auto func_name = result.str(1);
         auto cmd = result.str(2);
         func_name = to_lower(func_name);
-        if (func_name == "quit") {
+        if (func_name == "quit") {`
             game_over_ = true;
             return ORDER_QUIT;
             // todo quit
@@ -167,9 +167,6 @@ int Gsystem::prarse_input(std::string &input) {
             auto number = std::stoi(cmd);
             if (func_name == "step") {
                 return number;
-            } else if (func_name == "bomb") {
-                players_[current_player_].user_bomb(number);
-                return 0;
             } else if (func_name == "sell") {
                 players_[current_player_].sell_land(number);
                 return 0;
@@ -198,9 +195,6 @@ bool Gsystem::preset(std::string &cmd) {
     } else if (paras[0] == "state") {
         set_state(paras[1][0], std::stoi(paras[2]));
         return true;
-    } else if (paras[0] == "bomb") {
-        set_bomb(paras[1][0], std::stoi(paras[2]));
-        return true;
     } else if (paras[0] == "barrier") {
         set_barrier(paras[1][0], std::stoi(paras[2]));
         return true;
@@ -228,16 +222,15 @@ bool Gsystem::print() {
     for (auto ch : user_order_) {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
-        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(), players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
+        printf("%c %d %d %d %d 0 %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
+               players_[ch].get_state(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = -1;
     for (auto &place : places_) {
         ++i;
         if (place.level_ == 0 && place.state_ == unowned) continue;
         printf("building %d %d %c ", i, place.level_, place.owner_);
-        if (place.has_bomb) {
-            printf("1\n");
-        } else if (place.has_barrier) {
+        if (place.has_barrier) {
             printf("2\n");
         } else {
             printf("0\n");
@@ -279,25 +272,24 @@ bool Gsystem::step() {
         auto current_pos_type = places_[pos].type_;
         change_map(pos, current_player_, get_clour(current_player_)); //移动后改变地图
         switch (current_pos_type) {
-        case prision: {
-            players_[current_player_].got_prison();
-            return true;
+        case park: {
+            continue;
         }
         case mine: {
             players_[current_player_].got_mine();
-            return true;
+            continue;
         }
         case gift_house: {
             players_[current_player_].got_gift_house();
-            return true;
+            continue;
         }
         case tool_house: {
             players_[current_player_].got_tool_house();
-            return true;
+            continue;
         }
         case magic_house: {
             // player.magic
-            return true;
+            continue;
         }
         }
         auto current_pos_state = places_[pos].state_;
@@ -362,14 +354,7 @@ bool Gsystem::update_position(char actor, int step) {
     change_map(pos, places_[pos].default_symbol_, get_clour(places_[pos].owner_)); //在玩家移动前恢复地图
     places_[pos].has_player--;
     for (auto i = pos + 1; i <= pos + step; i++) {
-        if (places_[i].has_bomb) {
-            places_[i].has_bomb = false;
-            places_[i].has_player++;
-            players_[actor].got_hospital();
-            return true;
-        }
         if (places_[i].has_barrier) {
-            places_[i].has_bomb = false;
             places_[i].has_player++;
             players_[actor].set_pos(i);
             return true;
@@ -439,15 +424,6 @@ bool Gsystem::set_state(char user, int num) {
     return true;
 }
 
-//设置玩家炸弹数
-bool Gsystem::set_bomb(char user, int num) {
-    user = toupper(user);
-    if (!isPlayerName(user))
-        return false;
-    players_[user].set_bomb(num);
-    return true;
-}
-
 //设置玩家路障数
 bool Gsystem::set_barrier(char user, int num) {
     user = toupper(user);
@@ -489,12 +465,6 @@ bool Gsystem::place_tool(int loc, int type) {
         Place &place = places_[loc];
         if (place.has_barrier)
             place.has_barrier = true;
-        return true;
-    }
-    if (type == 1) {
-        Place &place = places_[loc];
-        if (place.has_bomb)
-            place.has_bomb = true;
         return true;
     }
     return true;

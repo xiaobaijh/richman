@@ -54,7 +54,6 @@ public:
     bool set_property(char user, int num);             //设置玩家钱
     bool set_credit(char user, int num);               //设置玩家点数
     bool set_state(char user, int num);                //设置玩家停止回合数
-    bool set_bomb(char user, int num);                 //设置玩家炸弹数
     bool set_barrier(char user, int num);              //设置玩家路障数
     bool set_robot(char user, int num);                //设置玩家机器人数
     bool set_god(char user, int num);                  //设置财神回合
