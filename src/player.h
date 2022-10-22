@@ -75,7 +75,7 @@ public:
     bool set_barrier(int &num);
     bool set_robot(int &num);
     bool set_god(int &num);
-
+    bool add_stop_time(int num);
     void init(Gsystem *g) {
         g_ = g;
     }

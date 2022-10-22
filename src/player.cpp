@@ -125,6 +125,38 @@ void Player::got_mine() {
     }
 } //到达矿地
 
+void Player::got_magic_house(char actor) {
+    g_->out_tip(MagicHouseTip);
+    std::string input;
+    input = g_->convert_input(actor_, 1);
+    get_input(0, 0, 0, 0);
+    char actor=0;
+    if(input=="1"){
+        actor='Q';
+    }else if(input=="2"){
+        actor='A';
+    }else if(input=="3"){
+        actor='S';
+    }else if(input=="4"){
+        actor='J';
+    }else{
+        g_->out_tip(CmdErrorStr);
+        return ;
+    }
+    
+    if(g_->players_.count(actor)<=0){
+        g_->out_tip(FailFrameStr);
+        return ;
+    }
+    Player& tar=g_->players_[actor];
+    if(tar.get_state()==bankrupt){
+        g_->out_tip(FailFrameStr);
+        return ;
+    }
+    tar.add_stop_time(2);
+    return ;
+}//进入魔法屋
+
 bool Player::sell_land(int loc) {
     if (loc < 0 || loc > 69) {
         g_->out_tip(SellErrorPosLand);
@@ -400,5 +432,10 @@ bool Player::set_robot(int &num) {
 }
 bool Player::set_god(int &num) {
     god_ = num;
+    return true;
+}
+
+bool Player::add_stop_time(int num){
+    stop_time_+=num;
     return true;
 }
