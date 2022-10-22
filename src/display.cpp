@@ -4,11 +4,10 @@
 #include <locale.h>
 // #include "display.h"
 #include <string.h>
-
-enum {COLOR_BACKGROUD=0, COLOR_BASIC, COLOR_P1, COLOR_P2, NUM_COLOR};
+#include "display.h"
 
 static int shape_map[3] = {0};
-static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE};
+static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_GREEN, COLOR_BLUE, COLOR_YELLOW};
 
 #define curs_color(color) ((color < NUM_COLOR) ?  _color_array[color] : _color_array[COLOR_BASIC])
 

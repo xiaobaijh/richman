@@ -54,7 +54,7 @@ int main(void){
     show_tips();
     char hint[] = "钱夫人>";
     char buf[1024];
-    get_input(hint, COLOR_P1, buf, 10);
+    get_input(hint, COLOR_Q, buf, 10);
     endwin();
     exit(0);
 }
