@@ -221,9 +221,14 @@ bool Gsystem::preset(std::string &cmd) {
 
 bool Gsystem::print() {
     int num = user_order_.size();
+    int index = 0;
+    for (auto ch : user_order_) {
+        if (ch == current_player_) break;
+        index++;
+    }
     printf("seq ");
     for (int i = 0; i < num; ++i) {
-        printf("%c", user_order_[(current_player_ - '1' + i) % num]);
+        printf("%c", user_order_[(index + i) % num]);
     }
     printf("\n");
     for (auto ch : "QASJ") {
