@@ -27,9 +27,12 @@ public:
     inline int get_credit() {
         return credit_;
     } //获取当前积分数
-    inline int get_state() {
-        return stop_time_;
+    inline  player_state get_state() {
+        return state_;
     } //获取当前状态
+    inline int get_stop_time () {
+        return stop_time_;
+    }
     inline int get_barrier() {
         return barrier_;
     }

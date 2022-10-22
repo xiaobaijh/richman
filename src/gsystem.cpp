@@ -230,7 +230,7 @@ bool Gsystem::print() {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
         printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
-               players_[ch].get_state(), 0, players_[ch].get_barrier(), player.get_robot(), player.get_god());
+               players_[ch].get_stop_time(), 0, players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = -1;
     for (auto &place : places_) {
