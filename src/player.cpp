@@ -134,7 +134,7 @@ void Player::got_mine() {
 void Player::got_hospital() {
     stop_time_ += HOSPITAL_ROLL_DELAY;
     position_ = HOSPITAL_POS;
-    change_map(HOSPITAL_POS, actor_, 0);
+    change_map(HOSPITAL_POS, actor_, get_clour(actor_));
 } //遇到炸弹后进入医院
 
 bool Player::sell_land(int loc) {
@@ -171,14 +171,16 @@ bool Player::buy_land() {
         if (to_lower(input) == "y") {
             if ((property_ - g_->places_[position_].price_) < 0) {
                 g_->out_tip(MoneyNotEnough);
+                get_input(0,0,0,0);
                 break;
             }
             property_ -= g_->places_[position_].price_;
             places_.push_back(position_);
             g_->places_[position_].state_ = owned;
             g_->places_[position_].owner_ = actor_;
-            change_map(position_, g_->places_[position_].default_symbol_, 0);
+            change_map(position_, g_->places_[position_].default_symbol_, get_clour(actor_));
             g_->out_tip(BuyEmptyY);
+            get_input(0,0,0,0);
             break;
         } else if (to_lower(input) == "n") {
             break;
@@ -196,15 +198,17 @@ bool Player::charge(char owner) {
             return false;
         }
         g_->out_tip(get_name(actor_) + BankruptcyStr);
+        get_input(0,0,0,0);
         return true;
     }
     if (god_ > 0) {
         god_--;
         g_->out_tip(GodOnBodyStr);
+        get_input(0,0,0,0);
         return true;
     }
     property_ -= (land_price) / 2;
-    g_->players_[owner].property_ += land_price;
+    g_->players_[owner].property_ += land_price/2;
     return true;
 } //玩家缴费
 

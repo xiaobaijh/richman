@@ -216,17 +216,17 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool Gsystem::print() {
-    for (auto ch : "QASJ") {
+    for (auto ch :user_order_) {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
         printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
                players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
-    int i = 0;
+    int i = -1;
     for (auto &place : places_) {
         ++i;
         if (place.level_ == 0 && place.state_ == unowned) continue;
-        printf("building %d %d %d ", i, place.level_, place.owner_);
+        printf("building %d %d %c ", i, place.level_, place.owner_);
         if (place.has_bomb) {
             printf("1\n");
         } else if (place.has_barrier) {
@@ -269,7 +269,7 @@ bool Gsystem::step() {
         //更新后根据当前位置行动
         auto pos = players_[current_player_].get_position();
         auto current_pos_type = places_[pos].type_;
-        change_map(pos, current_player_, COLOR_P1); //移动后改变地图
+        change_map(pos, current_player_, get_clour(current_player_)); //移动后改变地图
         switch (current_pos_type) {
         case prision: {
             players_[current_player_].got_prison();
@@ -312,7 +312,7 @@ bool Gsystem::step() {
     // 3.玩家遇到监狱，礼品屋，道具屋，魔法屋，矿地返回场地类型为prison等
     // 4.玩家遇到普通地块返回场地类型为
     return true;
-}
+query}
 
 int Gsystem::player_step(char actor) {
     std::string input;

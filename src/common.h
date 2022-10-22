@@ -1,7 +1,3 @@
-#define COLOR_A 0
-#define COLOR_Q 1
-#define COLOR_S 2
-#define COLOR_J 3
 #define TOOL_DOLL 0
 #define TOOL_BOMB 1
 #define TOOL_BARRIER 2
