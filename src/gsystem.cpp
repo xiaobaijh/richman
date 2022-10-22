@@ -216,7 +216,8 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool Gsystem::print() {
-    for (auto ch : user_order_) {
+    for (auto ch : "QASJ") {
+        if(players_.count(ch)<=0) continue;
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
         printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),

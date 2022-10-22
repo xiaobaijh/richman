@@ -57,6 +57,7 @@ public:
     void got_prison();       //进入监狱
     void got_mine();         //到达矿地
     void got_hospital();     //遇到炸弹后进入医院
+    void got_magic_house(char actor);  //进入魔法屋
     bool sell_land(int loc); //卖地
     bool buy_land();         //买地
     bool charge(char owner);           //玩家缴费
@@ -82,7 +83,7 @@ public:
     bool set_barrier(int &num);
     bool set_robot(int &num);
     bool set_god(int &num);
-
+    bool add_stop_time(int num);
     void init(Gsystem *g) {
         g_ = g;
     }
