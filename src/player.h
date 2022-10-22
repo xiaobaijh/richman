@@ -60,7 +60,7 @@ public:
     void got_gift_house();            //进入礼物屋
     void got_prison();                //进入监狱
     void got_mine();                  //到达矿地
-    void got_magic_house(char actor); //到达魔法屋
+    void got_magic_house(); //到达魔法屋
     bool sell_land(int loc);          //卖地
     bool buy_land();                  //买地
     bool charge(char owner);          //玩家缴费

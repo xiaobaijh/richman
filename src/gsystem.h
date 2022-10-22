@@ -32,6 +32,7 @@ public:
     virtual ~Gsystem(void);
 
     void init_game_display();
+    bool update_map();
     // void init_map();
     bool set_user(std::string &seq, int money); //设置玩家列表
     bool ready();

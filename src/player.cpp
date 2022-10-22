@@ -15,7 +15,8 @@ Player::Player() {
 }
 
 bool Player::update_poistion(int &step_num) {
-    position_ = (position_ + step_num) % 69;
+    position_ = (position_ + step_num) % 70;
+    return false;
 }
 bool Player::query_use_tool() {
     if (barrier_ > 0 || robot_ > 0) {
@@ -65,15 +66,16 @@ bool Player::buy_barrier() {
         return true;
     } else {
         g_->out_tip(get_name(actor_) + MoneyNotEnough);
+        get_input(0, 0, 0, 0);
         return false;
     }
 }
 
 void Player::got_tool_house() {
     g_->out_tip(ToolHouseTip);
+    get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
-    get_input(0, 0, 0, 0);
     if (input == "1") {
         buy_barrier();
     } else if (input == "2") {
@@ -132,8 +134,10 @@ void Player::got_mine() {
     }
 } //到达矿地
 
-void Player::got_magic_house(char actor) {
+void Player::got_magic_house() {
+    char actor;
     g_->out_tip(MagicHouseTip);
+    get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
     if (input == "1") {
@@ -146,19 +150,25 @@ void Player::got_magic_house(char actor) {
         actor = 'J';
     } else {
         g_->out_tip(CmdErrorStr);
+        get_input(0, 0, 0, 0);
         return;
     }
 
     if (g_->players_.count(actor) <= 0) {
         g_->out_tip(FailFrameStr);
+        get_input(0, 0, 0, 0);
         return;
     }
     Player &tar = g_->players_[actor];
     if (tar.get_state() == bankrupt) {
         g_->out_tip(FailFrameStr);
+        get_input(0, 0, 0, 0);
         return;
     }
     tar.add_stop_time(2);
+    tar.state_ = stop;
+    g_->out_tip(FrameStr + get_name(actor));
+    get_input(0, 0, 0, 0);
     return;
 } //进入魔法屋
 
@@ -184,8 +194,9 @@ bool Player::sell_land(int loc) {
         g_->places_[loc].price_ /= g_->places_[loc].level_;
     }
     g_->places_[loc].level_ = 0;
+    g_->places_[loc].color_ = COLOR_BASIC;
     g_->out_tip(SellStr);
-    change_map(loc, '0', COLOR_BASIC);
+    g_->update_map();
     return false;
 }
 //买地
@@ -203,7 +214,8 @@ bool Player::buy_land() {
             places_.push_back(position_);
             g_->places_[position_].state_ = owned;
             g_->places_[position_].owner_ = actor_;
-            change_map(position_, g_->places_[position_].default_symbol_, get_clour(actor_));
+            g_->places_[position_].color_ = get_clour(actor_);
+            // change_map(position_, g_->places_[position_].default_symbol_, get_clour(actor_));
             g_->out_tip(BuyEmptyY);
             get_input(0, 0, 0, 0);
             break;
@@ -215,6 +227,12 @@ bool Player::buy_land() {
 }
 
 bool Player::charge(char owner) {
+    if (god_ > 0) {
+        god_--;
+        g_->out_tip(GodOnBodyStr);
+        get_input(0, 0, 0, 0);
+        return true;
+    }
     auto land_price = g_->places_[position_].price_;
     if (land_price > property_) {
         state_ = bankrupt;
@@ -222,13 +240,9 @@ bool Player::charge(char owner) {
         if (!bankrupted()) {
             return false;
         }
+        g_->places_[position_].has_player--;
+        change_map(position_,g_->places_[position_].default_symbol_,g_->places_[position_].color_);
         g_->out_tip(get_name(actor_) + BankruptcyStr);
-        get_input(0, 0, 0, 0);
-        return true;
-    }
-    if (god_ > 0) {
-        god_--;
-        g_->out_tip(GodOnBodyStr);
         get_input(0, 0, 0, 0);
         return true;
     }
@@ -264,12 +278,14 @@ bool Player::update_land() {
     while (1) {
         if (g_->places_[position_].level_ < 4) {
             g_->out_tip(QueryUpdateBulidingTip);
+            get_input(0,0,0,0);
             auto input = g_->convert_input(actor_, 1);
             if (input == "y") {
                 property_ -= land_price;
                 land_price += land_price;
                 g_->places_[position_].level_++;
                 g_->out_tip(get_name(actor_) + UpdateBulidingY);
+                get_input(0,0,0,0);
                 break;
             } else if (input == "n") {
                 break;
@@ -401,7 +417,7 @@ bool Player::query() {
     }
     std::string s4 = "总计：\n空地：" + std::to_string(total[0]) + "块\t茅屋：" + std::to_string(total[1]) + "间\t洋房：" + std::to_string(total[2]) + "幢\t摩天楼：" + std::to_string(total[3]) + "座\n";
     str += s4;
-    std::string s5 = "道具：\n路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\n";
+    std::string s5 = "道具：\n路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "轮\t财神回合：" + std::to_string(god_) + "个\n";
     str += s5;
 
     // char str_char[500];

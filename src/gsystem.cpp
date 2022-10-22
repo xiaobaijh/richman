@@ -23,6 +23,7 @@ Gsystem::~Gsystem() {
 void Gsystem::init_game_display() {
     int i = 0;
     places_[i].default_symbol_ = 'S';
+    places_[i].has_player = user_num_;
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
@@ -73,6 +74,15 @@ void Gsystem::init_game_display() {
     init_display();
     display_map(29, 8, map_);
     init_tips(HELPStr, COLOR_BASIC);
+}
+
+bool Gsystem::update_map() {
+    for (int i = 0; i < 70; i++) {
+        if (places_[i].has_player == 0) {
+            change_map(i, places_[i].default_symbol_, places_[i].color_);
+        }
+    }
+    return true;
 }
 
 bool Gsystem::set_user(std::string &seq, int money) {
@@ -257,34 +267,39 @@ bool Gsystem::step() {
         return false;
     }
     for (auto i = 0; i < user_num_; i++) {
-        if (user_num_ == 0) {
+        if (user_num_ == 1) {
+            out_tip(get_name(user_order_[i]) + WinStr);
             return false;
         }
         if (players_[user_order_[i]].isBankruptcy()) {
             continue;
         }
         current_player_ = user_order_[i];
+        if (players_[current_player_].state_ == stop) {
+            players_[current_player_].stopped();
+            continue;
+        }
         //玩家回合一步，处理玩家需要输入的指令，处理完后进入系统回合
         auto step = player_step(current_player_);
-        if (step < 0 || step > 100) {
+        if (step < 0 || step > 10000) {
             return false;
         }
 
         //掷完骰子后更新玩家位置
-        if (places_[current_player_].has_player != 0) {
-            places_[current_player_].has_player--;
-        }
-
         if (!update_position(current_player_, step)) {
             return false;
         }
 
         //更新后根据当前位置行动
         auto pos = players_[current_player_].get_position();
-        auto current_pos_type = places_[pos].type_;
         change_map(pos, current_player_, get_clour(current_player_)); //移动后改变地图
+        update_map();
+        auto current_pos_type = places_[pos].type_;
         switch (current_pos_type) {
         case park: {
+            continue;
+        }
+        case start: {
             continue;
         }
         case mine: {
@@ -300,7 +315,7 @@ bool Gsystem::step() {
             continue;
         }
         case magic_house: {
-            // player.magic
+            players_[current_player_].got_magic_house();
             continue;
         }
         }
@@ -329,16 +344,6 @@ bool Gsystem::step() {
 int Gsystem::player_step(char actor) {
     std::string input;
     int step = 0;
-    player_state current_player_state = players_[actor].get_state();
-    switch (current_player_state) {
-    case stop: {
-        players_[actor].stopped();
-        return 0;
-    }
-    case bankrupt: {
-        return 0;
-    }
-    }
     out_tip(get_name(actor) + ActorTip);
     input = convert_input(actor, 100);
     while (1) {
@@ -350,8 +355,8 @@ int Gsystem::player_step(char actor) {
             return -1;
         } else if (result == ORDER_WRONG) {
             out_tip(CmdErrorStr);
-        } else if (result > 0 && result < 69) {
-            step = (prarse_input(input));
+        } else if (result > 0 && result < 1000) {
+            step = result;
             break;
         }
         input = convert_input(actor, 100);
@@ -363,16 +368,21 @@ int Gsystem::player_step(char actor) {
 
 bool Gsystem::update_position(char actor, int step) {
     int pos = players_[actor].get_position();
-    change_map(pos, places_[pos].default_symbol_, get_clour(places_[pos].owner_)); //在玩家移动前恢复地图
-    places_[pos].has_player--;
+    // change_map(pos, places_[pos].default_symbol_, get_clour(places_[pos].owner_)); //在玩家移动前恢复地图
+    if (places_[pos].has_player != 0) {
+        places_[pos].has_player--;
+    }
     for (auto i = pos + 1; i <= pos + step; i++) {
-        if (places_[i].has_barrier) {
-            places_[i].has_player++;
-            players_[actor].set_pos(i);
+        auto tmp = i % 70;
+        if (places_[tmp].has_barrier) {
+            places_[tmp].has_player++;
+            players_[actor].set_pos(tmp);
             return true;
         }
     }
     players_[actor].update_poistion(step);
+    pos = players_[actor].get_position();
+    places_[pos].has_player++;
     return true;
 } //根据位置更新玩家信息，考虑地形
 
