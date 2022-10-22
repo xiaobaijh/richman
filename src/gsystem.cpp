@@ -65,6 +65,7 @@ void Gsystem::init_game_display() {
     places_[i].default_symbol_ = 'M';
     map_[i++] = 'M';
     for (int m = 0; m < 6; ++m) {
+        places_[i].type_ = mine;
         places_[i].price_ = 500;
         places_[i].default_symbol_ = '$';
         map_[i++] = '$';
@@ -211,7 +212,7 @@ bool Gsystem::preset(std::string &cmd) {
         set_building(std::stoi(paras[1]), std::stoi(paras[2]), paras[3][0]);
         return true;
     } else if (paras[0] == "building-tool") {
-        place_tool(paras[1][0], std::stoi(paras[2]));
+        place_tool(std::stoi(paras[1]), std::stoi(paras[2]));
         return true;
     }
     is.str("");
@@ -444,7 +445,7 @@ bool Gsystem::set_robot(char user, int num) {
     user = toupper(user);
     if (!isPlayerName(user))
         return false;
-    players_[user].set_barrier(num);
+    players_[user].set_robot(num);
     return true;
 }
 
@@ -472,7 +473,7 @@ bool Gsystem::place_tool(int loc, int type) {
         return false;
     if (type == 2) {
         Place &place = places_[loc];
-        if (place.has_barrier)
+        if (!place.has_barrier)
             place.has_barrier = true;
         return true;
     }

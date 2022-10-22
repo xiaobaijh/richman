@@ -63,6 +63,7 @@ int main(int argc, char **argv) {
 
     while (sys.prarse_preset(input)) {
         input = sys.convert_input( 0,40);
+
         sys.prarse_preset(input);
     }
 
