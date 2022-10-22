@@ -10,6 +10,7 @@
 #include "gutil.h"
 #include "tips.h"
 #include "common.h"
+#include "display.h"
 
 void init_player(int player_num);
 void game();
@@ -23,7 +24,7 @@ bool test_get_input(Gsystem *g);
 int main(int argc, char **argv) {
     Gsystem sys = Gsystem();
     sys.init_game_display();
-    //test_get_input(&sys);
+    // test_get_input(&sys);
 
     int player_num = 0;
     int default_fund = 1000;
@@ -32,8 +33,8 @@ int main(int argc, char **argv) {
 
     while (1) {
         sys.out_tip(InitFundTip);
-        input = sys.convert_input('0',5);
-        if (std::stoi(input) < 50000 && std::stoi(input) > 1000) {
+        input = sys.convert_input('0', 6);
+        if (std::stoi(input) <= 50000 && std::stoi(input) >= 1000) {
             default_fund = std::stoi(input);
             break;
         }
@@ -41,29 +42,26 @@ int main(int argc, char **argv) {
 
     while (1) {
         sys.out_tip(ChoosePlayerTip);
-        input = sys.convert_input('0', 4);
+        input = sys.convert_input('0', 10);
         for (auto &e : input) {
             if (e == '1')
-                e = 'q';
+                e = 'Q';
             if (e == '2')
-                e = 'a';
+                e = 'A';
             if (e == '3')
-                e = 's';
+                e = 'S';
             if (e == '4')
-                e = 'j';
+                e = 'J';
         }
-        if (sys.set_user(input, default_fund))
+        if (sys.set_user(input, default_fund)) {
+            clean_info();
             break;
+        }
     }
-
     while (sys.step()) {
         ;
     }
-
-    // while (true) {
-    //     std::getline(cin, input);
-    //     sys.prarse_input(input);
-    // }
+    end_display();
     return 0;
 }
 
@@ -73,7 +71,7 @@ bool test_get_input(Gsystem *g) {
     std::string order = "qasj";
     g->set_user(order, 5000);
     g->out_tip(CmdErrorStr);              //需要向玩家输入信息时使用，在tips.h下有string，直接传进去即可
-    input = g->convert_input('j', 6);     //参数为aqsj之一，代表4个玩家之一，为了显示箭头
+    input = g->convert_input('j', 10);     //参数为aqsj之一，代表4个玩家之一，为了显示箭头
     auto result = g->prarse_input(input); //解析指令，有第二个参数的返回大于零的数字，仍需进一步判断，返回-8代表非法指令
     std::cout << result << endl;
     switch (result) {
@@ -83,6 +81,10 @@ bool test_get_input(Gsystem *g) {
     }
     case ORDER_QUERY: {
         std::cout << "输入了query" << endl;
+        break;
+    }
+    case ORDER_ROLL: {
+        std::cout << "输入了roll" << endl;
         break;
     }
     case ORDER_Y: {

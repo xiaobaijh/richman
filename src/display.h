@@ -1,7 +1,7 @@
 #ifndef _DISPLAY_H_
 #define _DISPLAY_H_
 
-enum {COLOR_BACKGROUD=0, COLOR_BASIC, COLOR_P1, COLOR_P2, NUM_COLOR};
+enum {COLOR_BACKGROUD=0, COLOR_BASIC, COLOR_Q, COLOR_A, COLOR_S, COLOR_J, NUM_COLOR};
 
 char init_display();
 
@@ -47,5 +47,7 @@ int get_input(const char * hint, int color, char * buf, int len);
 void init_tips(const char * content, int color);
 
 void show_tips(void);
+
+void end_display();
 
 #endif

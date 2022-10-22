@@ -1,15 +1,16 @@
 #include "tips.h"
 #include "common.h"
+#include "display.h"
 #include <string>
 std::string get_name(char c) {
     switch (c) {
-    case 'a':
+    case 'A':
         return "阿土伯";
-    case 'q':
+    case 'Q':
         return "钱夫人";
-    case 's':
+    case 'S':
         return "孙小美";
-    case 'j':
+    case 'J':
         return "金贝贝";
     default:
         return "";
@@ -34,15 +35,15 @@ std::string get_level_str(int level) {
 
 int get_clour(char c) {
     switch (c) {
-    case 'a':
+    case 'A':
         return COLOR_A;
-    case 'q':
+    case 'Q':
         return COLOR_Q;
-    case 's':
+    case 'S':
         return COLOR_S;
-    case 'j':
+    case 'J':
         return COLOR_J;
     default:
-        return 0;
+        return COLOR_BASIC;
     }
 }

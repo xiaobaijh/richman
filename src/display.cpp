@@ -4,11 +4,10 @@
 #include <locale.h>
 // #include "display.h"
 #include <string.h>
-
-enum {COLOR_BACKGROUD=0, COLOR_BASIC, COLOR_P1, COLOR_P2, NUM_COLOR};
+#include "display.h"
 
 static int shape_map[3] = {0};
-static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE};
+static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_RED, COLOR_BLUE, COLOR_YELLOW};
 
 #define curs_color(color) ((color < NUM_COLOR) ?  _color_array[color] : _color_array[COLOR_BASIC])
 
@@ -162,6 +161,7 @@ char clean_info(){
 }
 
 char print_info(const char * content){
+    // getch();
     clean_info();
     addstr(content);
     refresh();
@@ -201,11 +201,16 @@ char print_line(int x, int y, const char * content, int color){
 
 int get_input(const char * hint, int color, char * buf, int len){
     fflush(stdin);
+    if(len == 0){
+        getch();
+        return 1;
+    }
     print_line(0, LINES-1, hint, color);
     const int x = strlen(hint)-3;
     int count = 0, input = 0;
     while(1){
-        for(count = 0; count < len-1; ){
+        count = 0;
+        do{
 get_input_load:
             input = getch();
             switch(input){
@@ -226,7 +231,7 @@ get_input_load:
                     ++count;
                     break;
             }
-        }
+        }while(count < len);
         do{
             input = getch();
             if(input == 263){
@@ -308,6 +313,10 @@ char * tips2str(void){
 void init_tips(const char * content, int color){
     if(!content)
         return;
+    if(tips.cap != 0){
+        for(int i = 0; i < tips.cap; free(tips.content[i++]));
+        free(tips.content);
+    }
     getmaxyx(stdscr, tips.row, tips.col);
     tips.cap = 0;
     tips.content = NULL;
@@ -368,4 +377,8 @@ void show_tips(void){
         input = getch();
     }
     attroff(COLOR_PAIR(tips.color));
+}
+
+void end_display(){
+    endwin();
 }

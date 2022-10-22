@@ -42,17 +42,14 @@ public:
     std::string convert_input(char actor, int len); //需要玩家输入信息时使用，返回一个字符串
     int prarse_input(std::string &input);           //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
 
-    bool step(); //游戏进行一步
-    int player_step(char actor);
+    bool step();                                //游戏进行一步
+    int player_step(char actor);                //玩家活动一步
     int get_dices();                            //模拟掷骰子
     bool use_tool(int loc, int type);           //使用道具
     bool update_position(char actor, int step); //根据位置更新玩家信息，考虑地形，
 
-    bool set_current_user(int cur_user);  //设置当前玩家
-    bool set_current_user(char cur_user); //设置当前玩家
-    int get_current_user(void);           //获得当前玩家
-
     bool preset(std::string &cmd);                     //以下均为预设置有关
+    bool set_current_user(char cur_user);              //设置当前玩家
     bool set_user_pos(char user, int loc);             //设置玩家位置
     bool set_property(char user, int num);             //设置玩家钱
     bool set_credit(char user, int num);               //设置玩家点数
