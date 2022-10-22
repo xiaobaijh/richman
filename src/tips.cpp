@@ -44,6 +44,6 @@ int get_clour(char c) {
     case 'J':
         return COLOR_J;
     default:
-        return 0;
+        return COLOR_BASIC;
     }
 }

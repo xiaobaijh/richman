@@ -216,7 +216,7 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool Gsystem::print() {
-    for (auto ch :user_order_) {
+    for (auto ch : user_order_) {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
         printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
@@ -351,9 +351,7 @@ int Gsystem::player_step(char actor) {
 
 bool Gsystem::update_position(char actor, int step) {
     int pos = players_[actor].get_position();
-    if (places_[pos].state_ != owned) {
-        change_map(pos, places_[pos].default_symbol_, COLOR_BASIC); //在玩家移动前恢复地图
-    }
+    change_map(pos, places_[pos].default_symbol_, get_clour(places_[pos].owner_)); //在玩家移动前恢复地图
     places_[pos].has_player--;
     for (auto i = pos + 1; i <= pos + step; i++) {
         if (places_[i].has_bomb) {
