@@ -228,8 +228,7 @@ bool Gsystem::print() {
     for (auto ch : user_order_) {
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
-        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
-               players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
+        printf("%c %d %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(), players_[ch].get_state(), players_[ch].get_bomb(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = -1;
     for (auto &place : places_) {
@@ -347,7 +346,7 @@ int Gsystem::player_step(char actor) {
             return -1;
         } else if (result == ORDER_WRONG) {
             out_tip(CmdErrorStr);
-        } else if (prarse_input(input) > 0 && prarse_input(input) < 100) {
+        } else if (result > 0 && result < 69) {
             step = (prarse_input(input));
             break;
         }
