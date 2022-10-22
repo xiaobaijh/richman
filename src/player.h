@@ -57,7 +57,7 @@ public:
     void got_prison();     //进入监狱
     void got_mine();       //到达矿地
     void got_hospital();   //遇到炸弹后进入医院
-    bool sell_land();      //卖地
+    bool sell_land(int loc);      //卖地
     bool buy_land();       //买地
     bool charge();         //玩家缴费
     bool bankrupted();     //玩家破产

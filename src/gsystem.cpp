@@ -119,6 +119,7 @@ int Gsystem::prarse_input(std::string &input) {
     std::regex pat("\\s*(\\w*)\\s*(.*)");
     std::regex number_pat("\\+?[1-9][0-9]*$");
     std::smatch result;
+    std::smatch result_num;
     if (std::regex_match(input, result, pat)) {
         auto func_name = result.str(1);
         auto cmd = result.str(2);
@@ -130,19 +131,32 @@ int Gsystem::prarse_input(std::string &input) {
         } else if (func_name == "roll") {
             return ORDER_ROLL;
         } else if (func_name == "robot") {
-            return ORDER_ROBOT;
+            players_[current_player_].user_robot();
+            return 0;
         } else if (func_name == "query") {
             return ORDER_QUERY;
         } else if (func_name == "help") {
             out_help();
             return 0;
         } else if (func_name == "print") {
-            // todo print
-            return -1;
-        } else if ((func_name == "sell") || (func_name == "block") || (func_name == "bomb") || (func_name == "step")) {
-            std::smatch result_num;
-            if (std::regex_match(cmd, result_num, number_pat)) {
-                return std::stoi(cmd);
+            print();
+            return 0;
+        } else if ((std::regex_match(cmd, result_num, number_pat))) {
+            auto number = std::stoi(cmd);
+            if (func_name == "step") {
+                return number;
+            } else if (
+                func_name == "bomb") {
+                players_[current_player_].user_bomb(number);
+                return 0;
+            } else if (
+                func_name == "sell") {
+                players_[current_player_].sell_land(number);
+                return 0;
+            } else if (
+                func_name == "bolck") {
+                players_[current_player_].use_barrier(number);
+                return 0;
             }
         } else if (func_name == "preset") {
             if (!preset(cmd)) {
@@ -306,14 +320,14 @@ int Gsystem::player_step(char actor) {
         switch (result) {
         case ORDER_ROLL: {
             step = get_dices();
-            break;
+            out_tip(RollStr + std::to_string(step));
+            return step;
         }
         case ORDER_QUIT: {
             return -1;
         }
         }
-        if (prarse_input(input) == ORDER_ROLL) {
-        } else if (prarse_input(input) > 0 && prarse_input(input) < 7) {
+        if (prarse_input(input) > 0 && prarse_input(input) < 7) {
             step = (prarse_input(input));
             break;
         }

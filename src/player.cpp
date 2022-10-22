@@ -136,7 +136,7 @@ void Player::got_hospital() {
     change_map(HOSPITAL_POS, actor_, 0);
 } //遇到炸弹后进入医院
 
-bool Player::sell_land() {
+bool Player::sell_land(int loc) {
 }
 //买地
 bool Player::buy_land() {
