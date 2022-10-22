@@ -312,7 +312,7 @@ bool Gsystem::step() {
     // 3.玩家遇到监狱，礼品屋，道具屋，魔法屋，矿地返回场地类型为prison等
     // 4.玩家遇到普通地块返回场地类型为
     return true;
-query}
+}
 
 int Gsystem::player_step(char actor) {
     std::string input;
