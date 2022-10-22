@@ -145,7 +145,7 @@ int Gsystem::prarse_input(std::string &input) {
         auto func_name = result.str(1);
         auto cmd = result.str(2);
         func_name = to_lower(func_name);
-        if (func_name == "quit") {`
+        if (func_name == "quit") {
             game_over_ = true;
             return ORDER_QUIT;
             // todo quit
@@ -219,17 +219,17 @@ bool Gsystem::preset(std::string &cmd) {
 }
 
 bool Gsystem::print() {
-    int num=user_order_.size();
+    int num = user_order_.size();
     printf("seq ");
-    for(int i=0;i<num;++i){
-        printf("%c",user_order_[(current_player_-'1'+i)%num]);
+    for (int i = 0; i < num; ++i) {
+        printf("%c", user_order_[(current_player_ - '1' + i) % num]);
     }
     printf("\n");
     for (auto ch : "QASJ") {
-        if(players_.count(ch)<=0) continue;
+        if (players_.count(ch) <= 0) continue;
         auto &player = players_[ch];
         if (players_[ch].get_state() == bankrupt) continue;
-        printf("%c %d %d %d %d 0 %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
+        printf("%c %d %d %d %d %d %d %d\n", ch, player.get_position(), player.get_property(), player.get_credit(),
                players_[ch].get_state(), players_[ch].get_barrier(), player.get_robot(), player.get_god());
     }
     int i = -1;

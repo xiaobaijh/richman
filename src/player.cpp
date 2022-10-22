@@ -129,8 +129,6 @@ void Player::got_magic_house(char actor) {
     g_->out_tip(MagicHouseTip);
     std::string input;
     input = g_->convert_input(actor_, 1);
-    get_input(0, 0, 0, 0);
-    char actor=0;
     if(input=="1"){
         actor='Q';
     }else if(input=="2"){
