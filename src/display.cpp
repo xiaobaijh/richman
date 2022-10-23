@@ -203,7 +203,9 @@ char print_line(int x, int y, const char * content, int color){
 int get_input(const char * hint, int color, char * buf, int len){
     fflush(stdin);
     if(len == 0){
+#ifndef DEBUG
         getch();
+#endif
         return 1;
     }
     print_line(0, LINES-1, hint, color);

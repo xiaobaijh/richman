@@ -1,6 +1,10 @@
 #ifndef _DISPLAY_H_
 #define _DISPLAY_H_
 
+#ifndef DEBUG
+#define DEBUG 
+#endif
+
 enum {COLOR_BACKGROUD=0, COLOR_BASIC, COLOR_Q, COLOR_A, COLOR_S, COLOR_J, COLOR_SPECIAL, NUM_COLOR};
 
 char init_display();
