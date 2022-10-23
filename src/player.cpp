@@ -62,11 +62,11 @@ bool Player::buy_barrier() {
         credit_ -= 50;
         barrier_ += 1;
         g_->out_tip(get_name(actor_) + BuyBarrierStr);
-        get_input(0, 0, 0, 0);
+        //get_input(0, 0, 0, 0);
         return true;
     } else {
         g_->out_tip(get_name(actor_) + MoneyNotEnough);
-        get_input(0, 0, 0, 0);
+        //get_input(0, 0, 0, 0);
         return false;
     }
 }
@@ -79,7 +79,7 @@ void Player::got_tool_house() {
 
     while (credit_ >= 30) {
         g_->out_tip(ToolHouseTip);
-        // get_input(0, 0, 0, 0);
+        //get_input(0, 0, 0, 0);
         std::string input;
         input = g_->convert_input(actor_, 1);
         if (input == "1") {
@@ -88,12 +88,14 @@ void Player::got_tool_house() {
             buy_robot();
         } else if (input == "0") {
             g_->out_tip(ExitToolHouseTip);
+            get_input(0, 0, 0, 0);
             std::string input;
             break;
         } else {
             g_->out_tip(CmdErrorStr);
             std::string input;
         }
+        get_input(0, 0, 0, 0);
     }
 
 } //进入道具屋
@@ -290,7 +292,7 @@ bool Player::update_land() {
         return true;
     }
     while (1) {
-        if (g_->places_[position_].level_ < 4) {
+        if (g_->places_[position_].level_ < 3) {
             g_->out_tip(QueryUpdateBulidingTip);
             // get_input(0, 0, 0, 0);
             auto input = g_->convert_input(actor_, 1);
@@ -306,6 +308,8 @@ bool Player::update_land() {
             } else if (input == "n") {
                 break;
             }
+        } else {
+            break;
         }
     } //升级土地
     return true;
