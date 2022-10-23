@@ -25,6 +25,7 @@ void Gsystem::init_game_display() {
     places_[i].type_ = park;
     places_[i].default_symbol_ = 'S';
     places_[i].has_player = user_num_;
+    places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
@@ -33,7 +34,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = start;
     places_[i].default_symbol_ = 'P';
+    places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'P';
+    
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 200;
         places_[i].default_symbol_ = '0';
@@ -41,7 +44,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = tool_house;
     places_[i].default_symbol_ = 'T';
+    places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'T';
+    
     for (int m = 0; m < 6; ++m) {
         places_[i].price_ = 500;
         places_[i].default_symbol_ = '0';
@@ -49,7 +54,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = gift_house;
     places_[i].default_symbol_ = 'G';
+    places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'G';
+    
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 300;
         places_[i].default_symbol_ = '0';
@@ -57,7 +64,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = park;
     places_[i].default_symbol_ = 'P';
+    places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'P';
+    
     for (int m = 0; m < 13; ++m) {
         places_[i].price_ = 300;
         places_[i].default_symbol_ = '0';
@@ -65,11 +74,14 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = magic_house;
     places_[i].default_symbol_ = 'M';
+    places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'M';
+    
     for (int m = 0; m < 6; ++m) {
         places_[i].type_ = mine;
         places_[i].price_ = 500;
         places_[i].default_symbol_ = '$';
+        places_[i].color_= COLOR_SPECIAL;
         map_[i++] = '$';
     }
     init_display();
@@ -268,10 +280,10 @@ bool Gsystem::step() {
         return false;
     }
     for (auto i = 0; i < user_num_; i++) {
-        if (user_num_ == 1) {
-            out_tip(get_name(user_order_[i]) + WinStr);
-            return false;
-        }
+        // if (user_num_ == 1) {
+        //     out_tip(get_name(user_order_[i]) + WinStr);
+        //     return false;
+        // }
         if (players_[user_order_[i]].isBankruptcy()) {
             continue;
         }
@@ -381,7 +393,7 @@ bool Gsystem::update_position(char actor, int step) {
         if (places_[tmp].has_barrier) {
             places_[tmp].has_player++;
             places_[tmp].has_barrier = false;
-            change_map(tmp, places_[tmp].default_symbol_, COLOR_BASIC);
+            change_map(tmp, places_[tmp].default_symbol_, COLOR_SPECIAL);
             players_[actor].set_pos(tmp);
             return true;
         }

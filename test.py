@@ -7,14 +7,15 @@ from openpyxl import Workbook
 import os
 import time 
 import pandas as pd
-DEFAULT_EXEC = "./build/richman"
+DEFAULT_EXEC = "/data1/jilinfei/rich/build/richman "
 EXPIRE_TIME_MS = 1000
+TESTDIR = 'testcase/testcase_g2'
 GREEN = PatternFill(start_color='7FFF00',
                     end_color='7FFF00', fill_type='solid')
 RED = PatternFill(start_color='FF0000', end_color='FF0000', fill_type='solid')
 def readfilepair(args):
     #dirname= os.listdir(args.dir) #得到文件夹下的所有文件名称
-    dirname = ['base']
+    dirname = ['map']
     files = []
     for path in dirname:
         dir = os.path.join(args.dir,path)
@@ -40,10 +41,10 @@ def textprocess(text):
                 numorder += d[i]
             continue
         if i[:6].lower() == 'preset':
-            text = text + i + '\n'
+            text = text+ '\n' + i 
         else:
-            text = text + i + '\n\n'
-    text = '10000\n'+numorder+'\n'+text.replace("\r\n",'\n')+'print\n\n'+'quit\n'
+            text = text +'\n\n' + i
+    text = '10000\n'+numorder+text.replace("\r\n",'\n')+'\n\nprint'+'\nquit\n'
     return text
 
 def export_to_xlsx(file_name, res):
@@ -58,18 +59,19 @@ def export_to_xlsx(file_name, res):
     ws.cell(row, 2).value = 'PASS/FAIL'
     #ws.cell(row, 3).value = '%d/%d' % (cnt, len(res_keys))
     ws.cell(row, 3).value = 'runtime'
+    ws.cell(row,4).value = 'error'
     alltime = 0
     cnt = 0
     for test in res_keys:   
         if res[test][1]:
             cnt = cnt + 1  # count True
         row = row + 1
-        ws.cell(row, 1).value = test
+        ws.cell(row, 1).value = test[-10:]
         ws.cell(row, 2).value = "PASS" if res[test][1] else 'FAIL'
         ws.cell(row, 2).fill = GREEN if res[test][1] else RED
         alltime += res[test][0]
         ws.cell(row, 3).value = round(res[test][0],3)
-        #ws.cell(row, 4).value = 'time(ms)'
+        ws.cell(row, 4).value = str(res[test][2:])
 
     row = row + 1
     ws.cell(row, 1).value = "alltest"
@@ -97,10 +99,10 @@ def export_to_xlsx(file_name, res):
 if __name__ == "__main__":
     args = argparse.ArgumentParser()
     args.add_argument('-d', '--dir', help='testcase dir',
-                    default='testlist', type=str)#改为测试在的dir
+                    default=TESTDIR, type=str)#改为测试在的dir
     args.add_argument('-n', '--name', help='process name',
                     default=DEFAULT_EXEC, type=str)#exe在的地方
-   
+
     args = args.parse_args()
 
     file_pairs = readfilepair(args)#(file.in,file.out)
@@ -122,7 +124,7 @@ if __name__ == "__main__":
             out = child.communicate(text,timeout=EXPIRE_TIME_MS/1000)
             out = out[0].splitlines()
         except subprocess.TimeoutExpired:
-            
+
             #print("time out in {}".format(files[0]))
             pass
         #print(out[0].splitlines())
@@ -133,10 +135,15 @@ if __name__ == "__main__":
         ans = ans.replace('\n\n','\n').splitlines()
         lenans = len(ans)
         count = 0
+        error = ''
         for i in range(lenans):#倒着比
             try:
-                if ans[-i-1] == out[-i-1][-len(ans[-i-1]):]:
+                if ans[-i-1].strip() == out[-i-1][-len(ans[-i-1]):]:
                     count += 1
+                else:
+                    error = {"ans":ans[-i-1].strip(),"out":out[-i-1]}
+                    #print(text)
+                    print(error)
             except:
                 pass
         if count == lenans:
@@ -147,8 +154,6 @@ if __name__ == "__main__":
             res[files[0]].append(0)
             print("fail")
             fail+=1
-        
+        res[files[0]].append(error)
         #print(out[0])
     export_to_xlsx('./result.xlsx',res)
-
-

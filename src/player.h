@@ -27,10 +27,10 @@ public:
     inline int get_credit() {
         return credit_;
     } //获取当前积分数
-    inline  player_state get_state() {
+    inline player_state get_state() {
         return state_;
     } //获取当前状态
-    inline int get_stop_time () {
+    inline int get_stop_time() {
         return stop_time_;
     }
     inline int get_barrier() {
@@ -56,17 +56,17 @@ public:
     bool buy_robot();         //购买娃娃
     bool buy_barrier();       //购买障碍物
 
-    void got_tool_house();            //进入道具屋
-    void got_gift_house();            //进入礼物屋
-    void got_prison();                //进入监狱
-    void got_mine();                  //到达矿地
-    void got_magic_house(); //到达魔法屋
-    bool sell_land(int loc);          //卖地
-    bool buy_land();                  //买地
-    bool charge(char owner);          //玩家缴费
-    bool bankrupted();                //玩家破产
-    bool stopped();                   //因为炸弹或监狱等状态轮空一轮
-    bool update_land();               //升级土地
+    void got_tool_house();   //进入道具屋
+    void got_gift_house();   //进入礼物屋
+    void got_prison();       //进入监狱
+    void got_mine();         //到达矿地
+    void got_magic_house();  //到达魔法屋
+    bool sell_land(int loc); //卖地
+    bool buy_land();         //买地
+    bool charge(char owner); //玩家缴费
+    bool bankrupted();       //玩家破产
+    bool stopped();          //因为炸弹或监狱等状态轮空一轮
+    bool update_land();      //升级土地
 
     bool query_buy_empty();    //查询是否买空地，（查询是否符合买地条件）
     bool query_use_tool();     //查询是否使用道具
