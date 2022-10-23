@@ -376,6 +376,7 @@ bool Gsystem::update_position(char actor, int step) {
         auto tmp = i % 70;
         if (places_[tmp].has_barrier) {
             places_[tmp].has_player++;
+            places_[tmp].has_barrier = false;
             players_[actor].set_pos(tmp);
             return true;
         }
@@ -476,6 +477,9 @@ bool Gsystem::set_god(char user, int num) {
 //设置建筑物状态
 bool Gsystem::set_building(int loc, int level, char owner) {
     places_[loc].level_ = level;
+    if (level != 0) {
+        places_[loc].price_ *= level;
+    }
     places_[loc].state_ = owned;
     places_[loc].owner_ = toupper(owner);
     players_[owner].increase_land(loc);
