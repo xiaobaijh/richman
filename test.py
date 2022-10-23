@@ -1,5 +1,5 @@
 import os
-import concurrent
+import concurrent.futures
 import tldr
 
 sequence = {'Q': '1', 'A': '2', 'S': '3', 'J': '4', 'q': '1', 'a': '2', 's': '3', 'j': 4, '\n':'\n'}
@@ -37,6 +37,7 @@ def parse_input(path):
             f.write(line)
     f.write('\nprint\nquit\n')
     f.close()
+    return path
 
 import os
 
@@ -53,13 +54,18 @@ def parse_output(path):
     for i in range(len(base)):
         if ''.join(base[i].split()) != ''.join(output[i].split()):
             print(path,'failed!')
+
             record.write('\n\n')
             record.write(path)
-            record.write('correct:\n')
+            record.write("\ninput:\n")
+            with open(path+'in') as input_file:
+                for line in input_file.readlines():
+                    record.write(line)            
+            record.write('\ncorrect:')
             for i in base:
                 record.write(i)
             # record.write(base[-1][:-1])
-            record.write('\noutput:\n')
+            record.write('\n\noutput:\n')
             for i in range(len(base)):
                 record.write(output[i])
             return 0
@@ -69,14 +75,23 @@ def parse_output(path):
 with open('testcase.txt', 'r') as f:
     testcase = [i[:-3] for i in f.readlines()]
 print(len(testcase))
+if len(testcase[-1]) == 0:
+    testcase = testcase[:-1] 
 total = len(testcase)
-for i in testcase:
-    if len(i) == 0:
-        continue
-    parse_input(i)
-    print('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+
+with concurrent.futures.ThreadPoolExecutor(128) as E:
+    tasks = E.map(parse_input, testcase)
+for i in tasks:
     os.system('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
-    right += parse_output(i)
+with concurrent.futures.ThreadPoolExecutor(128) as E:
+    tasks = E.map(parse_output, testcase)
+for i in tasks:
+    right += i
+# for i in testcase:
+#     parse_input(i)
+#     print('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+#     os.system('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+#     right += parse_output(i)
 # with concurrent.futures.ThreadPoolExecutor(128) as E:
 #     tasks = E.map(parse_input, testcase)
 # count = 0
