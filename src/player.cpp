@@ -39,7 +39,7 @@ bool Player::increase_property() {
 }
 
 bool Player::increase_god() {
-    god_ += 5;
+    god_ = 5;
     return true;
 }
 
@@ -72,24 +72,14 @@ bool Player::buy_barrier() {
 }
 
 void Player::got_tool_house() {
-    g_->out_tip(ToolHouseTip);
-    get_input(0, 0, 0, 0);
-    std::string input;
-    input = g_->convert_input(actor_, 1);
-    if (input == "1") {
-        buy_barrier();
-    } else if (input == "2") {
-        buy_robot();
-    } else if (input == "0") {
-        g_->out_tip(ExitToolHouseTip);
-        std::string input;
-    } else {
-        g_->out_tip(CmdErrorStr);
-        std::string input;
-    }
+    // if (credit_ < 30) {
+    //     g_->out_tip(CreditNotEnoughStr);
+    //     // get_input(0, 0, 0, 0);
+    // }
+    
     while (credit_ >= 30) {
         g_->out_tip(ToolHouseTip);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
         std::string input;
         input = g_->convert_input(actor_, 1);
         if (input == "1") {
@@ -110,22 +100,22 @@ void Player::got_tool_house() {
 
 void Player::got_gift_house() {
     g_->out_tip(GiftHouseTip);
-    get_input(0, 0, 0, 0);
+    // get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
 
     if (input == "1") {
         increase_property();
         g_->out_tip(GetFundStr);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
     } else if (input == "2") {
         increase_credit();
         g_->out_tip(GetCreditStr);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
     } else if (input == "3") {
         increase_god();
         g_->out_tip(GetGodStr);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
     }
 
 } //进入礼物屋
@@ -162,7 +152,7 @@ void Player::got_mine() {
 void Player::got_magic_house() {
     char actor;
     g_->out_tip(MagicHouseTip);
-    get_input(0, 0, 0, 0);
+    //get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
     if (input == "1") {
@@ -251,9 +241,8 @@ bool Player::buy_land() {
 
 bool Player::charge(char owner) {
     if (god_ > 0) {
-        god_--;
         g_->out_tip(GodOnBodyStr);
-        get_input(0, 0, 0, 0);
+        //get_input(0, 0, 0, 0);
         return true;
     }
     auto land_price = g_->places_[position_].price_;
@@ -302,11 +291,13 @@ bool Player::update_land() {
     while (1) {
         if (g_->places_[position_].level_ < 4) {
             g_->out_tip(QueryUpdateBulidingTip);
-            get_input(0, 0, 0, 0);
+            // get_input(0, 0, 0, 0);
             auto input = g_->convert_input(actor_, 1);
             if (input == "y") {
-                property_ -= land_price;
-                land_price += land_price;
+
+                property_ -= g_->places_[position_].base_price_;
+                land_price += g_->places_[position_].base_price_;
+
                 g_->places_[position_].level_++;
                 // TODO  g_->places_[position]_.default_symbol_ =
                 g_->out_tip(get_name(actor_) + UpdateBulidingY);

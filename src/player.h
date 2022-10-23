@@ -48,6 +48,10 @@ public:
         return true;
     }
 
+    void decrease_god() {
+        god_--;
+    }
+
     bool isBankruptcy(void); //是否破产
 
     bool increase_property(); //礼品屋选择金钱

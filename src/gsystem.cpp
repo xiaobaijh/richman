@@ -28,6 +28,7 @@ void Gsystem::init_game_display() {
     places_[i].color_= COLOR_SPECIAL;
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
+        places_[i].base_price_ = 200;
         places_[i].price_ = 200;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
@@ -38,6 +39,7 @@ void Gsystem::init_game_display() {
     map_[i++] = 'P';
     
     for (int m = 0; m < 13; ++m) {
+        places_[i].base_price_ = 200;
         places_[i].price_ = 200;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
@@ -48,6 +50,7 @@ void Gsystem::init_game_display() {
     map_[i++] = 'T';
     
     for (int m = 0; m < 6; ++m) {
+        places_[i].base_price_ = 500;
         places_[i].price_ = 500;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
@@ -58,6 +61,7 @@ void Gsystem::init_game_display() {
     map_[i++] = 'G';
     
     for (int m = 0; m < 13; ++m) {
+        places_[i].base_price_ = 300;
         places_[i].price_ = 300;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
@@ -68,6 +72,7 @@ void Gsystem::init_game_display() {
     map_[i++] = 'P';
     
     for (int m = 0; m < 13; ++m) {
+        places_[i].base_price_ = 300;
         places_[i].price_ = 300;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
@@ -79,7 +84,7 @@ void Gsystem::init_game_display() {
     
     for (int m = 0; m < 6; ++m) {
         places_[i].type_ = mine;
-        places_[i].price_ = 500;
+        // places_[i].price_ = 500;
         places_[i].default_symbol_ = '$';
         places_[i].color_= COLOR_SPECIAL;
         map_[i++] = '$';
@@ -288,6 +293,9 @@ bool Gsystem::step() {
             continue;
         }
         current_player_ = user_order_[i];
+        if (players_[current_player_].get_god()>0) {
+            players_[current_player_].decrease_god();
+        }
         if (players_[current_player_].state_ == stop) {
             if (places_[players_[current_player_].get_position()].has_player == 1) {
                 change_map(players_[current_player_].get_position(), current_player_, get_clour(current_player_));

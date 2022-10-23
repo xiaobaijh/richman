@@ -165,6 +165,7 @@ char print_info(const char * content){
     clean_info();
     addstr(content);
     refresh();
+    // delay(500);
     return 0;
 }
 

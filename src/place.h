@@ -28,6 +28,7 @@ public:
     int level_{0};
     int has_player{0}; //是否有玩家
     bool has_barrier{false};
+    int base_price_{0};
 
     Place() = default;
     ~Place();
