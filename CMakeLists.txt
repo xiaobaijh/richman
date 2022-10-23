@@ -13,11 +13,3 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC src)
 
-
-# TODO: 如有需要，请添加测试并安装目标。
-option(BUILD_TEST "Whether or not to build the tests" ON)
-if (${BUILD_TEST})
-    message(STATUS "Building tests")
-    enable_testing()  # Enable testing only works in root scope
-    add_subdirectory(tests)
-endif ()

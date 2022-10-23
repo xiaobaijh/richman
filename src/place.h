@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "player.h"
+#include "display.h"
 
 enum place_state { unowned,
                    owned,
@@ -8,12 +9,12 @@ enum place_state { unowned,
 
 enum place_type {
     common,
-    hospital,
-    prision,
     mine,
     tool_house,
     gift_house,
-    magic_house
+    magic_house,
+    park,
+    start
 };
 
 class Place {
@@ -21,12 +22,13 @@ public:
     place_state state_{unowned};
     place_type type_{common};
     char default_symbol_{'0'}; //地图默认图标
-    char owner_{'0'};          // owner =0没有所有者，1表示玩家1，类推
+    int color_{COLOR_BASIC};
+    char owner_{'0'}; // owner =0没有所有者，1表示玩家1，类推
     int price_{0};
     int level_{0};
-    int  has_player{0}; //是否有玩家
-    bool has_bomb{false};
+    int has_player{0}; //是否有玩家
     bool has_barrier{false};
+    int base_price_{0};
 
     Place() = default;
     ~Place();

@@ -15,10 +15,11 @@ Player::Player() {
 }
 
 bool Player::update_poistion(int &step_num) {
-    position_ = (position_ + step_num) % 69;
+    position_ = (position_ + step_num) % 70;
+    return false;
 }
 bool Player::query_use_tool() {
-    if (bomb_ > 0 || barrier_ > 0 || robot_ > 0) {
+    if (barrier_ > 0 || robot_ > 0) {
         return true;
     }
     return false;
@@ -38,76 +39,89 @@ bool Player::increase_property() {
 }
 
 bool Player::increase_god() {
-    god_ += 5;
+    god_ = 5;
     return true;
 }
-bool Player::buy_bomb() {
-    if (property_ >= 50 && (bomb_ + robot_ + barrier_) < 10) {
-        property_ -= 50;
-        bomb_ += 1;
-        return true;
-    } else {
-        return false;
-    }
-}
+
 bool Player::buy_robot() {
-    if (property_ >= 30 && (bomb_ + robot_ + barrier_) < 10) {
-        property_ -= 30;
+    if (credit_ >= 30 && (robot_ + barrier_) < 10) {
+        credit_ -= 30;
         robot_ += 1;
+        g_->out_tip(get_name(actor_) + BuyRobotStr);
+        get_input(0, 0, 0, 0);
         return true;
     } else {
+        g_->out_tip(get_name(actor_) + MoneyNotEnough);
+        get_input(0, 0, 0, 0);
         return false;
     }
 }
 
 bool Player::buy_barrier() {
-    if (property_ >= 50 && (bomb_ + robot_ + barrier_) < 10) {
-        property_ -= 50;
+    if (credit_ >= 50 && (robot_ + barrier_) < 10) {
+        credit_ -= 50;
         barrier_ += 1;
+        g_->out_tip(get_name(actor_) + BuyBarrierStr);
+        //get_input(0, 0, 0, 0);
         return true;
     } else {
+        g_->out_tip(get_name(actor_) + MoneyNotEnough);
+        //get_input(0, 0, 0, 0);
         return false;
     }
 }
 
 void Player::got_tool_house() {
-    g_->out_tip(ToolHouseTip);
-    std::string input;
-    input = g_->convert_input(actor_, 1);
-    get_input(0, 0, 0, 0);
-    if (input == "1") {
-        buy_barrier();
-    } else if (input == "2") {
-        buy_robot();
-    } else if (input == "3") {
-        buy_bomb();
+    // if (credit_ < 30) {
+    //     g_->out_tip(CreditNotEnoughStr);
+    //     // get_input(0, 0, 0, 0);
+    // }
+
+    while (credit_ >= 30) {
+        g_->out_tip(ToolHouseTip);
+        //get_input(0, 0, 0, 0);
+        std::string input;
+        input = g_->convert_input(actor_, 1);
+        if (input == "1") {
+            buy_barrier();
+        } else if (input == "2") {
+            buy_robot();
+        } else if (input == "0") {
+            g_->out_tip(ExitToolHouseTip);
+            get_input(0, 0, 0, 0);
+            std::string input;
+            break;
+        } else {
+            g_->out_tip(CmdErrorStr);
+            std::string input;
+        }
+        get_input(0, 0, 0, 0);
     }
+
 } //进入道具屋
 
 void Player::got_gift_house() {
     g_->out_tip(GiftHouseTip);
-    get_input(0, 0, 0, 0);
+    // get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
 
     if (input == "1") {
         increase_property();
         g_->out_tip(GetFundStr);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
     } else if (input == "2") {
         increase_credit();
         g_->out_tip(GetCreditStr);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
     } else if (input == "3") {
         increase_god();
         g_->out_tip(GetGodStr);
-        get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
     }
 
 } //进入礼物屋
-void Player::got_prison() {
-    stop_time_ += PRISON_ROLL_DELAY;
-} //进入监狱
+
 void Player::got_mine() {
     switch (position_) {
     case MINE1_POS: {
@@ -136,11 +150,42 @@ void Player::got_mine() {
     }
     }
 } //到达矿地
-void Player::got_hospital() {
-    stop_time_ += HOSPITAL_ROLL_DELAY;
-    position_ = HOSPITAL_POS;
-    change_map(HOSPITAL_POS, actor_, get_clour(actor_));
-} //遇到炸弹后进入医院
+
+void Player::got_magic_house() {
+    char actor;
+    g_->out_tip(MagicHouseTip);
+    // get_input(0, 0, 0, 0);
+    std::string input;
+    input = g_->convert_input(actor_, 1);
+    if (input == "1") {
+        actor = 'Q';
+    } else if (input == "2") {
+        actor = 'A';
+    } else if (input == "3") {
+        actor = 'S';
+    } else if (input == "4") {
+        actor = 'J';
+    } else {
+        return;
+    }
+
+    if (g_->players_.count(actor) <= 0) {
+        g_->out_tip(FailFrameStr);
+        get_input(0, 0, 0, 0);
+        return;
+    }
+    Player &tar = g_->players_[actor];
+    if (tar.get_state() == bankrupt) {
+        g_->out_tip(FailFrameStr);
+        get_input(0, 0, 0, 0);
+        return;
+    }
+    tar.add_stop_time(2);
+    tar.state_ = stop;
+    g_->out_tip(FrameStr + get_name(actor));
+    get_input(0, 0, 0, 0);
+    return;
+} //进入魔法屋
 
 bool Player::sell_land(int loc) {
     if (loc < 0 || loc > 69) {
@@ -151,7 +196,8 @@ bool Player::sell_land(int loc) {
         g_->out_tip(SellErrorOwnerLand);
         return false;
     }
-    property_ += g_->places_[loc].price_ * 2;
+    property_ += (g_->places_[loc].price_ * 2);
+    g_->places_[loc].state_ = unowned;
     for (auto iter = places_.begin(); iter != places_.end(); iter++) { //从vector中删除指定的某一个元素
         if (*iter == loc) {
             places_.erase(iter);
@@ -164,8 +210,9 @@ bool Player::sell_land(int loc) {
         g_->places_[loc].price_ /= g_->places_[loc].level_;
     }
     g_->places_[loc].level_ = 0;
+    g_->places_[loc].color_ = COLOR_BASIC;
     g_->out_tip(SellStr);
-    change_map(loc, '0', COLOR_BASIC);
+    g_->update_map();
     return false;
 }
 //买地
@@ -183,7 +230,8 @@ bool Player::buy_land() {
             places_.push_back(position_);
             g_->places_[position_].state_ = owned;
             g_->places_[position_].owner_ = actor_;
-            change_map(position_, g_->places_[position_].default_symbol_, get_clour(actor_));
+            g_->places_[position_].color_ = get_clour(actor_);
+            // change_map(position_, g_->places_[position_].default_symbol_, get_clour(actor_));
             g_->out_tip(BuyEmptyY);
             get_input(0, 0, 0, 0);
             break;
@@ -195,25 +243,25 @@ bool Player::buy_land() {
 }
 
 bool Player::charge(char owner) {
+    if (god_ > 0) {
+        g_->out_tip(GodOnBodyStr);
+        // get_input(0, 0, 0, 0);
+        return true;
+    }
     auto land_price = g_->places_[position_].price_;
     if (land_price > property_) {
         state_ = bankrupt;
-        g_->user_num_--;
         if (!bankrupted()) {
             return false;
         }
+        g_->places_[position_].has_player--;
+        change_map(position_, g_->places_[position_].default_symbol_, g_->places_[position_].color_);
         g_->out_tip(get_name(actor_) + BankruptcyStr);
         get_input(0, 0, 0, 0);
         return true;
     }
-    if (god_ > 0) {
-        god_--;
-        g_->out_tip(GodOnBodyStr);
-        get_input(0, 0, 0, 0);
-        return true;
-    }
-    property_ -= (land_price) / 2;
-    g_->players_[owner].property_ += land_price / 2;
+    property_ -= (land_price / 2);
+    g_->players_[owner].property_ += (land_price / 2);
     return true;
 } //玩家缴费
 
@@ -232,9 +280,11 @@ bool Player::bankrupted() {
 }
 bool Player::stopped() {
     stop_time_--;
-    stop_time_ == 0 ? state_ = normal : state_ = stop;
+    if (stop_time_ == 0) {
+        state_ = normal;
+    }
     return true;
-} //因为炸弹或监狱等状态轮空一轮
+} //因为被陷害轮空一轮
 
 bool Player::update_land() {
     auto land_price = g_->places_[position_].price_;
@@ -242,18 +292,24 @@ bool Player::update_land() {
         return true;
     }
     while (1) {
-        if (g_->places_[position_].level_ < 4) {
+        if (g_->places_[position_].level_ < 3) {
             g_->out_tip(QueryUpdateBulidingTip);
+            // get_input(0, 0, 0, 0);
             auto input = g_->convert_input(actor_, 1);
             if (input == "y") {
-                property_ -= land_price;
-                land_price += land_price;
+                property_ -= g_->places_[position_].base_price_;
+                land_price += g_->places_[position_].base_price_;
+
                 g_->places_[position_].level_++;
+                // TODO  g_->places_[position]_.default_symbol_ =
                 g_->out_tip(get_name(actor_) + UpdateBulidingY);
+                get_input(0, 0, 0, 0);
                 break;
             } else if (input == "n") {
                 break;
             }
+        } else {
+            break;
         }
     } //升级土地
     return true;
@@ -262,15 +318,20 @@ bool Player::update_land() {
 bool Player::user_robot() {
     if (robot_ <= 0) {
         g_->out_tip(NoRobotStr);
+        get_input(0, 0, 0, 0);
         return false;
     } else {
         robot_--;
+        g_->out_tip(UseRobotStr);
+        get_input(0, 0, 0, 0);
         for (int i = 1; i <= 10; i++) {
             int pos = (get_position() + i) % PLACE_NUM;
-            if (g_->places_[pos].has_bomb != false || g_->places_[pos].has_barrier != false) {
-                g_->places_[pos].has_bomb = false;
+            if (g_->places_[pos].has_barrier != false) {
                 g_->places_[pos].has_barrier = false;
                 switch (g_->places_[pos].type_) {
+                case park: {
+                    change_map(pos, PARK_PIC, COLOR_BASIC);
+                }
                 case mine: {
                     change_map(pos, MINE_PIC, COLOR_BASIC);
                     break;
@@ -314,43 +375,26 @@ bool Player::user_robot() {
     }
 } // 使用机器人
 
-bool Player::user_bomb(int loc) {
-    if (bomb_ <= 0) {
-        g_->out_tip(NoBombStr);
-        return false;
-    } else {
-        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player != 0 || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
-            // 判断loc是否属于[0, 69]
-            // 判断loc是否和当前位置差距 > 10
-            // 判断loc是否有人、有道具
-            // 判断loc是否在医院、监狱
-            g_->out_tip(CantPlaceBomb);
-            return false;
-        } else {
-            bomb_--;
-            g_->place_tool(loc, TOOL_BOMB);
-            change_map(loc, BOMB_PIC, COLOR_BASIC);
-            return true;
-        }
-    }
-} // 使用炸弹
-
 bool Player::use_barrier(int loc) {
     if (barrier_ <= 0) {
         g_->out_tip(NoBarrierStr);
+        get_input(0, 0, 0, 0);
         return false;
     } else {
-        if (loc < 0 || loc > 69 || (abs(loc - position_) > 10) || g_->places_[position_].has_barrier || g_->places_[position_].has_bomb || g_->places_[position_].has_player != 0 || g_->places_[position_].type_ == hospital || g_->places_[position_].type_ == prision) {
-            // 判断loc是否属于[0, 69]
-            // 判断loc是否和当前位置差距 > 10
+        int barrier_pos = (loc + position_ + PLACE_NUM) % PLACE_NUM;
+        if (loc < -10 || loc > 10 || g_->places_[barrier_pos].has_barrier || g_->places_[barrier_pos].has_player != 0 || g_->places_[barrier_pos].type_ == park) {
+            // 判断loc是否属于[-10, 10]
             // 判断loc是否有人、有道具
-            // 判断loc是否在医院、监狱
+            // 判断loc是否在公园
             g_->out_tip(CantPlaceBarrier);
+            get_input(0, 0, 0, 0);
             return false;
         } else {
             barrier_--;
-            g_->place_tool(loc, TOOL_BARRIER);
-            change_map(loc, BARRIER_PIC, COLOR_BASIC);
+            g_->place_tool(barrier_pos, TOOL_BARRIER);
+            change_map(barrier_pos, BARRIER_PIC, COLOR_BASIC);
+            g_->out_tip(UseBarrierStr);
+            get_input(0, 0, 0, 0);
             return true;
         }
     }
@@ -398,9 +442,9 @@ bool Player::query() {
         str_pos = std::to_string(pos) + "\t" + LandTypeStr + district + "\t" + LandLevel + "\n";
         str += str_pos;
     }
-    std::string s4 = "总计：空地" + std::to_string(total[0]) + "块，茅屋：" + std::to_string(total[1]) + "间，洋房：" + std::to_string(total[2]) + "幢，摩天楼：" + std::to_string(total[3]) + "座\n";
+    std::string s4 = "总计：\n空地：" + std::to_string(total[0]) + "块\t茅屋：" + std::to_string(total[1]) + "间\t洋房：" + std::to_string(total[2]) + "幢\t摩天楼：" + std::to_string(total[3]) + "座\n";
     str += s4;
-    std::string s5 = "道具：\n炸弹：" + std::to_string(bomb_) + "个\t路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\n";
+    std::string s5 = "道具：\n路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\t财神回合：" + std::to_string(god_) + "轮\n";
     str += s5;
 
     // char str_char[500];
@@ -425,10 +469,7 @@ bool Player::set_stop_time_(int &num) {
     stop_time_ = num;
     return true;
 }
-bool Player::set_bomb(int &num) {
-    bomb_ = num;
-    return true;
-}
+
 bool Player::set_barrier(int &num) {
     barrier_ = num;
     return true;
@@ -439,5 +480,10 @@ bool Player::set_robot(int &num) {
 }
 bool Player::set_god(int &num) {
     god_ = num;
+    return true;
+}
+
+bool Player::add_stop_time(int num) {
+    stop_time_ += num;
     return true;
 }

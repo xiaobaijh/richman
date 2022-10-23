@@ -32,6 +32,7 @@ public:
     virtual ~Gsystem(void);
 
     void init_game_display();
+    bool update_map();
     // void init_map();
     bool set_user(std::string &seq, int money); //设置玩家列表
     bool ready();
@@ -41,7 +42,7 @@ public:
     void out_err(std::string &tip);                 //系统输出错误，即提示开发人员的错误
     std::string convert_input(char actor, int len); //需要玩家输入信息时使用，返回一个字符串
     int prarse_input(std::string &input);           //处理输入信息，支持处理quit,help两种玩家指令，preset,print两种系统指令
-
+    bool prarse_preset(std::string input);
     bool step();                                //游戏进行一步
     int player_step(char actor);                //玩家活动一步
     int get_dices();                            //模拟掷骰子
@@ -54,7 +55,6 @@ public:
     bool set_property(char user, int num);             //设置玩家钱
     bool set_credit(char user, int num);               //设置玩家点数
     bool set_state(char user, int num);                //设置玩家停止回合数
-    bool set_bomb(char user, int num);                 //设置玩家炸弹数
     bool set_barrier(char user, int num);              //设置玩家路障数
     bool set_robot(char user, int num);                //设置玩家机器人数
     bool set_god(char user, int num);                  //设置财神回合

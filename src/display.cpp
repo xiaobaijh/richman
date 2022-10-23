@@ -7,7 +7,7 @@
 #include "display.h"
 
 static int shape_map[3] = {0};
-static int _color_array[] = {COLOR_BLACK, COLOR_GREEN, COLOR_YELLOW, COLOR_RED, COLOR_BLUE, COLOR_YELLOW};
+static int _color_array[] = {COLOR_BLACK, COLOR_WHITE, COLOR_YELLOW, COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_GREEN};
 
 #define curs_color(color) ((color < NUM_COLOR) ?  _color_array[color] : _color_array[COLOR_BASIC])
 
@@ -165,6 +165,7 @@ char print_info(const char * content){
     clean_info();
     addstr(content);
     refresh();
+    // delay(500);
     return 0;
 }
 
