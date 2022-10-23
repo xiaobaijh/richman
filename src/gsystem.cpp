@@ -293,9 +293,7 @@ bool Gsystem::step() {
             continue;
         }
         current_player_ = user_order_[i];
-        if (players_[current_player_].get_god()>0) {
-            players_[current_player_].decrease_god();
-        }
+
         if (players_[current_player_].state_ == stop) {
             if (places_[players_[current_player_].get_position()].has_player == 1) {
                 change_map(players_[current_player_].get_position(), current_player_, get_clour(current_player_));
@@ -355,6 +353,9 @@ bool Gsystem::step() {
                 players_[current_player_].charge(places_[pos].owner_);
             }
         }
+        }
+        if (players_[current_player_].get_god()>0) {
+            players_[current_player_].decrease_god();
         }
     }
     //更新位置的过程中可能出现：
