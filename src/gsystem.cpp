@@ -51,7 +51,7 @@ void Gsystem::init_game_display() {
     places_[i].default_symbol_ = 'G';
     map_[i++] = 'G';
     for (int m = 0; m < 13; ++m) {
-        places_[i].price_ = 200;
+        places_[i].price_ = 300;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
@@ -59,7 +59,7 @@ void Gsystem::init_game_display() {
     places_[i].default_symbol_ = 'P';
     map_[i++] = 'P';
     for (int m = 0; m < 13; ++m) {
-        places_[i].price_ = 200;
+        places_[i].price_ = 300;
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
@@ -277,6 +277,9 @@ bool Gsystem::step() {
         }
         current_player_ = user_order_[i];
         if (players_[current_player_].state_ == stop) {
+            if (places_[players_[current_player_].get_position()].has_player == 1) {
+                change_map(players_[current_player_].get_position(), current_player_, get_clour(current_player_));
+            }
             players_[current_player_].stopped();
             continue;
         }
@@ -378,7 +381,7 @@ bool Gsystem::update_position(char actor, int step) {
         if (places_[tmp].has_barrier) {
             places_[tmp].has_player++;
             places_[tmp].has_barrier = false;
-            change_map(tmp,places_[tmp].default_symbol_,COLOR_BASIC);
+            change_map(tmp, places_[tmp].default_symbol_, COLOR_BASIC);
             players_[actor].set_pos(tmp);
             return true;
         }
