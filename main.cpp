@@ -61,10 +61,10 @@ int main(int argc, char **argv) {
     
     input = sys.convert_input(0, 40);
 
-    while (sys.prarse_preset(input)) {
+    auto result = sys.prarse_preset(input);
+    while (result) {
         input = sys.convert_input( 0,40);
-
-        sys.prarse_preset(input);
+        result =sys.prarse_preset(input);
     }
 
     while (sys.step()) {

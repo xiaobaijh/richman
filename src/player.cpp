@@ -76,7 +76,7 @@ void Player::got_tool_house() {
     //     g_->out_tip(CreditNotEnoughStr);
     //     // get_input(0, 0, 0, 0);
     // }
-    
+
     while (credit_ >= 30) {
         g_->out_tip(ToolHouseTip);
         // get_input(0, 0, 0, 0);
@@ -152,7 +152,7 @@ void Player::got_mine() {
 void Player::got_magic_house() {
     char actor;
     g_->out_tip(MagicHouseTip);
-    //get_input(0, 0, 0, 0);
+    // get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
     if (input == "1") {
@@ -194,7 +194,8 @@ bool Player::sell_land(int loc) {
         g_->out_tip(SellErrorOwnerLand);
         return false;
     }
-    property_ += g_->places_[loc].price_ * 2;
+    property_ += (g_->places_[loc].price_ * 2);
+    g_->places_[loc].state_ = unowned;
     for (auto iter = places_.begin(); iter != places_.end(); iter++) { //从vector中删除指定的某一个元素
         if (*iter == loc) {
             places_.erase(iter);
@@ -242,7 +243,7 @@ bool Player::buy_land() {
 bool Player::charge(char owner) {
     if (god_ > 0) {
         g_->out_tip(GodOnBodyStr);
-        //get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
         return true;
     }
     auto land_price = g_->places_[position_].price_;
@@ -294,7 +295,6 @@ bool Player::update_land() {
             // get_input(0, 0, 0, 0);
             auto input = g_->convert_input(actor_, 1);
             if (input == "y") {
-
                 property_ -= g_->places_[position_].base_price_;
                 land_price += g_->places_[position_].base_price_;
 

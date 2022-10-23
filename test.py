@@ -7,7 +7,7 @@ from openpyxl import Workbook
 import os
 import time 
 import pandas as pd
-DEFAULT_EXEC = "/data1/jilinfei/rich/build/richman "
+DEFAULT_EXEC = "/data1/publicUser/wjh/richman/build/richman "
 EXPIRE_TIME_MS = 1000
 TESTDIR = 'testcase/testcase_g2'
 GREEN = PatternFill(start_color='7FFF00',
@@ -15,11 +15,12 @@ GREEN = PatternFill(start_color='7FFF00',
 RED = PatternFill(start_color='FF0000', end_color='FF0000', fill_type='solid')
 def readfilepair(args):
     dirname= os.listdir(args.dir) #得到文件夹下的所有文件名称
-    #dirname = ['base']
+    #dirname = ['pay rent']
     files = []
     for path in dirname:
         dir = os.path.join(args.dir,path)
         file = os.listdir(dir)
+        #file = ["NO1-9.in","NO1-9.out"]
         file.sort()
         for i in file:
             files.append(os.path.join(dir,i))
@@ -134,7 +135,8 @@ if __name__ == "__main__":
         fout = open(files[1],'rb')
         ans = fout.read().decode()
         ans = ans.replace('\n\n','\n').splitlines()
-        ans = [i.strip() for i in ans]
+        ans = [i.strip()  for i in ans if i]
+        ans = [i.strip()  for i in ans if i]
         out = [i.strip() for i in out]
         lenans = len(ans)
         out = out[-lenans:]
@@ -143,7 +145,7 @@ if __name__ == "__main__":
         out.sort()
         count = 0
         errorline = 0
-        error = ''
+        error = {}
         for i in range(lenans):#倒着比
             outlist = []
             anslist = []
@@ -152,7 +154,8 @@ if __name__ == "__main__":
                     count += 1
                 else:
                     errorline +=1
-                    error = {"ans{}".format(errorline):ans[-i-1],"out{}".format(errorline):out[-i-1]}
+                    error["ans{}".format(errorline)] = ans[-i-1]
+                    error["out{}".format(errorline)] = out[-i-1]
                     #print(text)
                     print(error)
             except:

@@ -442,6 +442,7 @@ bool Gsystem::set_user_pos(char user, int loc) {
         return false;
     }
     players_[user].set_pos(loc);
+    places_[loc].has_player += 1;
     return true;
 }
 
