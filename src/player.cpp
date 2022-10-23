@@ -269,8 +269,8 @@ bool Player::charge(char owner) {
         get_input(0, 0, 0, 0);
         return true;
     }
-    property_ -= (land_price);
-    g_->players_[owner].property_ += (land_price);
+    property_ -= (land_price/2);
+    g_->players_[owner].property_ += (land_price/2);
     return true;
 } //玩家缴费
 
