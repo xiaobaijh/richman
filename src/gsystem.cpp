@@ -254,7 +254,7 @@ bool Gsystem::print() {
         if (ch == current_player_) break;
         index++;
     }
-    printf("seq ");
+    printf("\n\nseq ");
     for (int i = 0; i < num; ++i) {
         printf("%c", user_order_[(index + i) % num]);
     }
