@@ -241,7 +241,7 @@ bool Player::charge(char owner) {
             return false;
         }
         g_->places_[position_].has_player--;
-        change_map(position_,g_->places_[position_].default_symbol_,g_->places_[position_].color_);
+        change_map(position_, g_->places_[position_].default_symbol_, g_->places_[position_].color_);
         g_->out_tip(get_name(actor_) + BankruptcyStr);
         get_input(0, 0, 0, 0);
         return true;
@@ -266,7 +266,9 @@ bool Player::bankrupted() {
 }
 bool Player::stopped() {
     stop_time_--;
-    stop_time_ == 0 ? state_ = normal : state_ = stop;
+    if (stop_time_ == 0) {
+        state_ = normal;
+    }
     return true;
 } //因为被陷害轮空一轮
 
@@ -278,14 +280,14 @@ bool Player::update_land() {
     while (1) {
         if (g_->places_[position_].level_ < 4) {
             g_->out_tip(QueryUpdateBulidingTip);
-            get_input(0,0,0,0);
+            get_input(0, 0, 0, 0);
             auto input = g_->convert_input(actor_, 1);
             if (input == "y") {
                 property_ -= land_price;
                 land_price += land_price;
                 g_->places_[position_].level_++;
                 g_->out_tip(get_name(actor_) + UpdateBulidingY);
-                get_input(0,0,0,0);
+                get_input(0, 0, 0, 0);
                 break;
             } else if (input == "n") {
                 break;

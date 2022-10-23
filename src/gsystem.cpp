@@ -149,7 +149,7 @@ int Gsystem::prarse_input(std::string &input) {
         return 0;
     }
     std::regex pat("\\s*(\\w*)\\s*(.*)");
-    std::regex number_pat("\\+?[1-9][0-9]*$");
+    std::regex number_pat("-?(\\d+|\\d+\\.\\d+)");
     std::smatch result;
     std::smatch result_num;
     if (std::regex_match(input, result, pat)) {
