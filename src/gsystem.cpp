@@ -25,7 +25,7 @@ void Gsystem::init_game_display() {
     places_[i].type_ = park;
     places_[i].default_symbol_ = 'S';
     places_[i].has_player = user_num_;
-    places_[i].color_= COLOR_SPECIAL;
+    places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'S';
     for (int m = 0; m < 13; ++m) {
         places_[i].base_price_ = 200;
@@ -35,9 +35,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = start;
     places_[i].default_symbol_ = 'P';
-    places_[i].color_= COLOR_SPECIAL;
+    places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'P';
-    
+
     for (int m = 0; m < 13; ++m) {
         places_[i].base_price_ = 200;
         places_[i].price_ = 200;
@@ -46,9 +46,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = tool_house;
     places_[i].default_symbol_ = 'T';
-    places_[i].color_= COLOR_SPECIAL;
+    places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'T';
-    
+
     for (int m = 0; m < 6; ++m) {
         places_[i].base_price_ = 500;
         places_[i].price_ = 500;
@@ -57,9 +57,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = gift_house;
     places_[i].default_symbol_ = 'G';
-    places_[i].color_= COLOR_SPECIAL;
+    places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'G';
-    
+
     for (int m = 0; m < 13; ++m) {
         places_[i].base_price_ = 300;
         places_[i].price_ = 300;
@@ -68,9 +68,9 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = park;
     places_[i].default_symbol_ = 'P';
-    places_[i].color_= COLOR_SPECIAL;
+    places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'P';
-    
+
     for (int m = 0; m < 13; ++m) {
         places_[i].base_price_ = 300;
         places_[i].price_ = 300;
@@ -79,14 +79,14 @@ void Gsystem::init_game_display() {
     }
     places_[i].type_ = magic_house;
     places_[i].default_symbol_ = 'M';
-    places_[i].color_= COLOR_SPECIAL;
+    places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'M';
-    
+
     for (int m = 0; m < 6; ++m) {
         places_[i].type_ = mine;
         // places_[i].price_ = 500;
         places_[i].default_symbol_ = '$';
-        places_[i].color_= COLOR_SPECIAL;
+        places_[i].color_ = COLOR_SPECIAL;
         map_[i++] = '$';
     }
     init_display();
@@ -167,7 +167,7 @@ int Gsystem::prarse_input(std::string &input) {
         return 0;
     }
     std::regex pat("\\s*(\\w*)\\s*(.*)");
-    std::regex number_pat("-?(\\d+|\\d+\\.\\d+)");
+    std::regex number_pat("-?(\\d+|\\d+\\.\\d+)[ ]*");
     std::smatch result;
     std::smatch result_num;
     if (std::regex_match(input, result, pat)) {
@@ -319,42 +319,44 @@ bool Gsystem::step() {
         auto current_pos_type = places_[pos].type_;
         switch (current_pos_type) {
         case park: {
-            continue;
+            break;
         }
         case start: {
-            continue;
+            break;
         }
         case mine: {
             players_[current_player_].got_mine();
-            continue;
+            break;
         }
         case gift_house: {
             players_[current_player_].got_gift_house();
-            continue;
+            break;
         }
         case tool_house: {
             players_[current_player_].got_tool_house();
-            continue;
+            break;
         }
         case magic_house: {
             players_[current_player_].got_magic_house();
-            continue;
-        }
-        }
-        auto current_pos_state = places_[pos].state_;
-        switch (current_pos_state) {
-        case unowned:
-            players_[current_player_].buy_land();
             break;
-        case owned: {
-            if (places_[pos].owner_ == current_player_) {
-                players_[current_player_].update_land();
-            } else {
-                players_[current_player_].charge(places_[pos].owner_);
+        }
+        default: {
+            auto current_pos_state = places_[pos].state_;
+            switch (current_pos_state) {
+            case unowned:
+                players_[current_player_].buy_land();
+                break;
+            case owned: {
+                if (places_[pos].owner_ == current_player_) {
+                    players_[current_player_].update_land();
+                } else {
+                    players_[current_player_].charge(places_[pos].owner_);
+                }
+            }
             }
         }
         }
-        if (players_[current_player_].get_god()>0) {
+        if (players_[current_player_].get_god() > 0) {
             players_[current_player_].decrease_god();
         }
     }

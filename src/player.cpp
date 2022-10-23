@@ -283,6 +283,9 @@ bool Player::stopped() {
     if (stop_time_ == 0) {
         state_ = normal;
     }
+    if (god_>0) {
+        god_--;
+    }
     return true;
 } //因为被陷害轮空一轮
 

@@ -12,3 +12,5 @@ cmake-build-debug/
 CMakeSettings.json
 Makefile
 CMakeCache.txt
+*.in_tmp
+*.out_tmp
