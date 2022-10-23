@@ -149,8 +149,6 @@ void Player::got_magic_house() {
     } else if (input == "4") {
         actor = 'J';
     } else {
-        g_->out_tip(CmdErrorStr);
-        get_input(0, 0, 0, 0);
         return;
     }
 
@@ -300,9 +298,12 @@ bool Player::update_land() {
 bool Player::user_robot() {
     if (robot_ <= 0) {
         g_->out_tip(NoRobotStr);
+        get_input(0, 0, 0, 0);
         return false;
     } else {
         robot_--;
+        g_->out_tip(UseRobotStr);
+        get_input(0, 0, 0, 0);
         for (int i = 1; i <= 10; i++) {
             int pos = (get_position() + i) % PLACE_NUM;
             if (g_->places_[pos].has_barrier != false) {
@@ -357,6 +358,7 @@ bool Player::user_robot() {
 bool Player::use_barrier(int loc) {
     if (barrier_ <= 0) {
         g_->out_tip(NoBarrierStr);
+        get_input(0, 0, 0, 0);
         return false;
     } else {
         int barrier_pos = (loc + position_ + PLACE_NUM) % PLACE_NUM;
@@ -365,11 +367,14 @@ bool Player::use_barrier(int loc) {
             // 判断loc是否有人、有道具
             // 判断loc是否在公园
             g_->out_tip(CantPlaceBarrier);
+            get_input(0, 0, 0, 0);
             return false;
         } else {
             barrier_--;
-            g_->place_tool(loc, TOOL_BARRIER);
-            change_map(loc, BARRIER_PIC, COLOR_BASIC);
+            g_->place_tool(barrier_pos, TOOL_BARRIER);
+            change_map(barrier_pos, BARRIER_PIC, COLOR_BASIC);
+            g_->out_tip(UseBarrierStr);
+            get_input(0, 0, 0, 0);
             return true;
         }
     }
@@ -419,7 +424,7 @@ bool Player::query() {
     }
     std::string s4 = "总计：\n空地：" + std::to_string(total[0]) + "块\t茅屋：" + std::to_string(total[1]) + "间\t洋房：" + std::to_string(total[2]) + "幢\t摩天楼：" + std::to_string(total[3]) + "座\n";
     str += s4;
-    std::string s5 = "道具：\n路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "轮\t财神回合：" + std::to_string(god_) + "个\n";
+    std::string s5 = "道具：\n路障：" + std::to_string(barrier_) + "个\t机器娃娃：" + std::to_string(robot_) + "个\t财神回合：" + std::to_string(god_) + "轮\n";
     str += s5;
 
     // char str_char[500];

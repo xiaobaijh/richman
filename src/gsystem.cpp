@@ -22,6 +22,7 @@ Gsystem::~Gsystem() {
 }
 void Gsystem::init_game_display() {
     int i = 0;
+    places_[i].type_ = park;
     places_[i].default_symbol_ = 'S';
     places_[i].has_player = user_num_;
     map_[i++] = 'S';
@@ -30,7 +31,7 @@ void Gsystem::init_game_display() {
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
-    places_[i].type_ = park;
+    places_[i].type_ = start;
     places_[i].default_symbol_ = 'P';
     map_[i++] = 'P';
     for (int m = 0; m < 13; ++m) {
@@ -78,7 +79,7 @@ void Gsystem::init_game_display() {
 
 bool Gsystem::update_map() {
     for (int i = 0; i < 70; i++) {
-        if (places_[i].has_player == 0) {
+        if (places_[i].has_player == 0 && places_[i].has_barrier == false) {
             change_map(i, places_[i].default_symbol_, places_[i].color_);
         }
     }
@@ -181,7 +182,7 @@ int Gsystem::prarse_input(std::string &input) {
             } else if (func_name == "sell") {
                 players_[current_player_].sell_land(number);
                 return 0;
-            } else if (func_name == "bolck") {
+            } else if (func_name == "block") {
                 players_[current_player_].use_barrier(number);
                 return 0;
             }
@@ -377,6 +378,7 @@ bool Gsystem::update_position(char actor, int step) {
         if (places_[tmp].has_barrier) {
             places_[tmp].has_player++;
             places_[tmp].has_barrier = false;
+            change_map(tmp,places_[tmp].default_symbol_,COLOR_BASIC);
             players_[actor].set_pos(tmp);
             return true;
         }
@@ -478,7 +480,7 @@ bool Gsystem::set_god(char user, int num) {
 bool Gsystem::set_building(int loc, int level, char owner) {
     places_[loc].level_ = level;
     if (level != 0) {
-        places_[loc].price_ *= level;
+        places_[loc].price_ *= (level + 1);
     }
     places_[loc].state_ = owned;
     places_[loc].owner_ = toupper(owner);
