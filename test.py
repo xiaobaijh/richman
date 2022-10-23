@@ -14,8 +14,8 @@ GREEN = PatternFill(start_color='7FFF00',
                     end_color='7FFF00', fill_type='solid')
 RED = PatternFill(start_color='FF0000', end_color='FF0000', fill_type='solid')
 def readfilepair(args):
-    #dirname= os.listdir(args.dir) #得到文件夹下的所有文件名称
-    dirname = ['map']
+    dirname= os.listdir(args.dir) #得到文件夹下的所有文件名称
+    #dirname = ['base']
     files = []
     for path in dirname:
         dir = os.path.join(args.dir,path)
@@ -66,7 +66,7 @@ def export_to_xlsx(file_name, res):
         if res[test][1]:
             cnt = cnt + 1  # count True
         row = row + 1
-        ws.cell(row, 1).value = test[-10:]
+        ws.cell(row, 1).value = test
         ws.cell(row, 2).value = "PASS" if res[test][1] else 'FAIL'
         ws.cell(row, 2).fill = GREEN if res[test][1] else RED
         alltime += res[test][0]
@@ -94,6 +94,7 @@ def export_to_xlsx(file_name, res):
     wb.save(file_name)
     df=pd.read_excel(file_name)
     print(df)
+    print("{}/{}".format(cnt,len(res_keys)))
     return
 
 if __name__ == "__main__":
@@ -133,15 +134,25 @@ if __name__ == "__main__":
         fout = open(files[1],'rb')
         ans = fout.read().decode()
         ans = ans.replace('\n\n','\n').splitlines()
+        ans = [i.strip() for i in ans]
+        out = [i.strip() for i in out]
         lenans = len(ans)
+        out = out[-lenans:]
+        out[0] = out[0][-len(ans[0]):]
+        ans.sort()
+        out.sort()
         count = 0
+        errorline = 0
         error = ''
         for i in range(lenans):#倒着比
+            outlist = []
+            anslist = []
             try:
-                if ans[-i-1].strip() == out[-i-1][-len(ans[-i-1]):]:
+                if ans[-i-1]== out[-i-1]:
                     count += 1
                 else:
-                    error = {"ans":ans[-i-1].strip(),"out":out[-i-1]}
+                    errorline +=1
+                    error = {"ans{}".format(errorline):ans[-i-1],"out{}".format(errorline):out[-i-1]}
                     #print(text)
                     print(error)
             except:

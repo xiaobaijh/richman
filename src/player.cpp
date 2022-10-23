@@ -80,32 +80,32 @@ void Player::got_tool_house() {
         buy_barrier();
     } else if (input == "2") {
         buy_robot();
-    }else if (input == "0"){
+    } else if (input == "0") {
         g_->out_tip(ExitToolHouseTip);
         std::string input;
-    }else {
+    } else {
         g_->out_tip(CmdErrorStr);
         std::string input;
     }
     while (credit_ >= 30) {
-    g_->out_tip(ToolHouseTip);
-    get_input(0, 0, 0, 0);
-    std::string input;
-    input = g_->convert_input(actor_, 1);
-    if (input == "1") {
-        buy_barrier();
-    } else if (input == "2") {
-        buy_robot();
-    }else if (input == "0"){
-        g_->out_tip(ExitToolHouseTip);
+        g_->out_tip(ToolHouseTip);
+        get_input(0, 0, 0, 0);
         std::string input;
-        break;
-    }else {
-        g_->out_tip(CmdErrorStr);
-        std::string input;
+        input = g_->convert_input(actor_, 1);
+        if (input == "1") {
+            buy_barrier();
+        } else if (input == "2") {
+            buy_robot();
+        } else if (input == "0") {
+            g_->out_tip(ExitToolHouseTip);
+            std::string input;
+            break;
+        } else {
+            g_->out_tip(CmdErrorStr);
+            std::string input;
+        }
     }
-    }
-    
+
 } //进入道具屋
 
 void Player::got_gift_house() {
@@ -259,7 +259,6 @@ bool Player::charge(char owner) {
     auto land_price = g_->places_[position_].price_;
     if (land_price > property_) {
         state_ = bankrupt;
-        g_->user_num_--;
         if (!bankrupted()) {
             return false;
         }
@@ -269,8 +268,8 @@ bool Player::charge(char owner) {
         get_input(0, 0, 0, 0);
         return true;
     }
-    property_ -= (land_price/2);
-    g_->players_[owner].property_ += (land_price/2);
+    property_ -= (land_price / 2);
+    g_->players_[owner].property_ += (land_price / 2);
     return true;
 } //玩家缴费
 
@@ -309,6 +308,7 @@ bool Player::update_land() {
                 property_ -= land_price;
                 land_price += land_price;
                 g_->places_[position_].level_++;
+                // TODO  g_->places_[position]_.default_symbol_ =
                 g_->out_tip(get_name(actor_) + UpdateBulidingY);
                 get_input(0, 0, 0, 0);
                 break;
