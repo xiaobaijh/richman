@@ -83,7 +83,7 @@ total = len(testcase)
 with concurrent.futures.ThreadPoolExecutor(128) as E:
     tasks = E.map(parse_input, testcase)
 for i in tqdm(tasks):
-    os.system('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+    os.system('./richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
 # with concurrent.futures.ThreadPoolExecutor(128) as E:
 #     tasks = E.map(parse_output, testcase)
 for i in tqdm(testcase):

@@ -5,7 +5,6 @@
 build/
 bin/
 CMakeFiles/
-tests/
 test.txt
 cmake-build-debug/
 *.code-workspace
