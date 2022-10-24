@@ -1,0 +1,111 @@
+testcase/testcase_g2/map/map9.in
+testcase/testcase_g2/map/map3.in
+testcase/testcase_g2/map/map7.in
+testcase/testcase_g2/map/map6.in
+testcase/testcase_g2/map/map8.in
+testcase/testcase_g2/map/map4.in
+testcase/testcase_g2/map/map5.in
+testcase/testcase_g2/character/case_3.in
+testcase/testcase_g2/character/case_6.in
+testcase/testcase_g2/character/case_2.in
+testcase/testcase_g2/character/case_1.in
+testcase/testcase_g2/character/case_5.in
+testcase/testcase_g2/character/case_4.in
+testcase/testcase_g2/Enter dollhouse/4.in
+testcase/testcase_g2/Enter dollhouse/1.in
+testcase/testcase_g2/Enter dollhouse/10.in
+testcase/testcase_g2/Enter dollhouse/2.in
+testcase/testcase_g2/Enter dollhouse/5.in
+testcase/testcase_g2/Enter dollhouse/12.in
+testcase/testcase_g2/Enter dollhouse/3.in
+testcase/testcase_g2/Enter dollhouse/13.in
+testcase/testcase_g2/Enter dollhouse/11.in
+testcase/testcase_g2/Enter dollhouse/6.in
+testcase/testcase_g2/magic house/case2.in
+testcase/testcase_g2/magic house/case3.in
+testcase/testcase_g2/magic house/case1.in
+testcase/testcase_g2/magic house/case4.in
+testcase/testcase_g2/credit/case-2.in
+testcase/testcase_g2/credit/case-4.in
+testcase/testcase_g2/credit/case-3.in
+testcase/testcase_g2/credit/case-5.in
+testcase/testcase_g2/credit/case-6.in
+testcase/testcase_g2/Enter empty places/4.in
+testcase/testcase_g2/Enter empty places/2.3.in
+testcase/testcase_g2/Enter empty places/1.1.in
+testcase/testcase_g2/Enter empty places/1.3.in
+testcase/testcase_g2/Enter empty places/1.2.in
+testcase/testcase_g2/Enter empty places/2.2.in
+testcase/testcase_g2/Enter empty places/3.in
+testcase/testcase_g2/Enter empty places/2.1.in
+testcase/testcase_g2/pay rent/case10.in
+testcase/testcase_g2/pay rent/case7.in
+testcase/testcase_g2/pay rent/case15.in
+testcase/testcase_g2/pay rent/case13.in
+testcase/testcase_g2/pay rent/case9.in
+testcase/testcase_g2/pay rent/case1.in
+testcase/testcase_g2/pay rent/case14.in
+testcase/testcase_g2/pay rent/case11.in
+testcase/testcase_g2/pay rent/case8.in
+testcase/testcase_g2/pay rent/case6.in
+testcase/testcase_g2/pay rent/case12.in
+testcase/testcase_g2/Sell your ground/1.1.1.in
+testcase/testcase_g2/Sell your ground/1.0.2.in
+testcase/testcase_g2/Sell your ground/2_dollhouse.in
+testcase/testcase_g2/Sell your ground/1.3.1.in
+testcase/testcase_g2/Sell your ground/1.3.2.in
+testcase/testcase_g2/Sell your ground/2_gifthouse.in
+testcase/testcase_g2/Sell your ground/1.3.3.in
+testcase/testcase_g2/Sell your ground/2_mineground.in
+testcase/testcase_g2/Sell your ground/2_others.in
+testcase/testcase_g2/Sell your ground/1.0.1.in
+testcase/testcase_g2/Sell your ground/2_magichouse.in
+testcase/testcase_g2/Sell your ground/1.1.3.in
+testcase/testcase_g2/Sell your ground/1.1.2.in
+testcase/testcase_g2/Sell your ground/1.0.3.in
+testcase/testcase_g2/Sell your ground/1.2.2.in
+testcase/testcase_g2/Sell your ground/2_park.in
+testcase/testcase_g2/Sell your ground/1.2.1.in
+testcase/testcase_g2/Sell your ground/1.2.3.in
+testcase/testcase_g2/Sell your ground/2_emptyplace.in
+testcase/testcase_g2/base/seq1.in
+testcase/testcase_g2/base/buildingtool.in
+testcase/testcase_g2/base/robot.in
+testcase/testcase_g2/base/pos.in
+testcase/testcase_g2/base/building.in
+testcase/testcase_g2/base/barrier.in
+testcase/testcase_g2/base/seq.in
+testcase/testcase_g2/base/god.in
+testcase/testcase_g2/tool-use/case 11.in
+testcase/testcase_g2/tool-use/case 1.in
+testcase/testcase_g2/tool-use/case 8.in
+testcase/testcase_g2/tool-use/case 7.in
+testcase/testcase_g2/tool-use/case 13.in
+testcase/testcase_g2/tool-use/case 6.in
+testcase/testcase_g2/tool-use/case 4.in
+testcase/testcase_g2/tool-use/case 9.in
+testcase/testcase_g2/tool-use/case 3.in
+testcase/testcase_g2/tool-use/case 12.in
+testcase/testcase_g2/tool-use/case 5.in
+testcase/testcase_g2/tool-use/case 10.in
+testcase/testcase_g2/tool-use/case 2.in
+testcase/testcase_g2/Enter Gift House/NO1-4.in
+testcase/testcase_g2/Enter Gift House/NO2-2.in
+testcase/testcase_g2/Enter Gift House/NO1-1.in
+testcase/testcase_g2/Enter Gift House/NO1-9.in
+testcase/testcase_g2/Enter Gift House/NO1-3.in
+testcase/testcase_g2/Enter Gift House/NO1-2.in
+testcase/testcase_g2/Enter Gift House/NO1-7.in
+testcase/testcase_g2/Enter Gift House/NO1-6.in
+testcase/testcase_g2/Enter Gift House/NO2-1.in
+testcase/testcase_g2/Enter Gift House/NO1-5.in
+testcase/testcase_g2/Enter Gift House/NO1-8.in
+testcase/testcase_g2/Enter My House/NO1-1.in
+testcase/testcase_g2/Enter My House/NO1-3.in
+testcase/testcase_g2/Enter My House/NO1-2.in
+testcase/testcase_g2/Enter My House/NO3-1.in
+testcase/testcase_g2/Enter My House/NO6-2.in
+testcase/testcase_g2/Enter My House/NO2-1.in
+testcase/testcase_g2/Enter My House/NO4-1.in
+testcase/testcase_g2/Enter My House/NO5-1.in
+testcase/testcase_g2/Enter My House/NO6-1.in

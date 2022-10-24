@@ -1,0 +1,117 @@
+
+
+testcase/testcase_g2/Enter Gift House/NO1-3.
+input:
+
+
+testcase/testcase_g2/Enter Gift House/NO1-7.
+input:
+preset seq AQ
+preset pos A 31
+preset pos Q 0 
+step 4
+1
+
+correct:
+A 35 12000 0 0 0 0 0 0
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+output:
+A 35 12000 0 0 0 0 0 0
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+preset seq AQ
+preset god A 3
+preset pos A 33
+preset pos Q 0
+step 2
+0
+
+
+correct:
+A 35 10000 0 0 0 0 0 2
+Q 0 10000 0 0 0 0 0 0 
+seq QA
+
+output:
+A 35 10000 0 0 0 0 0 2
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+
+
+testcase/testcase_g2/Enter Gift House/NO1-9.
+input:
+preset seq AQ
+preset god A 1
+preset pos A 33 
+preset pos Q 0 
+step 2
+1
+correct: A 35 12000 0 0 0 0 0 0
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+output:
+A 35 12000 0 0 0 0 0 0
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+
+
+testcase/testcase_g2/Enter Gift House/NO1-5.
+input:
+preset seq AQ
+preset pos A 33 
+preset pos Q 0
+step 2
+3
+correct:A 35 10000 0 0 0 0 0 5
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+output:
+A 35 10000 0 0 0 0 0 4
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+
+testcase/testcase_g2/Enter Gift House/NO1-8.
+input:
+preset seq AQ
+preset pos A 33 
+preset pos Q 0 
+preset god A 3
+step 2
+1
+
+correct:
+A 35 12000 0 0 0 0 0 2
+Q 0 10000 0 0 0 0 0 0 
+seq QA
+
+output:
+A 35 12000 0 0 0 0 0 2
+Q 0 10000 0 0 0 0 0 0
+seq QA
+
+
+
+testcase/testcase_g2/Enter Gift House/NO1-6.
+input:
+preset seq AQ
+preset pos A 33
+preset pos Q 0
+preset god A 5
+step 2
+3
+correct:A 35 10000 0 0 0 0 0 5
+Q 0 10000 0 0 0 0 0 0 
+seq QA
+
+output:
+A 35 10000 0 0 0 0 0 4
+Q 0 10000 0 0 0 0 0 0
+seq QA

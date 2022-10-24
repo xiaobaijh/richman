@@ -1,4 +1,4 @@
 #!/bin/bash
+cd ./build
 cmake .
-make 
-./richman
+make -j123

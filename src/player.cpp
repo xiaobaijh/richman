@@ -62,11 +62,11 @@ bool Player::buy_barrier() {
         credit_ -= 50;
         barrier_ += 1;
         g_->out_tip(get_name(actor_) + BuyBarrierStr);
-        //get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
         return true;
     } else {
         g_->out_tip(get_name(actor_) + MoneyNotEnough);
-        //get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
         return false;
     }
 }
@@ -79,7 +79,7 @@ void Player::got_tool_house() {
 
     while (credit_ >= 30) {
         g_->out_tip(ToolHouseTip);
-        //get_input(0, 0, 0, 0);
+        // get_input(0, 0, 0, 0);
         std::string input;
         input = g_->convert_input(actor_, 1);
         if (input == "1") {
@@ -245,11 +245,13 @@ bool Player::buy_land() {
 bool Player::charge(char owner) {
     if (god_ > 0) {
         g_->out_tip(GodOnBodyStr);
-        // get_input(0, 0, 0, 0);
+        get_input(0, 0, 0, 0);
         return true;
     }
     auto land_price = g_->places_[position_].price_;
     if (land_price > property_) {
+        property_ -= land_price;
+        g_->players_[owner].property_ += property_;
         state_ = bankrupt;
         if (!bankrupted()) {
             return false;
@@ -282,6 +284,9 @@ bool Player::stopped() {
     stop_time_--;
     if (stop_time_ == 0) {
         state_ = normal;
+    }
+    if (god_ > 0) {
+        god_--;
     }
     return true;
 } //因为被陷害轮空一轮

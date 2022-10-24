@@ -1,173 +1,102 @@
-from codecs import unicode_escape_decode
-from encodings import utf_8
-import subprocess
-import argparse
-from openpyxl.styles import PatternFill
-from openpyxl import Workbook
 import os
-import time 
-import pandas as pd
-DEFAULT_EXEC = "/data1/wjh/richman/build/richman "
-EXPIRE_TIME_MS = 1000
-TESTDIR = 'testcase/testcase_g2'
-GREEN = PatternFill(start_color='7FFF00',
-                    end_color='7FFF00', fill_type='solid')
-RED = PatternFill(start_color='FF0000', end_color='FF0000', fill_type='solid')
-def readfilepair(args):
-    dirname= os.listdir(args.dir) #得到文件夹下的所有文件名称
-    #dirname = ['Enter Gift House']
-    files = []
-    for path in dirname:
-        dir = os.path.join(args.dir,path)
-        file = os.listdir(dir)
-        #file = ["NO1-9.in","NO1-9.out"]
-        file.sort()
-        for i in file:
-            files.append(os.path.join(dir,i))
-    file_pairs = []
-    for i in range(int(len(files)/2)):
-        file_pairs.append((files[2*i],files[2*i+1]))
-    return file_pairs
+import concurrent.futures
+import tldr
 
-def textprocess(text):
-    #text = "10000\n1234\n"+"step 6\ny\nprint\n"+'quit\n'
-    tx = text.splitlines()
-    text = ''
-    for i in tx:
-        if i[:10].lower() == 'preset seq':
-            order = i[11:]
-            d = {"Q":"1","A":"2","S":"3","J":"4","q":"1","a":"2","s":"3","j":"4"}
-            numorder = ''
-            for i in order:
-                numorder += d[i]
+sequence = {'Q': '1', 'A': '2', 'S': '3', 'J': '4', 'q': '1', 'a': '2', 's': '3', 'j': 4, '\n':'\n'}
+hint = 'reset'
+record = open("rocord.txt", 'w')
+total = 0
+right = 0
+
+
+
+def parse_input(path):
+    if len(path) == 0:
+        return
+    with open(path+'in') as fin:
+        lines = fin.readlines()
+    f = open(path+'in_tmp','w')
+    f.write('10000\n')
+    for i in lines[0].split(' ')[2]:
+        f.write(sequence[i])
+    # f.write('\n')
+    index = 1
+    for index in range(1, len(lines)):
+        if '\n' == lines[index][0]:
             continue
-        if i[:6].lower() == 'preset':
-            text = text+ '\n' + i 
+        elif hint == lines[index][1:6]:
+            f.write(lines[index])
+            index += 1
         else:
-            text = text +'\n\n' + i
-    text = '10000\n'+numorder+text.replace("\r\n",'\n')+'\n\nprint'+'\nquit\n'
-    return text
-
-def export_to_xlsx(file_name, res):
-    wb = Workbook()
-    ws = wb.active  # work sheet
-
-    row = 0
-    res_keys = list(res.keys())
-    res_keys.sort()
-    row = row + 1
-    ws.cell(row, 1).value = 'testname'
-    ws.cell(row, 2).value = 'PASS/FAIL'
-    #ws.cell(row, 3).value = '%d/%d' % (cnt, len(res_keys))
-    ws.cell(row, 3).value = 'runtime'
-    ws.cell(row,4).value = 'error'
-    alltime = 0
-    cnt = 0
-    for test in res_keys:   
-        if res[test][1]:
-            cnt = cnt + 1  # count True
-        row = row + 1
-        ws.cell(row, 1).value = test
-        ws.cell(row, 2).value = "PASS" if res[test][1] else 'FAIL'
-        ws.cell(row, 2).fill = GREEN if res[test][1] else RED
-        alltime += res[test][0]
-        ws.cell(row, 3).value = round(res[test][0],3)
-        ws.cell(row, 4).value = str(res[test][2:])
-
-    row = row + 1
-    ws.cell(row, 1).value = "alltest"
-    ws.cell(row, 2).value = "{}/{}".format(cnt,len(res_keys))
-    ws.cell(row, 3).value = round(alltime,3)
-    #     for item in res[test]:
-    #         row = row + 1
-    #         ws.cell(row, 1).value = item[0]
-    #         ws.cell(row, 2).value = item[1]
-    #         ws.cell(row, 3).value = 'PASS' if item[2] else 'FAIL'
-    #         ws.cell(row, 3).fill = GREEN if item[2] else RED
-    #         ws.cell(row, 4).value = item[3]
-    #         if item[3] >= EXPIRE_TIME_MS:
-    #             ws.cell(row, 4).fill = RED
-    #         pass # end for
-
-    #     row = row + 1  # empty line
-    #     pass
-
-    wb.save(file_name)
-    df=pd.read_excel(file_name)
-    print(df)
-    print("{}/{}".format(cnt,len(res_keys)))
-    return
-
-if __name__ == "__main__":
-    args = argparse.ArgumentParser()
-    args.add_argument('-d', '--dir', help='testcase dir',
-                    default=TESTDIR, type=str)#改为测试在的dir
-    args.add_argument('-n', '--name', help='process name',
-                    default=DEFAULT_EXEC, type=str)#exe在的地方
-
-    args = args.parse_args()
-
-    file_pairs = readfilepair(args)#(file.in,file.out)
-
-    res = {}
-
-    succeed = 0
-    fail = 0
-    for files in file_pairs:
-        fin = open(files[0],'rb')
-        text = fin.read().decode()
-        text = textprocess(text)
-        res[files[0]] = []
-        print("test in "+files[0]+":")
-        t = time.time()
-        try:
-            child = subprocess.Popen(args.name, universal_newlines=True,shell =True,
-                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out = child.communicate(text,timeout=EXPIRE_TIME_MS/1000)
-            out = out[0].splitlines()
-        except subprocess.TimeoutExpired:
-
-            #print("time out in {}".format(files[0]))
-            pass
-        #print(out[0].splitlines())
-        t = time.time() - t
-        res[files[0]].append(t)
-        fout = open(files[1],'rb')
-        ans = fout.read().decode()
-        ans = ans.replace('\n\n','\n').splitlines()
-        ans = [i.strip()  for i in ans if i]
-        ans = [i.strip()  for i in ans if i]
-        out = [i.strip() for i in out]
-        lenans = len(ans)
-        out = out[-lenans:]
-        out[0] = out[0][-len(ans[0]):]
-        ans.sort()
-        out.sort()
-        count = 0
-        errorline = 0
-        error = {}
-        for i in range(lenans):#倒着比
-            outlist = []
-            anslist = []
-            try:
-                if ans[-i-1]== out[-i-1]:
-                    count += 1
-                else:
-                    errorline +=1
-                    error["ans{}".format(errorline)] = ans[-i-1]
-                    error["out{}".format(errorline)] = out[-i-1]
-                    #print(text)
-                    print(error)
-            except:
-                pass
-        if count == lenans:
-            res[files[0]].append(1)
-            print('succeed')
-            succeed+=1
+            break
+    f.write('\n\n')
+    for line in lines[index:]:
+        if line[0] == 'F' or line[0] == 'f':
+            f.write('0\n')
         else:
-            res[files[0]].append(0)
-            print("fail")
-            fail+=1
-        res[files[0]].append(error)
-        #print(out[0])
-    export_to_xlsx('./result.xlsx',res)
+            f.write(line)
+    f.write('\nprint\nquit\n')
+    f.close()
+    return path
+
+import os
+
+
+
+def parse_output(path):
+    if len(path) == 0:
+        return
+    with open(path+'out_tmp') as f:
+        output = f.readlines()[::-1]
+    with open(path+'out') as f:
+        base = f.readlines()[::-1]
+    base[-1] = base[-1][:-1]
+    for i in range(len(base)):
+        if ''.join(base[i].split()) != ''.join(output[i].split()):
+            print(path,'failed!')
+
+            record.write('\n\n')
+            record.write(path)
+            record.write("\ninput:\n")
+            with open(path+'in') as input_file:
+                for line in input_file.readlines():
+                    record.write(line)            
+            record.write('\ncorrect:')
+            for i in base:
+                record.write(i)
+            # record.write(base[-1][:-1])
+            record.write('\n\noutput:\n')
+            for i in range(len(base)):
+                record.write(output[i])
+            return 0
+    print(path,'passed!')
+    return 1
+
+with open('testcase.txt', 'r') as f:
+    testcase = [i[:-3] for i in f.readlines()]
+print(len(testcase))
+if len(testcase[-1]) == 0:
+    testcase = testcase[:-1] 
+total = len(testcase)
+
+with concurrent.futures.ThreadPoolExecutor(128) as E:
+    tasks = E.map(parse_input, testcase)
+for i in tasks:
+    os.system('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+with concurrent.futures.ThreadPoolExecutor(128) as E:
+    tasks = E.map(parse_output, testcase)
+for i in tasks:
+    right += i
+# for i in testcase:
+#     parse_input(i)
+#     print('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+#     os.system('./build/richman < "'+i+'in_tmp" > "'+i+'out_tmp"')
+#     right += parse_output(i)
+# with concurrent.futures.ThreadPoolExecutor(128) as E:
+#     tasks = E.map(parse_input, testcase)
+# count = 0
+# for i in tasks:
+#     count += 1
+#     print(count)
+print(right, '/', total)
+record.close()
