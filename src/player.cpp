@@ -39,7 +39,7 @@ bool Player::increase_property() {
 }
 
 bool Player::increase_god() {
-    god_ = 5;
+    god_ = 6;
     return true;
 }
 
@@ -102,14 +102,14 @@ void Player::got_tool_house() {
 
 void Player::got_gift_house() {
     g_->out_tip(GiftHouseTip);
-    // get_input(0, 0, 0, 0);
+    get_input(0, 0, 0, 0);
     std::string input;
     input = g_->convert_input(actor_, 1);
 
     if (input == "1") {
         increase_property();
         g_->out_tip(GetFundStr);
-        // get_input(0, 0, 0, 0);
+        get_input(0, 0, 0, 0);
     } else if (input == "2") {
         increase_credit();
         g_->out_tip(GetCreditStr);
@@ -249,9 +249,7 @@ bool Player::charge(char owner) {
         return true;
     }
     auto land_price = g_->places_[position_].price_;
-    if (land_price > property_) {
-        property_ -= land_price;
-        g_->players_[owner].property_ += property_;
+    if ((land_price / 2) > property_) {
         state_ = bankrupt;
         if (!bankrupted()) {
             return false;
@@ -275,7 +273,6 @@ bool Player::bankrupted() {
         if (g_->places_[*iter].level_ != 0) {
             g_->places_[*iter].price_ /= g_->places_[*iter].level_;
         }
-        g_->places_[*iter].level_ = 0;
         change_map(*iter, '0', COLOR_BASIC);
     }
     return true;
