@@ -1,319 +1,342 @@
-./testcase/testcase_g2/character/case_6.in
-./testcase/testcase_g2/character/case_5.in
-./testcase/testcase_g2/character/case_2.in
-./testcase/testcase_g2/character/case_1.in
-./testcase/testcase_g2/character/case_4.in
-./testcase/testcase_g2/character/case_3.in
-./testcase/testcase_g2/Enter_empty_places/4.in
-./testcase/testcase_g2/Enter_empty_places/3.in
-./testcase/testcase_g2/Enter_empty_places/1.2.in
-./testcase/testcase_g2/Enter_empty_places/2.1.in
-./testcase/testcase_g2/Enter_empty_places/1.1.in
-./testcase/testcase_g2/Enter_empty_places/1.3.in
-./testcase/testcase_g2/Enter_empty_places/2.2.in
-./testcase/testcase_g2/Enter_empty_places/2.3.in
-./testcase/testcase_g2/pay_rent/case12.in
-./testcase/testcase_g2/pay_rent/case1.in
-./testcase/testcase_g2/pay_rent/case8.in
-./testcase/testcase_g2/pay_rent/case11.in
-./testcase/testcase_g2/pay_rent/case14.in
-./testcase/testcase_g2/pay_rent/case13.in
-./testcase/testcase_g2/pay_rent/case6.in
-./testcase/testcase_g2/pay_rent/case9.in
-./testcase/testcase_g2/pay_rent/case10.in
-./testcase/testcase_g2/pay_rent/case15.in
-./testcase/testcase_g2/pay_rent/case7.in
-./testcase/testcase_g2/tool-use/case 8.in
-./testcase/testcase_g2/tool-use/case 13.in
-./testcase/testcase_g2/tool-use/case 7.in
-./testcase/testcase_g2/tool-use/case 12.in
-./testcase/testcase_g2/tool-use/case 11.in
-./testcase/testcase_g2/tool-use/case 6.in
-./testcase/testcase_g2/tool-use/case 2.in
-./testcase/testcase_g2/tool-use/case 4.in
-./testcase/testcase_g2/tool-use/case 10.in
-./testcase/testcase_g2/tool-use/case 5.in
-./testcase/testcase_g2/tool-use/case 9.in
-./testcase/testcase_g2/tool-use/case 1.in
-./testcase/testcase_g2/tool-use/case 3.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-8.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-5.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-9.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-7.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-6.in
-./testcase/testcase_g2/Enter_Gift_House/NO2-2.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-2.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-4.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-1.in
-./testcase/testcase_g2/Enter_Gift_House/NO2-1.in
-./testcase/testcase_g2/Enter_Gift_House/NO1-3.in
-./testcase/testcase_g2/base/building.in
-./testcase/testcase_g2/base/god.in
-./testcase/testcase_g2/base/seq1.in
-./testcase/testcase_g2/base/seq.in
-./testcase/testcase_g2/base/pos.in
-./testcase/testcase_g2/base/barrier.in
-./testcase/testcase_g2/base/robot.in
-./testcase/testcase_g2/base/buildingtool.in
-./testcase/testcase_g2/Sell_your_ground/2_dollhouse.in
-./testcase/testcase_g2/Sell_your_ground/1.3.1.in
-./testcase/testcase_g2/Sell_your_ground/1.1.3.in
-./testcase/testcase_g2/Sell_your_ground/1.0.1.in
-./testcase/testcase_g2/Sell_your_ground/2_emptyplace.in
-./testcase/testcase_g2/Sell_your_ground/1.2.3.in
-./testcase/testcase_g2/Sell_your_ground/2_gifthouse.in
-./testcase/testcase_g2/Sell_your_ground/1.0.2.in
-./testcase/testcase_g2/Sell_your_ground/2_mineground.in
-./testcase/testcase_g2/Sell_your_ground/2_park.in
-./testcase/testcase_g2/Sell_your_ground/1.1.2.in
-./testcase/testcase_g2/Sell_your_ground/1.0.3.in
-./testcase/testcase_g2/Sell_your_ground/1.1.1.in
-./testcase/testcase_g2/Sell_your_ground/1.3.3.in
-./testcase/testcase_g2/Sell_your_ground/2_others.in
-./testcase/testcase_g2/Sell_your_ground/2_magichouse.in
-./testcase/testcase_g2/Sell_your_ground/1.3.2.in
-./testcase/testcase_g2/Sell_your_ground/1.2.2.in
-./testcase/testcase_g2/Sell_your_ground/1.2.1.in
-./testcase/testcase_g2/Enter_dollhouse/4.in
-./testcase/testcase_g2/Enter_dollhouse/3.in
-./testcase/testcase_g2/Enter_dollhouse/1.in
-./testcase/testcase_g2/Enter_dollhouse/5.in
-./testcase/testcase_g2/Enter_dollhouse/12.in
-./testcase/testcase_g2/Enter_dollhouse/6.in
-./testcase/testcase_g2/Enter_dollhouse/13.in
-./testcase/testcase_g2/Enter_dollhouse/11.in
-./testcase/testcase_g2/Enter_dollhouse/10.in
-./testcase/testcase_g2/Enter_dollhouse/2.in
-./testcase/testcase_g2/Enter_My_House/NO6-1.in
-./testcase/testcase_g2/Enter_My_House/NO5-1.in
-./testcase/testcase_g2/Enter_My_House/NO1-2.in
-./testcase/testcase_g2/Enter_My_House/NO3-1.in
-./testcase/testcase_g2/Enter_My_House/NO4-1.in
-./testcase/testcase_g2/Enter_My_House/NO1-1.in
-./testcase/testcase_g2/Enter_My_House/NO2-1.in
-./testcase/testcase_g2/Enter_My_House/NO1-3.in
-./testcase/testcase_g2/Enter_My_House/NO6-2.in
-./testcase/testcase_g2/map/map3.in
-./testcase/testcase_g2/map/map8.in
-./testcase/testcase_g2/map/map6.in
-./testcase/testcase_g2/map/map9.in
-./testcase/testcase_g2/map/map7.in
-./testcase/testcase_g2/map/map5.in
-./testcase/testcase_g2/map/map4.in
-./testcase/testcase_g2/magic_house/case1.in
-./testcase/testcase_g2/magic_house/case2.in
-./testcase/testcase_g2/magic_house/case3.in
-./testcase/testcase_g2/magic_house/case4.in
-./testcase/testcase_g2/credit/case-2.in
-./testcase/testcase_g2/credit/case-3.in
-./testcase/testcase_g2/credit/case-4.in
-./testcase/testcase_g2/credit/case-5.in
-./testcase/testcase_g2/credit/case-6.in
-./testcase/testcase_g1/Sell/Sell07.in
-./testcase/testcase_g1/Sell/Sell06.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine3.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine10.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine4.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine9.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine7.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine11.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine12.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine2.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine1.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine8.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine6.in
+./testcase/testcase_g1/fine/god/ownernormal/noenough/fine5.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine3.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine10.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine4.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine9.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine7.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine11.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine12.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine2.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine1.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine8.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine6.in
+./testcase/testcase_g1/fine/god/ownernormal/enough/fine5.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine3.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine10.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine4.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine9.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine7.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine11.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine12.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine2.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine1.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine8.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine6.in
+./testcase/testcase_g1/fine/god/owner normal/enough/fine5.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine3.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine10.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine4.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine9.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine7.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine11.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine12.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine2.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine1.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine8.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine6.in
+./testcase/testcase_g1/fine/god/owner normal/no enough/fine5.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine3.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine10.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine4.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine9.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine7.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine11.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine12.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine2.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine1.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine8.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine6.in
+./testcase/testcase_g1/fine/no god/owner normal/enough/fine5.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine3.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine10.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine4.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine9.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine7.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine11.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine12.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine2.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine1.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine8.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine6.in
+./testcase/testcase_g1/fine/no god/owner normal/no enough/fine5.in
+./testcase/testcase_g1/toolroom/3/3.in
+./testcase/testcase_g1/toolroom/4/4.in
+./testcase/testcase_g1/toolroom/2/2.in
+./testcase/testcase_g1/toolroom/11/11.in
+./testcase/testcase_g1/toolroom/8/8.in
+./testcase/testcase_g1/toolroom/7/7.in
+./testcase/testcase_g1/toolroom/1/1.in
 ./testcase/testcase_g1/Sell/Sell20.in
-./testcase/testcase_g1/Sell/Sell13.in
-./testcase/testcase_g1/Sell/Sell05.in
-./testcase/testcase_g1/Sell/Sell09.in
-./testcase/testcase_g1/Sell/Sell03.in
-./testcase/testcase_g1/Sell/Sell12.in
 ./testcase/testcase_g1/Sell/Sell11.in
-./testcase/testcase_g1/Sell/Sell16.in
-./testcase/testcase_g1/Sell/Sell17.in
-./testcase/testcase_g1/Sell/Sell02.in
-./testcase/testcase_g1/Sell/Sell19.in
+./testcase/testcase_g1/Sell/Sell06.in
+./testcase/testcase_g1/Sell/Sell07.in
+./testcase/testcase_g1/Sell/Sell09.in
 ./testcase/testcase_g1/Sell/Sell14.in
+./testcase/testcase_g1/Sell/Sell13.in
 ./testcase/testcase_g1/Sell/Sell04.in
+./testcase/testcase_g1/Sell/Sell12.in
 ./testcase/testcase_g1/Sell/Sell10.in
-./testcase/testcase_g1/Sell/Sell18.in
+./testcase/testcase_g1/Sell/Sell02.in
 ./testcase/testcase_g1/Sell/Sell08.in
-./testcase/testcase_g1/Sell/Sell01.in
+./testcase/testcase_g1/Sell/Sell19.in
 ./testcase/testcase_g1/Sell/Sell15.in
+./testcase/testcase_g1/Sell/Sell17.in
+./testcase/testcase_g1/Sell/Sell03.in
+./testcase/testcase_g1/Sell/Sell01.in
+./testcase/testcase_g1/Sell/Sell16.in
+./testcase/testcase_g1/Sell/Sell05.in
+./testcase/testcase_g1/Sell/Sell18.in
+./testcase/testcase_g1/private/private_15.in
+./testcase/testcase_g1/private/private_7.in
+./testcase/testcase_g1/private/private_13.in
+./testcase/testcase_g1/private/private_6.in
+./testcase/testcase_g1/private/private_17.in
+./testcase/testcase_g1/private/private_8.in
+./testcase/testcase_g1/private/private_18.in
+./testcase/testcase_g1/private/private_24.in
+./testcase/testcase_g1/private/private_23.in
+./testcase/testcase_g1/private/private_21.in
+./testcase/testcase_g1/private/private_4.in
+./testcase/testcase_g1/private/private_3.in
+./testcase/testcase_g1/private/private_9.in
+./testcase/testcase_g1/private/private_16.in
+./testcase/testcase_g1/private/private_11.in
+./testcase/testcase_g1/private/private_1.in
+./testcase/testcase_g1/private/private_12.in
+./testcase/testcase_g1/private/private_22.in
+./testcase/testcase_g1/private/private_5.in
+./testcase/testcase_g1/private/private_14.in
+./testcase/testcase_g1/private/private_19.in
+./testcase/testcase_g1/private/private_20.in
+./testcase/testcase_g1/private/private_10.in
+./testcase/testcase_g1/private/private_2.in
+./testcase/testcase_g1/Mine/Mine3.in
+./testcase/testcase_g1/Mine/Mine4.in
+./testcase/testcase_g1/Mine/Mine6.in
+./testcase/testcase_g1/Mine/Mine2.in
+./testcase/testcase_g1/Mine/Mine1.in
+./testcase/testcase_g1/Mine/Mine5.in
+./testcase/testcase_g1/Mine/Mine7.in
+./testcase/testcase_g1/empty/empty_4.in
+./testcase/testcase_g1/empty/empty_1.in
+./testcase/testcase_g1/empty/empty_3.in
+./testcase/testcase_g1/empty/empty_5.in
+./testcase/testcase_g1/empty/empty_6.in
+./testcase/testcase_g1/empty/empty_2.in
+./testcase/testcase_g1/gifttest/4.in
+./testcase/testcase_g1/gifttest/1.in
+./testcase/testcase_g1/gifttest/10.in
+./testcase/testcase_g1/gifttest/2.in
+./testcase/testcase_g1/gifttest/5.in
+./testcase/testcase_g1/gifttest/12.in
+./testcase/testcase_g1/gifttest/3.in
+./testcase/testcase_g1/gifttest/13.in
+./testcase/testcase_g1/gifttest/11.in
 ./testcase/testcase_g1/magicroom/4.in
-./testcase/testcase_g1/magicroom/3.in
 ./testcase/testcase_g1/magicroom/1.in
+./testcase/testcase_g1/magicroom/10.in
+./testcase/testcase_g1/magicroom/8.in
+./testcase/testcase_g1/magicroom/2.in
 ./testcase/testcase_g1/magicroom/5.in
 ./testcase/testcase_g1/magicroom/12.in
 ./testcase/testcase_g1/magicroom/7.in
-./testcase/testcase_g1/magicroom/6.in
-./testcase/testcase_g1/magicroom/8.in
+./testcase/testcase_g1/magicroom/3.in
 ./testcase/testcase_g1/magicroom/13.in
 ./testcase/testcase_g1/magicroom/11.in
-./testcase/testcase_g1/magicroom/10.in
-./testcase/testcase_g1/magicroom/2.in
 ./testcase/testcase_g1/magicroom/9.in
-./testcase/testcase_g1/private/private_20.in
-./testcase/testcase_g1/private/private_24.in
-./testcase/testcase_g1/private/private_5.in
-./testcase/testcase_g1/private/private_15.in
-./testcase/testcase_g1/private/private_7.in
-./testcase/testcase_g1/private/private_12.in
-./testcase/testcase_g1/private/private_21.in
-./testcase/testcase_g1/private/private_17.in
-./testcase/testcase_g1/private/private_1.in
-./testcase/testcase_g1/private/private_19.in
-./testcase/testcase_g1/private/private_2.in
-./testcase/testcase_g1/private/private_16.in
-./testcase/testcase_g1/private/private_6.in
-./testcase/testcase_g1/private/private_23.in
-./testcase/testcase_g1/private/private_13.in
-./testcase/testcase_g1/private/private_9.in
-./testcase/testcase_g1/private/private_14.in
-./testcase/testcase_g1/private/private_8.in
-./testcase/testcase_g1/private/private_18.in
-./testcase/testcase_g1/private/private_4.in
-./testcase/testcase_g1/private/private_10.in
-./testcase/testcase_g1/private/private_22.in
-./testcase/testcase_g1/private/private_11.in
-./testcase/testcase_g1/private/private_3.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine11.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine7.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine12.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine2.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine9.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine5.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine8.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine3.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine10.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine1.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine6.in
-./testcase/testcase_g1/fine/no god/owner normal/enough/fine4.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine11.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine7.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine12.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine2.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine9.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine5.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine8.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine3.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine10.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine1.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine6.in
-./testcase/testcase_g1/fine/no god/owner normal/no enough/fine4.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine11.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine7.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine12.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine2.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine9.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine5.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine8.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine3.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine10.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine1.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine6.in
-./testcase/testcase_g1/fine/god/owner normal/enough/fine4.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine11.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine7.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine12.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine2.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine9.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine5.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine8.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine3.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine10.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine1.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine6.in
-./testcase/testcase_g1/fine/god/owner normal/no enough/fine4.in
-./testcase/testcase_g1/Mine/Mine3.in
-./testcase/testcase_g1/Mine/Mine6.in
-./testcase/testcase_g1/Mine/Mine7.in
-./testcase/testcase_g1/Mine/Mine1.in
-./testcase/testcase_g1/Mine/Mine2.in
-./testcase/testcase_g1/Mine/Mine4.in
-./testcase/testcase_g1/Mine/Mine5.in
-./testcase/testcase_g1/toolroom/1/1.in
-./testcase/testcase_g1/toolroom/11/11.in
-./testcase/testcase_g1/toolroom/3/3.in
-./testcase/testcase_g1/toolroom/7/7.in
-./testcase/testcase_g1/toolroom/4/4.in
-./testcase/testcase_g1/toolroom/8/8.in
-./testcase/testcase_g1/toolroom/2/2.in
-./testcase/testcase_g1/empty/empty_1.in
-./testcase/testcase_g1/empty/empty_5.in
-./testcase/testcase_g1/empty/empty_2.in
-./testcase/testcase_g1/empty/empty_6.in
-./testcase/testcase_g1/empty/empty_3.in
-./testcase/testcase_g1/empty/empty_4.in
-./testcase/testcase_g1/gifttest/4.in
-./testcase/testcase_g1/gifttest/3.in
-./testcase/testcase_g1/gifttest/1.in
-./testcase/testcase_g1/gifttest/5.in
-./testcase/testcase_g1/gifttest/12.in
-./testcase/testcase_g1/gifttest/13.in
-./testcase/testcase_g1/gifttest/11.in
-./testcase/testcase_g1/gifttest/10.in
-./testcase/testcase_g1/gifttest/2.in
-./testcase/testcase_g3/blockTest/block_1.in
-./testcase/testcase_g3/blockTest/block_9.in
-./testcase/testcase_g3/blockTest/block_4.in
-./testcase/testcase_g3/blockTest/block_2.in
-./testcase/testcase_g3/blockTest/block_6.in
-./testcase/testcase_g3/blockTest/case0.in
-./testcase/testcase_g3/blockTest/block_10.in
-./testcase/testcase_g3/blockTest/block_5.in
-./testcase/testcase_g3/blockTest/block_7.in
-./testcase/testcase_g3/blockTest/block_3.in
-./testcase/testcase_g3/blockTest/block_16.in
-./testcase/testcase_g3/blockTest/block_11.in
-./testcase/testcase_g3/blockTest/block_15.in
-./testcase/testcase_g3/blockTest/block_8.in
-./testcase/testcase_g3/godTest/godTime0.in
-./testcase/testcase_g3/godTest/godTime3.in
-./testcase/testcase_g3/godTest/godTime2.in
-./testcase/testcase_g3/godTest/godTime4.in
-./testcase/testcase_g3/godTest/godFunc0.in
-./testcase/testcase_g3/godTest/godTime1.in
-./testcase/testcase_g3/sell_land/case1.in
-./testcase/testcase_g3/sell_land/case0.in
-./testcase/testcase_g3/sell_land/case2.in
+./testcase/testcase_g1/magicroom/6.in
+./testcase/testcase_g2/map/map9.in
+./testcase/testcase_g2/map/map3.in
+./testcase/testcase_g2/map/map7.in
+./testcase/testcase_g2/map/map6.in
+./testcase/testcase_g2/map/map8.in
+./testcase/testcase_g2/map/map4.in
+./testcase/testcase_g2/map/map5.in
+./testcase/testcase_g2/character/case_3.in
+./testcase/testcase_g2/character/case_6.in
+./testcase/testcase_g2/character/case_2.in
+./testcase/testcase_g2/character/case_1.in
+./testcase/testcase_g2/character/case_5.in
+./testcase/testcase_g2/character/case_4.in
+./testcase/testcase_g2/Enter dollhouse/4.in
+./testcase/testcase_g2/Enter dollhouse/1.in
+./testcase/testcase_g2/Enter dollhouse/10.in
+./testcase/testcase_g2/Enter dollhouse/2.in
+./testcase/testcase_g2/Enter dollhouse/5.in
+./testcase/testcase_g2/Enter dollhouse/12.in
+./testcase/testcase_g2/Enter dollhouse/3.in
+./testcase/testcase_g2/Enter dollhouse/13.in
+./testcase/testcase_g2/Enter dollhouse/11.in
+./testcase/testcase_g2/Enter dollhouse/6.in
+./testcase/testcase_g2/magic house/case2.in
+./testcase/testcase_g2/magic house/case3.in
+./testcase/testcase_g2/magic house/case1.in
+./testcase/testcase_g2/magic house/case4.in
+./testcase/testcase_g2/credit/case-2.in
+./testcase/testcase_g2/credit/case-4.in
+./testcase/testcase_g2/credit/case-3.in
+./testcase/testcase_g2/credit/case-5.in
+./testcase/testcase_g2/credit/case-6.in
+./testcase/testcase_g2/Enter empty places/4.in
+./testcase/testcase_g2/Enter empty places/2.3.in
+./testcase/testcase_g2/Enter empty places/1.1.in
+./testcase/testcase_g2/Enter empty places/1.3.in
+./testcase/testcase_g2/Enter empty places/1.2.in
+./testcase/testcase_g2/Enter empty places/2.2.in
+./testcase/testcase_g2/Enter empty places/3.in
+./testcase/testcase_g2/Enter empty places/2.1.in
+./testcase/testcase_g2/pay rent/case10.in
+./testcase/testcase_g2/pay rent/case7.in
+./testcase/testcase_g2/pay rent/case15.in
+./testcase/testcase_g2/pay rent/case13.in
+./testcase/testcase_g2/pay rent/case9.in
+./testcase/testcase_g2/pay rent/case1.in
+./testcase/testcase_g2/pay rent/case14.in
+./testcase/testcase_g2/pay rent/case11.in
+./testcase/testcase_g2/pay rent/case8.in
+./testcase/testcase_g2/pay rent/case6.in
+./testcase/testcase_g2/pay rent/case12.in
+./testcase/testcase_g2/Sell your ground/1.1.1.in
+./testcase/testcase_g2/Sell your ground/1.0.2.in
+./testcase/testcase_g2/Sell your ground/2_dollhouse.in
+./testcase/testcase_g2/Sell your ground/1.3.1.in
+./testcase/testcase_g2/Sell your ground/1.3.2.in
+./testcase/testcase_g2/Sell your ground/2_gifthouse.in
+./testcase/testcase_g2/Sell your ground/1.3.3.in
+./testcase/testcase_g2/Sell your ground/2_mineground.in
+./testcase/testcase_g2/Sell your ground/2_others.in
+./testcase/testcase_g2/Sell your ground/1.0.1.in
+./testcase/testcase_g2/Sell your ground/2_magichouse.in
+./testcase/testcase_g2/Sell your ground/1.1.3.in
+./testcase/testcase_g2/Sell your ground/1.1.2.in
+./testcase/testcase_g2/Sell your ground/1.0.3.in
+./testcase/testcase_g2/Sell your ground/1.2.2.in
+./testcase/testcase_g2/Sell your ground/2_park.in
+./testcase/testcase_g2/Sell your ground/1.2.1.in
+./testcase/testcase_g2/Sell your ground/1.2.3.in
+./testcase/testcase_g2/Sell your ground/2_emptyplace.in
+./testcase/testcase_g2/base/seq1.in
+./testcase/testcase_g2/base/buildingtool.in
+./testcase/testcase_g2/base/robot.in
+./testcase/testcase_g2/base/pos.in
+./testcase/testcase_g2/base/building.in
+./testcase/testcase_g2/base/barrier.in
+./testcase/testcase_g2/base/seq.in
+./testcase/testcase_g2/base/god.in
+./testcase/testcase_g2/tool-use/case 11.in
+./testcase/testcase_g2/tool-use/case 1.in
+./testcase/testcase_g2/tool-use/case 8.in
+./testcase/testcase_g2/tool-use/case 7.in
+./testcase/testcase_g2/tool-use/case 13.in
+./testcase/testcase_g2/tool-use/case 6.in
+./testcase/testcase_g2/tool-use/case 4.in
+./testcase/testcase_g2/tool-use/case 9.in
+./testcase/testcase_g2/tool-use/case 3.in
+./testcase/testcase_g2/tool-use/case 12.in
+./testcase/testcase_g2/tool-use/case 5.in
+./testcase/testcase_g2/tool-use/case 10.in
+./testcase/testcase_g2/tool-use/case 2.in
+./testcase/testcase_g2/Enter Gift House/NO1-4.in
+./testcase/testcase_g2/Enter Gift House/NO2-2.in
+./testcase/testcase_g2/Enter Gift House/NO1-1.in
+./testcase/testcase_g2/Enter Gift House/NO1-9.in
+./testcase/testcase_g2/Enter Gift House/NO1-3.in
+./testcase/testcase_g2/Enter Gift House/NO1-2.in
+./testcase/testcase_g2/Enter Gift House/NO1-7.in
+./testcase/testcase_g2/Enter Gift House/NO1-6.in
+./testcase/testcase_g2/Enter Gift House/NO2-1.in
+./testcase/testcase_g2/Enter Gift House/NO1-5.in
+./testcase/testcase_g2/Enter Gift House/NO1-8.in
+./testcase/testcase_g2/Enter My House/NO1-1.in
+./testcase/testcase_g2/Enter My House/NO1-3.in
+./testcase/testcase_g2/Enter My House/NO1-2.in
+./testcase/testcase_g2/Enter My House/NO3-1.in
+./testcase/testcase_g2/Enter My House/NO6-2.in
+./testcase/testcase_g2/Enter My House/NO2-1.in
+./testcase/testcase_g2/Enter My House/NO4-1.in
+./testcase/testcase_g2/Enter My House/NO5-1.in
+./testcase/testcase_g2/Enter My House/NO6-1.in
 ./testcase/testcase_g3/buy_land/case0.in
-./testcase/testcase_g3/robot/case11use_show.in
-./testcase/testcase_g3/robot/case11influence.in
-./testcase/testcase_g3/giftTest/giftCredit0.in
-./testcase/testcase_g3/giftTest/giftMoney0.in
-./testcase/testcase_g3/giftTest/giftGod0.in
-./testcase/testcase_g3/giftTest/giftCredit1.in
-./testcase/testcase_g3/giftTest/giftError.in
-./testcase/testcase_g3/bankrupt/case13Abroke.in
 ./testcase/testcase_g3/bankrupt/case13Abroke2.in
 ./testcase/testcase_g3/bankrupt/case13Abroke4.in
-./testcase/testcase_g3/buyTool/case7input_error.in
-./testcase/testcase_g3/buyTool/case7buy_barrier.in
-./testcase/testcase_g3/buyTool/case7redit_not_enough.in
-./testcase/testcase_g3/buyTool/case7buy_robot.in
-./testcase/testcase_g3/buyTool/case7F_out.in
-./testcase/testcase_g3/magic_house/inMine5.in
-./testcase/testcase_g3/magic_house/case2_gx.in
-./testcase/testcase_g3/magic_house/toolRoomCase1.in
-./testcase/testcase_g3/magic_house/inMine1.in
-./testcase/testcase_g3/magic_house/inMine0.in
-./testcase/testcase_g3/magic_house/inMine2.in
-./testcase/testcase_g3/magic_house/case4rent2.in
-./testcase/testcase_g3/magic_house/inMine9.in
-./testcase/testcase_g3/magic_house/case4rent.in
-./testcase/testcase_g3/magic_house/inMine11.in
-./testcase/testcase_g3/magic_house/inMine4.in
-./testcase/testcase_g3/magic_house/toolroomcase0.in
-./testcase/testcase_g3/magic_house/inMine3.in
-./testcase/testcase_g3/magic_house/inMine10.in
-./testcase/testcase_g3/magic_house/case1_gx.in
-./testcase/testcase_g3/magic_house/case5_gx.in
-./testcase/testcase_g3/magic_house/inMine6.in
-./testcase/testcase_g3/magic_house/case3_gx.in
-./testcase/testcase_g3/magic_house/inMine7.in
-./testcase/testcase_g3/magic_house/inMine8.in
-./testcase/testcase_g3/magic_house/case4_gx.in
-./testcase/testcase_g3/magic_house/case0_gx.in
-./testcase/testcase_g3/upgrade_land/case0.in
-./testcase/testcase_g3/collect_rent/case1.in
-./testcase/testcase_g3/collect_rent/case0.in
-./testcase/testcase_g3/mineTest/case1.in
-./testcase/testcase_g3/mineTest/case8.in
-./testcase/testcase_g3/mineTest/case6.in
+./testcase/testcase_g3/bankrupt/case13Abroke.in
+./testcase/testcase_g3/blockTest/block_1.in
+./testcase/testcase_g3/blockTest/block_7.in
+./testcase/testcase_g3/blockTest/block_5.in
+./testcase/testcase_g3/blockTest/block_4.in
+./testcase/testcase_g3/blockTest/case0.in
+./testcase/testcase_g3/blockTest/block_11.in
+./testcase/testcase_g3/blockTest/block_15.in
+./testcase/testcase_g3/blockTest/block_10.in
+./testcase/testcase_g3/blockTest/block_6.in
+./testcase/testcase_g3/blockTest/block_8.in
+./testcase/testcase_g3/blockTest/block_9.in
+./testcase/testcase_g3/blockTest/block_3.in
+./testcase/testcase_g3/blockTest/block_16.in
+./testcase/testcase_g3/blockTest/block_2.in
+./testcase/testcase_g3/sell_land/case2.in
+./testcase/testcase_g3/sell_land/case0.in
+./testcase/testcase_g3/sell_land/case1.in
+./testcase/testcase_g3/mineTest/case7.in
+./testcase/testcase_g3/mineTest/case2.in
 ./testcase/testcase_g3/mineTest/case9.in
 ./testcase/testcase_g3/mineTest/case5.in
 ./testcase/testcase_g3/mineTest/case0.in
-./testcase/testcase_g3/mineTest/case2.in
 ./testcase/testcase_g3/mineTest/case3.in
-./testcase/testcase_g3/mineTest/case7.in
+./testcase/testcase_g3/mineTest/case1.in
 ./testcase/testcase_g3/mineTest/case4.in
+./testcase/testcase_g3/mineTest/case8.in
+./testcase/testcase_g3/mineTest/case6.in
+./testcase/testcase_g3/robot/case11influence.in
+./testcase/testcase_g3/robot/case11use_show.in
+./testcase/testcase_g3/collect_rent/case0.in
+./testcase/testcase_g3/collect_rent/case1.in
+./testcase/testcase_g3/godTest/godTime2.in
+./testcase/testcase_g3/godTest/godTime1.in
+./testcase/testcase_g3/godTest/godTime3.in
+./testcase/testcase_g3/godTest/godTime0.in
+./testcase/testcase_g3/godTest/godFunc0.in
+./testcase/testcase_g3/godTest/godTime4.in
+./testcase/testcase_g3/buyTool/case7input_error.in
+./testcase/testcase_g3/buyTool/case7buy_robot.in
+./testcase/testcase_g3/buyTool/case7redit_not_enough.in
+./testcase/testcase_g3/buyTool/case7F_out.in
+./testcase/testcase_g3/buyTool/case7buy_barrier.in
+./testcase/testcase_g3/giftTest/giftMoney0.in
+./testcase/testcase_g3/giftTest/giftError.in
+./testcase/testcase_g3/giftTest/giftGod0.in
+./testcase/testcase_g3/giftTest/giftCredit0.in
+./testcase/testcase_g3/giftTest/giftCredit1.in
+./testcase/testcase_g3/magic_house/inMine10.in
+./testcase/testcase_g3/magic_house/inMine6.in
+./testcase/testcase_g3/magic_house/case0_gx.in
+./testcase/testcase_g3/magic_house/inMine2.in
+./testcase/testcase_g3/magic_house/inMine7.in
+./testcase/testcase_g3/magic_house/inMine9.in
+./testcase/testcase_g3/magic_house/inMine5.in
+./testcase/testcase_g3/magic_house/inMine3.in
+./testcase/testcase_g3/magic_house/case3_gx.in
+./testcase/testcase_g3/magic_house/case2_gx.in
+./testcase/testcase_g3/magic_house/inMine0.in
+./testcase/testcase_g3/magic_house/case4rent2.in
+./testcase/testcase_g3/magic_house/case4rent.in
+./testcase/testcase_g3/magic_house/inMine4.in
+./testcase/testcase_g3/magic_house/inMine11.in
+./testcase/testcase_g3/magic_house/toolroomcase0.in
+./testcase/testcase_g3/magic_house/case4_gx.in
+./testcase/testcase_g3/magic_house/inMine1.in
+./testcase/testcase_g3/magic_house/case5_gx.in
+./testcase/testcase_g3/magic_house/case1_gx.in
+./testcase/testcase_g3/magic_house/inMine8.in
+./testcase/testcase_g3/magic_house/toolRoomCase1.in

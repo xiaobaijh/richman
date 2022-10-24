@@ -33,7 +33,7 @@ void Gsystem::init_game_display() {
         places_[i].default_symbol_ = '0';
         map_[i++] = '0';
     }
-    places_[i].type_ = start;
+    places_[i].type_ = park;
     places_[i].default_symbol_ = 'P';
     places_[i].color_ = COLOR_SPECIAL;
     map_[i++] = 'P';
@@ -256,6 +256,9 @@ bool Gsystem::print() {
     }
     printf("\n\nseq ");
     for (int i = 0; i < num; ++i) {
+        if (user_order_[(index + i) % num] == '0') {
+            continue;
+        }
         printf("%c", user_order_[(index + i) % num]);
     }
     printf("\n");
@@ -399,7 +402,7 @@ bool Gsystem::update_position(char actor, int step) {
     if (places_[pos].has_player != 0) {
         places_[pos].has_player--;
     }
-    for (auto i = pos + 1; i <= pos + step; i++) {
+    for (auto i = pos; i <= pos + step; i++) {
         auto tmp = i % 70;
         if (places_[tmp].has_barrier) {
             places_[tmp].has_player++;

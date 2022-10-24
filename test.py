@@ -56,7 +56,7 @@ def parse_output(path):
     with open(path+'out_tmp') as f:
         output = f.readlines()[-len(base):]
     for i in range(len(output)):
-        if base[i] != output[i].replace(' ', ''):
+        if base[i].lower() != output[i].replace(' ', '').lower():
             record.write('\n\n')
             record.write(path)
             record.write("\ninput:\n")

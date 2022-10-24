@@ -254,7 +254,10 @@ bool Player::charge(char owner) {
         if (!bankrupted()) {
             return false;
         }
+        property_ -= (land_price / 2);
         g_->places_[position_].has_player--;
+        auto pos = g_->user_order_.find(actor_);
+        g_->user_order_[pos] = '0';
         change_map(position_, g_->places_[position_].default_symbol_, g_->places_[position_].color_);
         g_->out_tip(get_name(actor_) + BankruptcyStr);
         get_input(0, 0, 0, 0);
@@ -273,6 +276,7 @@ bool Player::bankrupted() {
         if (g_->places_[*iter].level_ != 0) {
             g_->places_[*iter].price_ /= g_->places_[*iter].level_;
         }
+        g_->places_[*iter].level_ = 0;
         change_map(*iter, '0', COLOR_BASIC);
     }
     return true;
@@ -282,6 +286,27 @@ bool Player::stopped() {
     if (stop_time_ == 0) {
         state_ = normal;
     }
+    if (g_->places_[position_].owner_ != actor_ && g_->places_[position_].type_ == normal && g_->places_[position_].owner_ != '0' ) {
+       charge(g_->places_[position_].owner_);
+    }
+    if (position_ == MINE1_POS) {
+        credit_ += MINE1_CREDIT;
+    }
+    if (position_ == MINE2_POS) {
+        credit_ += MINE2_CREDIT;
+    }
+    if (position_ == MINE3_POS) {
+        credit_ += MINE3_CREDIT;
+    }
+    if (position_ == MINE4_POS) {
+        credit_ += MINE4_CREDIT;
+    }
+    if (position_ == MINE5_POS) {
+        credit_ += MINE5_CREDIT;
+    }
+    if (position_ == MINE6_POS) {
+        credit_ += MINE6_CREDIT;
+    }
     if (god_ > 0) {
         god_--;
     }
@@ -289,7 +314,7 @@ bool Player::stopped() {
 } //因为被陷害轮空一轮
 
 bool Player::update_land() {
-    auto land_price = g_->places_[position_].price_;
+    auto land_price = g_->places_[position_].base_price_;
     if (land_price > property_) {
         return true;
     }
