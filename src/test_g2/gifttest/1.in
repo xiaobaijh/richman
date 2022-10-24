@@ -1,0 +1,12 @@
+// GiftRoom
+preset seq QSAJ
+preset pos Q 34
+preset money Q 8000
+preset credit Q 100
+preset state Q 0
+preset barrier Q 0
+preset robot Q 0
+preset god Q 0
+
+step 1
+1

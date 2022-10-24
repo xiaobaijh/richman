@@ -1,0 +1,5 @@
+//Sell others - unsuccessful
+preset seq AJ
+preset money A 2000
+preset building 1 0 J
+sell 1

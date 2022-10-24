@@ -1,0 +1,26 @@
+preset seq QS
+preset pos Q 34
+preset money Q 8000
+preset credit Q 100
+preset state Q 0
+preset barrier Q 0
+preset robot Q 0
+preset god Q 0
+
+preset pos S 33
+preset money S 6000
+preset credit S 100
+preset state S 0
+preset barrier S 0
+preset robot S 0
+preset god S 0
+
+step 1
+1
+
+step 2
+1
+
+
+
+

@@ -1,0 +1,17 @@
+preset seq QSJ
+preset building 60 2 S //地段3 level=2 ower=S
+preset building 3 0 Q //地段1 level=0 ower=Q
+preset building 4 1 Q //地段1 level=1 ower=Q
+preset building 5 2 Q //地段1 level=2 ower=Q
+preset building 6 3 Q //地段1 level=3 ower=Q
+preset building 29 0 Q //地段2 level=0 ower=Q
+preset building 30 1 Q //地段2 level=1 ower=Q
+preset building 31 2 Q //地段2 level=2 ower=Q
+preset building 33 3 Q //地段2 level=3 ower=Q
+preset building 40 0 Q //地段3 level=0 ower=Q
+preset building 41 1 Q //地段3 level=1 ower=Q
+preset building 42 2 Q //地段3 level=2 ower=Q
+preset building 43 3 Q //地段3 level=3 ower=Q
+preset pos Q 56
+preset money Q 449
+step 4 

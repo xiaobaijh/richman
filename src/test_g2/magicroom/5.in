@@ -1,0 +1,21 @@
+preset seq QSAJ
+preset pos Q 34
+preset money Q 4000
+preset credit Q 150
+
+preset pos S 20
+preset money S 10000
+preset credit S 7
+
+preset pos A 28
+preset money A 3200
+preset credit A 3
+preset state A 2
+
+preset pos J 30
+preset money J 200
+preset credit J 2
+preset state J 1
+
+step 29
+4

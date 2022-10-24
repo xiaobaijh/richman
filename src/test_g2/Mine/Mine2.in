@@ -1,0 +1,5 @@
+//Mine: locate 65, get 80
+preset seq AJ
+preset pos A 62
+preset credit A 0
+step 3

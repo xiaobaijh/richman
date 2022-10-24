@@ -1,0 +1,30 @@
+preset seq QSAJ
+preset pos Q 34
+preset money Q 5000
+preset credit Q 50
+preset barrier Q 3
+preset robot Q 1
+preset god Q 3
+
+preset pos S 31 
+preset money S 4100
+preset credit S 100
+preset god S 1
+
+preset pos A 32
+preset money A 2000
+preset credit A 70
+preset barrier A 2
+
+preset pos J 33
+preset money J 3000
+
+
+step 1
+1
+
+step 4
+1
+
+step 3
+3

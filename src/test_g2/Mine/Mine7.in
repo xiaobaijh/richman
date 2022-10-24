@@ -1,0 +1,9 @@
+//Mine: A Two Steps - locate 64, get 60; locate 66, get 40
+preset seq AJ
+preset pos A 62
+preset credit A 0
+preset pos J 1
+step 2
+step 3
+n
+step 2

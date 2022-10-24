@@ -1,4 +1,4 @@
-# Install script for directory: /home/summage/Code/c/richman/src
+# Install script for directory: /home/wy/richman/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

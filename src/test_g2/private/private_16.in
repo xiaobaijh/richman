@@ -1,0 +1,6 @@
+preset seq QS
+preset pos Q 1
+preset building 2 3 Q
+preset money Q 200
+step 1
+y

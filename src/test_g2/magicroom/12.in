@@ -1,0 +1,18 @@
+preset seq QSAJ
+preset credit Q 100
+preset credit S 100
+preset credit A 100
+preset credit J 100
+
+preset building 6 2 S
+preset pos A 6
+preset pos J 49
+
+step 63
+2
+
+step 2
+n
+
+
+

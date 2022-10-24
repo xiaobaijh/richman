@@ -1,0 +1,5 @@
+//Sell my
+preset seq AJ
+preset money A 2000
+preset building 1 0 A
+sell 1

@@ -1,0 +1,10 @@
+preset seq QSAJ
+preset pos A 14
+preset pos J 30
+preset state A 2
+preset state J 7
+
+step 63
+4
+step 63
+2

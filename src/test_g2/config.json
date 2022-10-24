@@ -1,0 +1,19 @@
+{
+    "name": "g2",
+    "maxlevel": 1000,
+    "import": [
+        "empty",
+        "fine_",
+        "gifttest",
+        "meet_tool",
+        "Mine",
+        "prison",
+        "private",
+        "Sell",
+        "tool_house",
+        "use_tool",
+        "toolroom_",
+        "magicroom"
+    ],
+    "case": []
+}

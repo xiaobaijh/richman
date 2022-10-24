@@ -198,6 +198,7 @@ bool Player::sell_land(int loc) {
     }
     property_ += (g_->places_[loc].price_ * 2);
     g_->places_[loc].state_ = unowned;
+    g_->places_[loc].default_symbol_ = '0';
     for (auto iter = places_.begin(); iter != places_.end(); iter++) { //从vector中删除指定的某一个元素
         if (*iter == loc) {
             places_.erase(iter);
@@ -272,6 +273,7 @@ bool Player::bankrupted() {
     for (auto iter = places_.begin(); iter != places_.end(); iter++) {
         g_->places_[*iter].owner_ = '0';
         g_->places_[*iter].state_ = unowned;
+        g_->places_[*iter].default_symbol_ = '0';
         auto price = g_->places_[*iter].price_;
         if (g_->places_[*iter].level_ != 0) {
             g_->places_[*iter].price_ /= g_->places_[*iter].level_;
@@ -329,7 +331,21 @@ bool Player::update_land() {
 
                 g_->places_[position_].level_++;
                 // TODO  g_->places_[position]_.default_symbol_ =
+                g_->places_[position_].default_symbol_ = '0' + g_->places_[position_].level_;
                 g_->out_tip(get_name(actor_) + UpdateBulidingY);
+                int color = 0;
+
+                switch(actor_){
+                    case '1':
+                        color = COLOR_Q;
+                    case '2':
+                        color = COLOR_A;
+                    case '3':
+                        color = COLOR_S;
+                    case '4':
+                        color = COLOR_J;
+                }
+                // change_map(position_, '0' + g_->places_[position_].level_, color);
                 get_input(0, 0, 0, 0);
                 break;
             } else if (input == "n") {

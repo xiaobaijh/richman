@@ -1,0 +1,5 @@
+preset seq QSJ
+preset building 32 3 S //地段2 level=3 ower=S
+preset pos Q 28
+preset money Q 1000
+step 4 

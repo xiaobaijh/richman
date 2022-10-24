@@ -1,0 +1,4 @@
+//Sell special - unsuccessful
+preset seq AJ
+preset money A 2000
+sell 14

@@ -1,0 +1,17 @@
+seq SJQ
+Q 60 299 0 0 0 0 0 1
+S 0 10000 0 0 0 0 0 0
+J 0 10000 0 0 0 0 0 0
+building 60 1 S 0
+building 3 0 Q 0
+building 4 1 Q 0
+building 5 2 Q 0
+building 6 3 Q 0
+building 29 0 Q 0
+building 30 1 Q 0
+building 31 2 Q 0
+building 33 3 Q 0
+building 40 0 Q 0
+building 41 1 Q 0
+building 42 2 Q 0
+building 43 3 Q 0

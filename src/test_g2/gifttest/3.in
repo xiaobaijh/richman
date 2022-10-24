@@ -1,0 +1,15 @@
+preset seq QSAJ
+preset pos Q 34
+preset money Q 4000
+preset credit Q 150
+preset state Q 0
+preset barrier Q 0
+preset robot Q 0
+preset god Q 0
+
+step 1
+1
+
+
+
+
